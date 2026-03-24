@@ -9,8 +9,7 @@ import 'l10n/app_localizations.dart';
 import 'providers/app_provider.dart';
 import 'providers/prayer_provider.dart';
 import 'providers/dhikr_provider.dart';
-import 'screens/language_selection_screen.dart';
-import 'screens/home_screen.dart';
+import 'screens/splash_screen.dart';
 import 'utils/theme.dart';
 
 void main() async {
@@ -68,9 +67,7 @@ class IslamicCompanionApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: hasSelectedLanguage
-          ? const HomeScreen()
-          : const LanguageSelectionScreen(),
+      home: const SplashScreen(),
     );
   }
 }

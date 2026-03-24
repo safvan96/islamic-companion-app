@@ -10,6 +10,8 @@ import 'dhikr_screen.dart';
 import 'hadith_screen.dart';
 import 'surah_screen.dart';
 import 'sadaqah_screen.dart';
+import 'asma_al_husna_screen.dart';
+import 'dua_screen.dart';
 import 'settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -226,6 +228,25 @@ class _HomeContent extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (_) => const SadaqahScreen()),
+                ),
+              ),
+              _FeatureCard(
+                icon: Icons.star,
+                title: '99 Names',
+                color: const Color(0xFF4A148C),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const AsmaAlHusnaScreen()),
+                ),
+              ),
+              _FeatureCard(
+                icon: Icons.front_hand,
+                title: 'Duas',
+                color: const Color(0xFF00838F),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const DuaScreen()),
                 ),
               ),
             ]),
