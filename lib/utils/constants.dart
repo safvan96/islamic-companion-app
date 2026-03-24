@@ -10,6 +10,7 @@ class AppConstants {
 
   static const Map<String, String> languageNames = {
     'en': 'English',
+    'tr': 'Türkçe',
     'ar': 'العربية',
     'ru': 'Русский',
     'hi': 'हिन्दी',
@@ -23,6 +24,7 @@ class AppConstants {
 
   static const Map<String, String> languageFlags = {
     'en': '🇬🇧',
+    'tr': '🇹🇷',
     'ar': '🇸🇦',
     'ru': '🇷🇺',
     'hi': '🇮🇳',

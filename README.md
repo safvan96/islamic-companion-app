@@ -35,6 +35,7 @@ Watch an ad as an act of charity — half of the ad revenue is donated as Sadaqa
 | Language | Code |
 |----------|------|
 | English | en |
+| Türkçe (Turkish) | tr |
 | العربية (Arabic) | ar |
 | Русский (Russian) | ru |
 | हिन्दी (Hindi) | hi |
@@ -55,7 +56,7 @@ Watch an ad as an act of charity — half of the ad revenue is donated as Sadaqa
 ### Installation
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/islamic-companion-app.git
+git clone https://github.com/safvan96/islamic-companion-app.git
 cd islamic-companion-app
 flutter pub get
 flutter run

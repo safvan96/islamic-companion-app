@@ -14,6 +14,7 @@ class AppLocalizations {
 
   static const List<Locale> supportedLocales = [
     Locale('en'),
+    Locale('tr'),
     Locale('ar'),
     Locale('ru'),
     Locale('hi'),
@@ -68,6 +69,49 @@ class AppLocalizations {
       'todayHadith': "Today's Hadith",
       'readMore': 'Read More',
       'degrees': 'degrees',
+    },
+    'tr': {
+      'appTitle': 'İslami Rehber',
+      'prayerTimes': 'Namaz Vakitleri',
+      'qibla': 'Kıble',
+      'dhikr': 'Zikir',
+      'hadiths': 'Hadisler',
+      'surahs': 'Sureler',
+      'sadaqah': 'Sadaka',
+      'settings': 'Ayarlar',
+      'fajr': 'İmsak',
+      'sunrise': 'Güneş',
+      'dhuhr': 'Öğle',
+      'asr': 'İkindi',
+      'maghrib': 'Akşam',
+      'isha': 'Yatsı',
+      'nextPrayer': 'Sonraki Namaz',
+      'timeRemaining': 'Kalan Süre',
+      'counter': 'Sayaç',
+      'total': 'Toplam',
+      'reset': 'Sıfırla',
+      'target': 'Hedef',
+      'qiblaDirection': 'Kıble Yönü',
+      'pointTowards': 'Telefonunuzu Kabe yönüne doğrultun',
+      'watchAd': 'Sadaka İçin Reklam İzle',
+      'sadaqahMessage': 'Reklam gelirinin yarısı sizin adınıza sadaka olarak bağışlanacaktır. Allah kabul etsin!',
+      'sadaqahThank': 'Allah razı olsun! Sadakanız kaydedildi.',
+      'selectLanguage': 'Dilinizi Seçin',
+      'welcomeMessage': 'İslami Rehber\'e Hoş Geldiniz',
+      'continueBtn': 'Devam',
+      'darkMode': 'Karanlık Mod',
+      'language': 'Dil',
+      'location': 'Konum',
+      'listenRecitation': 'Tilavet Dinle',
+      'translation': 'Meal',
+      'transliteration': 'Okunuş',
+      'home': 'Ana Sayfa',
+      'noLocation': 'Lütfen konum servislerini etkinleştirin',
+      'loading': 'Yükleniyor...',
+      'adNotReady': 'Reklam yükleniyor, lütfen bekleyin...',
+      'todayHadith': 'Günün Hadisi',
+      'readMore': 'Devamını Oku',
+      'degrees': 'derece',
     },
     'ar': {
       'appTitle': 'الرفيق الإسلامي',
@@ -471,7 +515,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) {
-    return ['en', 'ar', 'ru', 'hi', 'id', 'zh', 'de', 'nl', 'fr', 'es']
+    return ['en', 'tr', 'ar', 'ru', 'hi', 'id', 'zh', 'de', 'nl', 'fr', 'es']
         .contains(locale.languageCode);
   }
 

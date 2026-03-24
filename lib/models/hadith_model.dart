@@ -16,6 +16,7 @@ class HadithModel {
       arabic: 'إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى',
       translations: {
         'en': 'Actions are judged by intentions, and every person will get what they intended.',
+        'tr': 'Ameller niyetlere göredir ve herkes niyet ettiğini elde eder.',
         'ar': 'إنما الأعمال بالنيات وإنما لكل امرئ ما نوى',
         'ru': 'Дела оцениваются по намерениям, и каждый получит то, что намеревался.',
         'hi': 'कर्म नीयतों पर निर्भर हैं, और हर व्यक्ति को वही मिलेगा जो उसने नीयत किया।',
@@ -33,6 +34,7 @@ class HadithModel {
       arabic: 'خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ',
       translations: {
         'en': 'The best of you are those who learn the Quran and teach it.',
+        'tr': 'Sizin en hayırlınız Kur\'an\'ı öğrenen ve öğretendir.',
         'ar': 'خيركم من تعلم القرآن وعلمه',
         'ru': 'Лучшие из вас — те, кто изучает Коран и обучает ему.',
         'hi': 'तुम में सबसे अच्छे वे हैं जो कुरान सीखें और सिखाएं।',
@@ -50,6 +52,7 @@ class HadithModel {
       arabic: 'لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ',
       translations: {
         'en': 'None of you truly believes until he loves for his brother what he loves for himself.',
+        'tr': 'Sizden biriniz kendisi için istediğini kardeşi için de istemedikçe gerçek mümin olamaz.',
         'ar': 'لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه',
         'ru': 'Не уверует никто из вас, пока не полюбит для брата своего то, что любит для себя.',
         'hi': 'तुम में से कोई तब तक सच्चा मोमिन नहीं जब तक अपने भाई के लिए वही न चाहे जो अपने लिए चाहता है।',
@@ -67,6 +70,7 @@ class HadithModel {
       arabic: 'مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ',
       translations: {
         'en': 'Whoever believes in Allah and the Last Day, let him speak good or remain silent.',
+        'tr': 'Allah\'a ve ahiret gününe iman eden kimse ya hayır söylesin ya da sussun.',
         'ar': 'من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت',
         'ru': 'Кто верует в Аллаха и Судный день, пусть говорит благое или молчит.',
         'hi': 'जो अल्लाह और आखिरत के दिन पर ईमान रखता है, वह अच्छी बात कहे या चुप रहे।',
@@ -84,6 +88,7 @@ class HadithModel {
       arabic: 'الدُّنْيَا سِجْنُ الْمُؤْمِنِ وَجَنَّةُ الْكَافِرِ',
       translations: {
         'en': 'The world is a prison for the believer and a paradise for the disbeliever.',
+        'tr': 'Dünya müminin zindanı, kâfirin cennetidir.',
         'ar': 'الدنيا سجن المؤمن وجنة الكافر',
         'ru': 'Мир — тюрьма для верующего и рай для неверующего.',
         'hi': 'दुनिया मोमिन के लिए कैदखाना है और काफिर के लिए जन्नत है।',
@@ -101,6 +106,7 @@ class HadithModel {
       arabic: 'تَبَسُّمُكَ فِي وَجْهِ أَخِيكَ لَكَ صَدَقَةٌ',
       translations: {
         'en': 'Your smile in the face of your brother is charity.',
+        'tr': 'Kardeşine gülümsemen sadakadır.',
         'ar': 'تبسمك في وجه أخيك لك صدقة',
         'ru': 'Твоя улыбка брату — это милостыня.',
         'hi': 'अपने भाई के चेहरे पर तुम्हारी मुस्कान सदका है।',
@@ -118,6 +124,7 @@ class HadithModel {
       arabic: 'الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ',
       translations: {
         'en': 'A Muslim is the one from whose tongue and hands other Muslims are safe.',
+        'tr': 'Müslüman, dilinden ve elinden diğer Müslümanların güvende olduğu kimsedir.',
         'ar': 'المسلم من سلم المسلمون من لسانه ويده',
         'ru': 'Мусульманин — тот, от языка и рук которого в безопасности другие мусульмане.',
         'hi': 'मुसलमान वह है जिसकी जुबान और हाथ से दूसरे मुसलमान सुरक्षित रहें।',
@@ -135,6 +142,7 @@ class HadithModel {
       arabic: 'إِنَّ اللَّهَ لَا يَنْظُرُ إِلَى صُوَرِكُمْ وَأَمْوَالِكُمْ وَلَكِنْ يَنْظُرُ إِلَى قُلُوبِكُمْ وَأَعْمَالِكُمْ',
       translations: {
         'en': 'Allah does not look at your appearance or your wealth, but He looks at your hearts and your deeds.',
+        'tr': 'Allah sizin suretlerinize ve mallarınıza değil, kalplerinize ve amellerinize bakar.',
         'ar': 'إن الله لا ينظر إلى صوركم وأموالكم ولكن ينظر إلى قلوبكم وأعمالكم',
         'ru': 'Аллах не смотрит на вашу внешность и богатство, но смотрит на ваши сердца и дела.',
         'hi': 'अल्लाह तुम्हारी शक्ल और दौलत नहीं देखता, बल्कि तुम्हारे दिलों और अमल को देखता है।',
@@ -152,6 +160,7 @@ class HadithModel {
       arabic: 'اتَّقِ اللَّهَ حَيْثُمَا كُنْتَ وَأَتْبِعِ السَّيِّئَةَ الْحَسَنَةَ تَمْحُهَا وَخَالِقِ النَّاسَ بِخُلُقٍ حَسَنٍ',
       translations: {
         'en': 'Fear Allah wherever you are, follow a bad deed with a good one to erase it, and treat people with good character.',
+        'tr': 'Nerede olursan ol Allah\'tan kork, kötülüğün arkasından iyilik yap ki onu silsin ve insanlara güzel ahlakla muamele et.',
         'ar': 'اتق الله حيثما كنت وأتبع السيئة الحسنة تمحها وخالق الناس بخلق حسن',
         'ru': 'Бойся Аллаха, где бы ты ни был, за плохим делом соверши хорошее — оно сотрёт его, и обходись с людьми хорошо.',
         'hi': 'जहां भी हो अल्लाह से डरो, बुराई के बाद नेकी करो वह उसे मिटा देगी, और लोगों से अच्छे अख़लाक़ से पेश आओ।',
@@ -169,6 +178,7 @@ class HadithModel {
       arabic: 'مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ طَرِيقًا إِلَى الْجَنَّةِ',
       translations: {
         'en': 'Whoever travels a path seeking knowledge, Allah will make easy for him a path to Paradise.',
+        'tr': 'Kim ilim öğrenmek için bir yola girerse, Allah ona cennete giden yolu kolaylaştırır.',
         'ar': 'من سلك طريقاً يلتمس فيه علماً سهل الله له طريقاً إلى الجنة',
         'ru': 'Кто отправится в путь ради поиска знаний, Аллах облегчит ему путь в Рай.',
         'hi': 'जो इल्म की तलाश में किसी रास्ते पर चलता है, अल्लाह उसके लिए जन्नत का रास्ता आसान कर देता है।',

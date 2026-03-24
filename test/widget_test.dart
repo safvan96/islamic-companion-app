@@ -21,9 +21,9 @@ void main() {
     expect(DhikrProvider.dhikrList.isNotEmpty, true);
   });
 
-  test('All hadiths have 10 translations', () {
+  test('All hadiths have 11 translations (including Turkish)', () {
     for (final hadith in HadithModel.hadiths) {
-      expect(hadith.translations.length, 10);
+      expect(hadith.translations.length, 11);
     }
   });
 }
