@@ -47,7 +47,7 @@ class HadithScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: const Color(0xFFD4AF37).withValues(alpha: 0.3),
+                      color: const Color(0xFFD4AF37).withOpacity(0.3),
                       width: 1,
                     ),
                   ),
@@ -91,7 +91,7 @@ class HadithScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
                             color: isDark
-                                ? Colors.white.withValues(alpha: 0.05)
+                                ? Colors.white.withOpacity(0.05)
                                 : const Color(0xFFFFF8E1),
                             borderRadius: BorderRadius.circular(12),
                           ),

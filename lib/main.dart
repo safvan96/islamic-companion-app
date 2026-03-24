@@ -18,7 +18,6 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   final prefs = await SharedPreferences.getInstance();
-  final hasSelectedLanguage = prefs.getBool('hasSelectedLanguage') ?? false;
   final savedLocale = prefs.getString('locale') ?? 'en';
   final isDarkMode = prefs.getBool('isDarkMode') ?? false;
 
@@ -34,20 +33,13 @@ void main() async {
         ChangeNotifierProvider(create: (_) => PrayerProvider()),
         ChangeNotifierProvider(create: (_) => DhikrProvider()),
       ],
-      child: IslamicCompanionApp(
-        hasSelectedLanguage: hasSelectedLanguage,
-      ),
+      child: const IslamicCompanionApp(),
     ),
   );
 }
 
 class IslamicCompanionApp extends StatelessWidget {
-  final bool hasSelectedLanguage;
-
-  const IslamicCompanionApp({
-    super.key,
-    required this.hasSelectedLanguage,
-  });
+  const IslamicCompanionApp({super.key});
 
   @override
   Widget build(BuildContext context) {

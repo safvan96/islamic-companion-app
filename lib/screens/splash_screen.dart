@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../providers/app_provider.dart';
 import 'language_selection_screen.dart';
 import 'home_screen.dart';
 
@@ -108,7 +106,7 @@ class _SplashScreenState extends State<SplashScreen>
           ),
         ),
         child: AnimatedBuilder(
-          animation: _fadeAnimation,
+          animation: _fadeController,
           builder: (context, child) {
             return Opacity(
               opacity: _fadeAnimation.value,
@@ -117,7 +115,7 @@ class _SplashScreenState extends State<SplashScreen>
                 children: [
                   // Animated Logo
                   AnimatedBuilder(
-                    animation: _scaleAnimation,
+                    animation: _scaleController,
                     builder: (context, child) {
                       return Transform.scale(
                         scale: _scaleAnimation.value,
@@ -139,7 +137,7 @@ class _SplashScreenState extends State<SplashScreen>
                             boxShadow: [
                               BoxShadow(
                                 color: const Color(0xFFD4AF37)
-                                    .withValues(alpha: 0.3),
+                                    .withOpacity(0.3),
                                 blurRadius: 30,
                                 spreadRadius: 5,
                               ),
@@ -157,7 +155,7 @@ class _SplashScreenState extends State<SplashScreen>
                   const SizedBox(height: 30),
                   // App name with shimmer
                   AnimatedBuilder(
-                    animation: _shimmerAnimation,
+                    animation: _shimmerController,
                     builder: (context, child) {
                       return ShaderMask(
                         shaderCallback: (bounds) {
@@ -194,7 +192,7 @@ class _SplashScreenState extends State<SplashScreen>
                     'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
                     style: TextStyle(
                       fontSize: 22,
-                      color: const Color(0xFFD4AF37).withValues(alpha: 0.9),
+                      color: const Color(0xFFD4AF37).withOpacity(0.9),
                       fontWeight: FontWeight.w500,
                       letterSpacing: 1,
                     ),
@@ -207,7 +205,7 @@ class _SplashScreenState extends State<SplashScreen>
                     child: CircularProgressIndicator(
                       strokeWidth: 2.5,
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        const Color(0xFFD4AF37).withValues(alpha: 0.7),
+                        const Color(0xFFD4AF37).withOpacity(0.7),
                       ),
                     ),
                   ),
@@ -221,17 +219,3 @@ class _SplashScreenState extends State<SplashScreen>
   }
 }
 
-class AnimatedBuilder extends AnimatedWidget {
-  final Widget Function(BuildContext, Widget?) builder;
-
-  const AnimatedBuilder({
-    super.key,
-    required Animation<double> animation,
-    required this.builder,
-  }) : super(listenable: animation);
-
-  @override
-  Widget build(BuildContext context) {
-    return builder(context, null);
-  }
-}

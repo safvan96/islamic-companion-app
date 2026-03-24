@@ -70,7 +70,7 @@ class PrayerTimesScreen extends StatelessWidget {
                               vertical: 8,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.15),
+                              color: Colors.white.withOpacity(0.15),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Text(
@@ -115,7 +115,7 @@ class PrayerTimesScreen extends StatelessWidget {
                     child: Card(
                       elevation: isNext ? 6 : 2,
                       shadowColor: isNext
-                          ? color.withValues(alpha: 0.5)
+                          ? color.withOpacity(0.5)
                           : Colors.black12,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
@@ -131,7 +131,7 @@ class PrayerTimesScreen extends StatelessWidget {
                         leading: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: color.withValues(alpha: 0.12),
+                            color: color.withOpacity(0.12),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(icon, color: color, size: 28),
@@ -158,7 +158,7 @@ class PrayerTimesScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: isNext
                                 ? color
-                                : color.withValues(alpha: 0.1),
+                                : color.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(

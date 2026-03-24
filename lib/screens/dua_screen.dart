@@ -214,7 +214,7 @@ class DuaScreen extends StatelessWidget {
                     width: 44,
                     height: 44,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF00838F).withValues(alpha: 0.1),
+                      color: const Color(0xFF00838F).withOpacity(0.1),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -249,7 +249,7 @@ class DuaScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
                               color: isDark
-                                  ? Colors.white.withValues(alpha: 0.05)
+                                  ? Colors.white.withOpacity(0.05)
                                   : const Color(0xFFE0F7FA),
                               borderRadius: BorderRadius.circular(14),
                             ),

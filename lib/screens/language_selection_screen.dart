@@ -28,7 +28,7 @@ class LanguageSelectionScreen extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withValues(alpha: 0.15),
+                  color: Colors.white.withOpacity(0.15),
                   border: Border.all(
                     color: const Color(0xFFD4AF37),
                     width: 2,
@@ -64,7 +64,7 @@ class LanguageSelectionScreen extends StatelessWidget {
                 'Select Your Language / اختر لغتك',
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.white.withValues(alpha: 0.9),
+                  color: Colors.white.withOpacity(0.9),
                 ),
               ),
               const SizedBox(height: 20),
@@ -112,7 +112,7 @@ class _LanguageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white.withValues(alpha: 0.12),
+      color: Colors.white.withOpacity(0.12),
       borderRadius: BorderRadius.circular(14),
       child: InkWell(
         borderRadius: BorderRadius.circular(14),
@@ -131,7 +131,7 @@ class _LanguageTile extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
-              color: const Color(0xFFD4AF37).withValues(alpha: 0.4),
+              color: const Color(0xFFD4AF37).withOpacity(0.4),
               width: 1,
             ),
           ),

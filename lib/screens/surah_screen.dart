@@ -74,7 +74,7 @@ class _SurahCard extends StatelessWidget {
             width: 45,
             height: 45,
             decoration: BoxDecoration(
-              color: const Color(0xFF00695C).withValues(alpha: 0.1),
+              color: const Color(0xFF00695C).withOpacity(0.1),
               shape: BoxShape.circle,
             ),
             child: Center(
@@ -125,7 +125,7 @@ class _SurahCard extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: isDark
-                          ? Colors.white.withValues(alpha: 0.05)
+                          ? Colors.white.withOpacity(0.05)
                           : const Color(0xFFF1F8E9),
                       borderRadius: BorderRadius.circular(14),
                     ),

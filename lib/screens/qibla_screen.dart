@@ -92,7 +92,7 @@ class _QiblaScreenState extends State<QiblaScreen>
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFFD4AF37).withValues(alpha: 0.4),
+                      color: const Color(0xFFD4AF37).withOpacity(0.4),
                       blurRadius: 20,
                       spreadRadius: 2,
                     ),
@@ -127,7 +127,7 @@ class _QiblaScreenState extends State<QiblaScreen>
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.2),
+                            color: Colors.black.withOpacity(0.2),
                             blurRadius: 20,
                             spreadRadius: 5,
                           ),
@@ -171,8 +171,8 @@ class _QiblaScreenState extends State<QiblaScreen>
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 decoration: BoxDecoration(
                   color: isDark
-                      ? Colors.white.withValues(alpha: 0.1)
-                      : Colors.white.withValues(alpha: 0.8),
+                      ? Colors.white.withOpacity(0.1)
+                      : Colors.white.withOpacity(0.8),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Column(

@@ -42,11 +42,11 @@ class _AsmaAlHusnaScreenState extends State<AsmaAlHusnaScreen> {
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 hintText: 'Search...',
-                hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.5)),
+                hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
                 prefixIcon: Icon(Icons.search,
-                    color: Colors.white.withValues(alpha: 0.7)),
+                    color: Colors.white.withOpacity(0.7)),
                 filled: true,
-                fillColor: Colors.white.withValues(alpha: 0.15),
+                fillColor: Colors.white.withOpacity(0.15),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   borderSide: BorderSide.none,

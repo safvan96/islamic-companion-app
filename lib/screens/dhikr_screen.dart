@@ -159,8 +159,8 @@ class _DhikrScreenState extends State<DhikrScreen>
                       .clamp(0.0, 1.0),
                   minHeight: 8,
                   backgroundColor: isDark
-                      ? Colors.white.withValues(alpha: 0.1)
-                      : Colors.black.withValues(alpha: 0.05),
+                      ? Colors.white.withOpacity(0.1)
+                      : Colors.black.withOpacity(0.05),
                   valueColor: AlwaysStoppedAnimation<Color>(
                     dhikrProvider.targetReached
                         ? const Color(0xFFD4AF37)
@@ -174,7 +174,7 @@ class _DhikrScreenState extends State<DhikrScreen>
             GestureDetector(
               onTap: () => _onTap(dhikrProvider),
               child: AnimatedBuilder(
-                animation: _pulseAnimation,
+                animation: _pulseController,
                 builder: (context, child) {
                   return Transform.scale(
                     scale: _pulseAnimation.value,
@@ -199,7 +199,7 @@ class _DhikrScreenState extends State<DhikrScreen>
                             color: (dhikrProvider.targetReached
                                     ? const Color(0xFFD4AF37)
                                     : const Color(0xFF6A1B9A))
-                                .withValues(alpha: 0.5),
+                                .withOpacity(0.5),
                             blurRadius: 25,
                             spreadRadius: 3,
                           ),
@@ -276,8 +276,8 @@ class _CounterBox extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
         color: isDark
-            ? Colors.white.withValues(alpha: 0.08)
-            : Colors.white.withValues(alpha: 0.7),
+            ? Colors.white.withOpacity(0.08)
+            : Colors.white.withOpacity(0.7),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -301,21 +301,4 @@ class _CounterBox extends StatelessWidget {
       ),
     );
   }
-}
-
-class AnimatedBuilder extends AnimatedWidget {
-  final Widget Function(BuildContext, Widget?) builder;
-
-  const AnimatedBuilder({
-    super.key,
-    required super.listenable,
-    required this.builder,
-  }) : super();
-
-  @override
-  Widget build(BuildContext context) {
-    return builder(context, null);
-  }
-
-  Animation<double> get animation => listenable as Animation<double>;
 }

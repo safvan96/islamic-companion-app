@@ -133,7 +133,7 @@ class _SadaqahScreenState extends State<SadaqahScreen>
                 children: [
                   // Heart animation
                   AnimatedBuilder(
-                    animation: _heartAnimation,
+                    animation: _heartController,
                     builder: (context, child) {
                       return Transform.scale(
                         scale: _heartAnimation.value,
@@ -144,8 +144,8 @@ class _SadaqahScreenState extends State<SadaqahScreen>
                             shape: BoxShape.circle,
                             gradient: RadialGradient(
                               colors: [
-                                const Color(0xFFC62828).withValues(alpha: 0.2),
-                                const Color(0xFFC62828).withValues(alpha: 0.05),
+                                const Color(0xFFC62828).withOpacity(0.2),
+                                const Color(0xFFC62828).withOpacity(0.05),
                               ],
                             ),
                           ),
@@ -174,11 +174,11 @@ class _SadaqahScreenState extends State<SadaqahScreen>
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: isDark
-                          ? Colors.white.withValues(alpha: 0.05)
-                          : Colors.white.withValues(alpha: 0.8),
+                          ? Colors.white.withOpacity(0.05)
+                          : Colors.white.withOpacity(0.8),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: const Color(0xFFD4AF37).withValues(alpha: 0.3),
+                        color: const Color(0xFFD4AF37).withOpacity(0.3),
                       ),
                     ),
                     child: Column(
@@ -237,7 +237,7 @@ class _SadaqahScreenState extends State<SadaqahScreen>
                         ),
                         elevation: 5,
                         shadowColor:
-                            const Color(0xFFC62828).withValues(alpha: 0.5),
+                            const Color(0xFFC62828).withOpacity(0.5),
                       ),
                     ),
                   ),
@@ -250,7 +250,7 @@ class _SadaqahScreenState extends State<SadaqahScreen>
                         vertical: 10,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFD4AF37).withValues(alpha: 0.15),
+                        color: const Color(0xFFD4AF37).withOpacity(0.15),
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Row(
@@ -280,10 +280,10 @@ class _SadaqahScreenState extends State<SadaqahScreen>
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF1B5E20).withValues(alpha: 0.1),
+                        color: const Color(0xFF1B5E20).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: const Color(0xFF1B5E20).withValues(alpha: 0.3),
+                          color: const Color(0xFF1B5E20).withOpacity(0.3),
                         ),
                       ),
                       child: Row(
@@ -316,17 +316,3 @@ class _SadaqahScreenState extends State<SadaqahScreen>
   }
 }
 
-class AnimatedBuilder extends AnimatedWidget {
-  final Widget Function(BuildContext, Widget?) builder;
-
-  const AnimatedBuilder({
-    super.key,
-    required super.listenable,
-    required this.builder,
-  }) : super();
-
-  @override
-  Widget build(BuildContext context) {
-    return builder(context, null);
-  }
-}

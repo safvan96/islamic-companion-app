@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedIndex: _currentIndex,
         onDestinationSelected: (i) => setState(() => _currentIndex = i),
         backgroundColor: isDark ? AppTheme.darkCard : Colors.white,
-        indicatorColor: AppTheme.primaryGreen.withValues(alpha: 0.15),
+        indicatorColor: AppTheme.primaryGreen.withOpacity(0.15),
         destinations: [
           NavigationDestination(
             icon: const Icon(Icons.home_outlined),
@@ -276,7 +276,7 @@ class _FeatureCard extends StatelessWidget {
 
     return Card(
       elevation: 4,
-      shadowColor: color.withValues(alpha: 0.3),
+      shadowColor: color.withOpacity(0.3),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
@@ -288,8 +288,8 @@ class _FeatureCard extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                color.withValues(alpha: isDark ? 0.3 : 0.1),
-                color.withValues(alpha: isDark ? 0.15 : 0.05),
+                color.withOpacity(isDark ? 0.3 : 0.1),
+                color.withOpacity(isDark ? 0.15 : 0.05),
               ],
             ),
           ),
@@ -299,7 +299,7 @@ class _FeatureCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.15),
+                  color: color.withOpacity(0.15),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(icon, size: 36, color: color),
