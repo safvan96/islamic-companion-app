@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -31,10 +32,11 @@ class _SadaqahScreenState extends State<SadaqahScreen>
     _heartAnimation = Tween<double>(begin: 1.0, end: 1.3).animate(
       CurvedAnimation(parent: _heartController, curve: Curves.elasticOut),
     );
-    _loadRewardedAd();
+    if (!kIsWeb) _loadRewardedAd();
   }
 
   void _loadRewardedAd() {
+    if (kIsWeb) return;
     setState(() => _isAdLoading = true);
     RewardedAd.load(
       adUnitId: AdConstants.rewardedAdUnitId,
