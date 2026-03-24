@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/prayer_provider.dart';
 import '../providers/app_provider.dart';
+import '../services/hijri_calendar.dart';
 
 class PrayerTimesScreen extends StatelessWidget {
   const PrayerTimesScreen({super.key});
@@ -90,6 +91,61 @@ class PrayerTimesScreen extends StatelessWidget {
               title: Text(l10n.translate('prayerTimes')),
             ),
           ),
+          // Ramadan Suhoor/Iftar Banner
+          if (HijriCalendar.now().isRamadan)
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                child: Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF1A237E), Color(0xFF4A148C)],
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        const Text('🌙', style: TextStyle(fontSize: 32)),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Ramadan Mubarak!',
+                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  const Icon(Icons.dark_mode, color: Color(0xFFD4AF37), size: 16),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    'Suhoor: ${prayerProvider.prayerTimes['Fajr'] ?? '--:--'}',
+                                    style: const TextStyle(color: Colors.white70, fontSize: 13),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  const Icon(Icons.wb_twilight, color: Color(0xFFD4AF37), size: 16),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    'Iftar: ${prayerProvider.prayerTimes['Maghrib'] ?? '--:--'}',
+                                    style: const TextStyle(color: Colors.white70, fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           SliverPadding(
             padding: const EdgeInsets.all(16),
             sliver: SliverList(

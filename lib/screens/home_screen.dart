@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/app_provider.dart';
 import '../providers/prayer_provider.dart';
+import '../services/hijri_calendar.dart';
 import '../utils/theme.dart';
 import 'prayer_times_screen.dart';
 import 'qibla_screen.dart';
@@ -118,20 +119,61 @@ class _HomeContent extends StatelessWidget {
               child: SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: Column(
+                  child: Builder(builder: (context) {
+                    final hijri = HijriCalendar.now();
+                    final langCode = Provider.of<AppProvider>(context).locale.languageCode;
+                    return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(height: 20),
+                      // Hijri Date
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.12),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.calendar_month, color: Color(0xFFD4AF37), size: 16),
+                            const SizedBox(width: 8),
+                            Text(
+                              hijri.format(langCode),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            if (hijri.isRamadan) ...[
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFD4AF37),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: const Text(
+                                  '🌙 Ramadan',
+                                  style: TextStyle(fontSize: 11, color: Colors.white, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 8),
                       Text(
                         'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 20,
                           color: const Color(0xFFD4AF37),
                           fontWeight: FontWeight.w500,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 8),
                       if (prayerProvider.nextPrayer.isNotEmpty) ...[
                         Text(
                           '${l10n.translate('nextPrayer')}: ${prayerProvider.nextPrayer}',
@@ -153,7 +195,8 @@ class _HomeContent extends StatelessWidget {
                         ),
                       ],
                     ],
-                  ),
+                  );
+                  }),
                 ),
               ),
             ),
