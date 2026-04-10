@@ -2,9 +2,16 @@
 
 <div align="center">
 
-**A beautiful, modern Islamic companion app for daily spiritual needs**
+**Your all-in-one Islamic companion for daily spiritual needs**
 
-*Prayer Times | Qibla Compass | Dhikr Counter | Hadiths | Quran Surahs | Sadaqah*
+*Prayer Times | Qibla | Dhikr | Quran Recitation | Hadiths | Duas | 99 Names | Sadaqah*
+
+[![Flutter CI/CD](https://github.com/safvan96/islamic-companion-app/actions/workflows/flutter-ci.yml/badge.svg)](https://github.com/safvan96/islamic-companion-app/actions/workflows/flutter-ci.yml)
+[![Web Demo](https://img.shields.io/badge/Web-Demo-1B5E20)](https://safvan96.github.io/islamic-companion-app/)
+
+**11 Languages | 27 Cities | Dark & Light Theme | Offline Support**
+
+[Web Demo](https://safvan96.github.io/islamic-companion-app/) | [Privacy Policy](https://safvan96.github.io/islamic-companion-app/privacy.html) | [Download APK](https://github.com/safvan96/islamic-companion-app/releases)
 
 </div>
 
@@ -12,45 +19,90 @@
 
 ## Features
 
-### Prayer Times (Ezan)
-Accurate prayer time calculations based on your location with beautiful visual indicators for each prayer.
+### Prayer Times
+- Accurate calculation for 27+ cities worldwide (10 Turkish cities)
+- Next prayer countdown timer
+- Adhan notification alerts
+- City selection with persistent save
 
 ### Qibla Compass
-Find the direction of the Kaaba from anywhere in the world with an elegant compass interface.
+- Direction based on selected city coordinates
+- Visual compass with N/E/S/W markers
 
 ### Dhikr Counter (Zikirmatik)
-Digital tasbih with haptic feedback, multiple dhikr options, customizable targets (33, 99, 100, 500, 1000), and lifetime counter.
+- 8 different dhikr (SubhanAllah, Alhamdulillah, Allahu Akbar, etc.)
+- Haptic feedback + click sound
+- Customizable targets (33, 99, 100, 500, 1000)
+- Weekly chart + per-dhikr lifetime stats
+- Share your stats
 
-### Hadith Collection
-Curated authentic hadiths from Sahih al-Bukhari, Sahih Muslim, and Jami at-Tirmidhi with translations in 10 languages.
+### Hadith Collection (20 Hadiths)
+- Authentic hadiths from Bukhari, Muslim, Tirmidhi
+- "Today's Hadith" daily highlight
+- Auto-scroll to today's hadith
+- Bookmark & share
 
-### Short Surahs & Ayahs
-Popular short surahs including Al-Fatiha, Ayatul Kursi, Al-Ikhlas, Al-Falaq, An-Nas, and more — with Arabic text, translations, and YouTube recitation links.
+### Quran Surahs (12 Surahs)
+- Al-Fatiha, Ya-Sin, Al-Mulk, Ar-Rahman, Ayatul Kursi, and more
+- Audio recitation by Mishary Alafasy
+- Arabic text + translation in 11 languages
+- Bookmark & share
 
-### Sadaqah Button
-Watch an ad as an act of charity — half of the ad revenue is donated as Sadaqah on your behalf.
+### Daily Duas (8 Categories)
+- Morning, Evening, Sleep, Food, Travel, Mosque, Protection, Forgiveness
+- Audio playback
+- Bookmark & share
 
-## Supported Languages
+### 99 Names of Allah (Esmaul Husna)
+- Searchable list with Arabic, transliteration, meaning
 
-| Language | Code |
-|----------|------|
-| English | en |
-| Türkçe (Turkish) | tr |
-| العربية (Arabic) | ar |
-| Русский (Russian) | ru |
-| हिन्दी (Hindi) | hi |
-| Bahasa Indonesia | id |
-| 中文 (Chinese) | zh |
-| Deutsch (German) | de |
-| Nederlands (Dutch) | nl |
-| Français (French) | fr |
-| Español (Spanish) | es |
+### Sadaqah
+- Watch ad = charity donation (AdMob rewarded ads)
+
+### Favorites
+- Bookmark hadiths, surahs, duas
+- Tabbed favorites screen
+
+### Notifications
+- Adhan alerts at prayer times
+- Daily hadith notification with custom time picker
+
+### Additional
+- Daily hadith card on home screen
+- Hijri calendar with Ramadan banner
+- Rate Us & Share App buttons
+- Custom app icon (Islamic green + gold crescent)
+- Onboarding: Language -> City -> Home
+
+## Supported Languages (11)
+
+| Flag | Language | Code |
+|------|----------|------|
+| GB | English | en |
+| TR | Turkce | tr |
+| SA | Arabic | ar |
+| RU | Russian | ru |
+| IN | Hindi | hi |
+| ID | Indonesian | id |
+| CN | Chinese | zh |
+| DE | German | de |
+| NL | Dutch | nl |
+| FR | French | fr |
+| ES | Spanish | es |
+
+## Supported Cities (27)
+
+**Turkey:** Istanbul, Ankara, Konya, Izmir, Bursa, Antalya, Adana, Gaziantep, Kayseri, Trabzon
+**Middle East:** Mecca, Medina, Cairo, Dubai, Riyadh
+**Europe:** London, Berlin, Paris, Amsterdam, Moscow
+**Asia:** Jakarta, New Delhi, Beijing, Kuala Lumpur
+**Americas:** New York, Madrid
 
 ## Getting Started
 
 ### Prerequisites
 - Flutter SDK 3.0+
-- Android Studio / VS Code
+- JDK 17
 - Android SDK (API 21+)
 
 ### Installation
@@ -62,50 +114,57 @@ flutter pub get
 flutter run
 ```
 
-### Build for Play Store
+### Build
 
 ```bash
+# APK
+flutter build apk --release
+
+# Play Store (App Bundle)
 flutter build appbundle --release
+
+# Web
+flutter build web --release --base-href "/islamic-companion-app/"
+
+# Run tests
+flutter test
+
+# Regenerate app icon
+dart run flutter_launcher_icons
 ```
-
-## Configuration
-
-### AdMob Setup
-1. Create an AdMob account at https://admob.google.com
-2. Create an app and get your App ID
-3. Create a Rewarded Ad unit
-4. Replace test IDs in:
-   - `android/app/src/main/AndroidManifest.xml` (App ID)
-   - `lib/utils/constants.dart` (Ad Unit IDs)
 
 ## Architecture
 
 ```
 lib/
-├── main.dart                    # App entry point
+├── main.dart                    # App entry + providers
 ├── l10n/
-│   └── app_localizations.dart   # 10-language localization system
+│   └── app_localizations.dart   # 11-language localization
 ├── models/
-│   ├── hadith_model.dart        # Hadith data with 10-lang translations
-│   └── surah_model.dart         # Surah data with Arabic + translations
+│   ├── hadith_model.dart        # 20 hadiths with translations
+│   ├── surah_model.dart         # 12 surahs with Arabic + translations
+│   └── asma_al_husna_model.dart # 99 Names of Allah
 ├── providers/
-│   ├── app_provider.dart        # App state (locale, theme)
-│   ├── dhikr_provider.dart      # Dhikr counter state
-│   └── prayer_provider.dart     # Prayer times calculation
-├── screens/
-│   ├── home_screen.dart         # Main dashboard
-│   ├── language_selection_screen.dart
-│   ├── prayer_times_screen.dart
-│   ├── qibla_screen.dart
-│   ├── dhikr_screen.dart
-│   ├── hadith_screen.dart
-│   ├── surah_screen.dart
-│   ├── sadaqah_screen.dart
-│   └── settings_screen.dart
+│   ├��─ app_provider.dart        # Locale, theme
+│   ├── prayer_provider.dart     # Prayer times, city
+│   ├── dhikr_provider.dart      # Dhikr counter + stats
+│   └── favorites_provider.dart  # Bookmarks
+├── screens/                     # 14 screens
+├── services/
+│   ├── adhan_service.dart       # Adhan notifications
+│   ├── notification_service.dart # Daily hadith notifications
+│   ├── share_service.dart       # Share hadiths/surahs/duas
+│   └── hijri_calendar.dart      # Hijri date calculation
 └── utils/
-    ├── constants.dart           # App constants & ad IDs
-    └── theme.dart               # Light/Dark theme definitions
+    ├── constants.dart           # Kaaba coords, AdMob IDs, languages
+    └── theme.dart               # Light/Dark Material 3 themes
 ```
+
+## AdMob Setup
+
+Replace test IDs before publishing:
+- `android/app/src/main/AndroidManifest.xml` → App ID
+- `lib/utils/constants.dart` → Ad Unit IDs
 
 ## License
 
