@@ -25,6 +25,7 @@ import 'favorites_screen.dart';
 import 'quran_reader_screen.dart';
 import 'juz_screen.dart';
 import 'prayer_guide_screen.dart';
+import 'tasbih_set_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -75,7 +76,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  static const _currentVersion = '2.3.0';
+  static const _currentVersion = '2.5.0';
 
   @override
   void initState() {
@@ -114,12 +115,11 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _whatsNewItem('20 languages supported'),
-            _whatsNewItem('42 cities worldwide'),
-            _whatsNewItem('Quran reading tracker'),
-            _whatsNewItem('Dhikr streak counter'),
-            _whatsNewItem('Islamic special days'),
-            _whatsNewItem('Hadith search'),
+            _whatsNewItem('Post-prayer Tasbih Set (33+33+33)'),
+            _whatsNewItem('Custom dhikr: add your own'),
+            _whatsNewItem('Loop mode & round counter'),
+            _whatsNewItem('Dhikr streak display'),
+            _whatsNewItem('Sound on/off toggle'),
             _whatsNewItem('Bug fixes & improvements'),
           ],
         ),
@@ -1039,6 +1039,8 @@ class _QuickActions extends StatelessWidget {
           const QuranReaderScreen()),
       _QuickItem(Icons.school, 'Guide',
           const PrayerGuideScreen()),
+      _QuickItem(Icons.repeat_rounded, l10n.translate('tasbihSet'),
+          const TasbihSetScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
