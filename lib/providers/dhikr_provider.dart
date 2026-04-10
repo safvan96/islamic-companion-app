@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,6 +9,23 @@ class DhikrProvider extends ChangeNotifier {
   int _selectedDhikrIndex = 0;
   bool _hapticEnabled = true;
   bool get hapticEnabled => _hapticEnabled;
+
+  // Loop mode: auto-reset when target reached, count rounds
+  bool _loopMode = false;
+  bool get loopMode => _loopMode;
+  int _roundCount = 0;
+  int get roundCount => _roundCount;
+
+  // Sound enabled
+  bool _soundEnabled = true;
+  bool get soundEnabled => _soundEnabled;
+
+  // Custom dhikr list (user-added)
+  List<Map<String, String>> _customDhikrs = [];
+  List<Map<String, String>> get customDhikrs => List.unmodifiable(_customDhikrs);
+
+  /// All dhikr: built-in + custom
+  List<Map<String, String>> get allDhikrList => [...dhikrList, ..._customDhikrs];
 
   int _todayCount = 0;
   String _todayKey = '';
@@ -99,9 +117,15 @@ class DhikrProvider extends ChangeNotifier {
     },
   ];
 
-  // Per-dhikr lifetime counts (parallel to dhikrList by index)
+  // Per-dhikr lifetime counts (parallel to allDhikrList by index)
   List<int> _perDhikrCounts = List<int>.filled(dhikrList.length, 0);
-  List<int> get perDhikrCounts => List.unmodifiable(_perDhikrCounts);
+  List<int> get perDhikrCounts {
+    // Ensure list covers all dhikrs (built-in + custom)
+    while (_perDhikrCounts.length < allDhikrList.length) {
+      _perDhikrCounts = [..._perDhikrCounts, 0];
+    }
+    return List.unmodifiable(_perDhikrCounts);
+  }
 
   // Fires once when target is reached on this session
   bool _targetCelebrated = false;
@@ -116,14 +140,36 @@ class DhikrProvider extends ChangeNotifier {
     _totalCount = prefs.getInt('totalDhikr') ?? 0;
     _count = prefs.getInt('currentDhikrCount') ?? 0;
     _targetCount = prefs.getInt('targetDhikrCount') ?? 33;
+    _loopMode = prefs.getBool('dhikrLoopMode') ?? false;
+    _roundCount = prefs.getInt('dhikrRoundCount') ?? 0;
+    _soundEnabled = prefs.getBool('dhikrSound') ?? true;
+
+    // Load custom dhikrs
+    final customJson = prefs.getStringList('customDhikrs') ?? [];
+    _customDhikrs = customJson
+        .map((s) {
+          try {
+            final m = Map<String, dynamic>.from(jsonDecode(s));
+            return m.map((k, v) => MapEntry(k, v.toString()));
+          } catch (_) {
+            return null;
+          }
+        })
+        .whereType<Map<String, String>>()
+        .toList();
+
     _selectedDhikrIndex = prefs.getInt('selectedDhikrIndex') ?? 0;
-    if (_selectedDhikrIndex < 0 || _selectedDhikrIndex >= dhikrList.length) {
+    if (_selectedDhikrIndex < 0 || _selectedDhikrIndex >= allDhikrList.length) {
       _selectedDhikrIndex = 0;
     }
     final stored = prefs.getStringList('perDhikrCounts');
-    if (stored != null && stored.length == dhikrList.length) {
+    if (stored != null && stored.length >= dhikrList.length) {
       _perDhikrCounts =
-          stored.map((s) => int.tryParse(s) ?? 0).toList(growable: false);
+          stored.map((s) => int.tryParse(s) ?? 0).toList();
+    }
+    // Extend perDhikrCounts if custom dhikrs were added
+    while (_perDhikrCounts.length < allDhikrList.length) {
+      _perDhikrCounts = [..._perDhikrCounts, 0];
     }
     _hapticEnabled = prefs.getBool('dhikrHaptic') ?? true;
     final today = _dateKey(DateTime.now());
@@ -172,6 +218,10 @@ class DhikrProvider extends ChangeNotifier {
   Future<void> increment() async {
     _count++;
     _totalCount++;
+    // Ensure perDhikrCounts covers current index
+    while (_perDhikrCounts.length <= _selectedDhikrIndex) {
+      _perDhikrCounts = [..._perDhikrCounts, 0];
+    }
     _perDhikrCounts[_selectedDhikrIndex]++;
     final today = _dateKey(DateTime.now());
     if (today != _todayKey) {
@@ -181,9 +231,18 @@ class DhikrProvider extends ChangeNotifier {
     _todayCount++;
     _history[_todayKey] = _todayCount;
     _trimHistory();
+
+    // Loop mode: auto-reset when target reached
+    if (_loopMode && _count >= _targetCount) {
+      _roundCount++;
+      _count = 0;
+      _targetCelebrated = false;
+    }
+
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('totalDhikr', _totalCount);
     await prefs.setInt('currentDhikrCount', _count);
+    await prefs.setInt('dhikrRoundCount', _roundCount);
     await prefs.setString('todayDhikrDay', _todayKey);
     await prefs.setInt('todayDhikrCount', _todayCount);
     await prefs.setStringList('dhikrHistory', _historyToList());
@@ -200,9 +259,11 @@ class DhikrProvider extends ChangeNotifier {
 
   Future<void> reset() async {
     _count = 0;
+    _roundCount = 0;
     _targetCelebrated = false;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('currentDhikrCount', 0);
+    await prefs.setInt('dhikrRoundCount', 0);
     notifyListeners();
   }
 
@@ -215,7 +276,7 @@ class DhikrProvider extends ChangeNotifier {
   }
 
   Future<void> resetLifetimeFor(int index) async {
-    if (index < 0 || index >= dhikrList.length) return;
+    if (index < 0 || index >= allDhikrList.length) return;
     final removed = _perDhikrCounts[index];
     _perDhikrCounts[index] = 0;
     _totalCount = (_totalCount - removed).clamp(0, 1 << 31);
@@ -231,10 +292,84 @@ class DhikrProvider extends ChangeNotifier {
   Future<void> selectDhikr(int index) async {
     _selectedDhikrIndex = index;
     _count = 0;
+    _roundCount = 0;
     _targetCelebrated = false;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('selectedDhikrIndex', index);
     await prefs.setInt('currentDhikrCount', 0);
+    await prefs.setInt('dhikrRoundCount', 0);
     notifyListeners();
+  }
+
+  Future<void> setLoopMode(bool value) async {
+    _loopMode = value;
+    _roundCount = 0;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('dhikrLoopMode', value);
+    await prefs.setInt('dhikrRoundCount', 0);
+    notifyListeners();
+  }
+
+  Future<void> setSoundEnabled(bool value) async {
+    _soundEnabled = value;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('dhikrSound', value);
+    notifyListeners();
+  }
+
+  Future<void> addCustomDhikr({
+    required String arabic,
+    required String transliteration,
+    required String meaning,
+  }) async {
+    _customDhikrs.add({
+      'arabic': arabic,
+      'transliteration': transliteration,
+      'meaning': meaning,
+    });
+    _perDhikrCounts = [..._perDhikrCounts, 0];
+    await _saveCustomDhikrs();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(
+      'perDhikrCounts',
+      _perDhikrCounts.map((e) => e.toString()).toList(),
+    );
+    notifyListeners();
+  }
+
+  Future<void> removeCustomDhikr(int customIndex) async {
+    if (customIndex < 0 || customIndex >= _customDhikrs.length) return;
+    final globalIndex = dhikrList.length + customIndex;
+    _customDhikrs.removeAt(customIndex);
+    if (globalIndex < _perDhikrCounts.length) {
+      _perDhikrCounts = List<int>.from(_perDhikrCounts)..removeAt(globalIndex);
+    }
+    // Adjust selected index if needed
+    if (_selectedDhikrIndex >= allDhikrList.length) {
+      _selectedDhikrIndex = 0;
+      _count = 0;
+      _roundCount = 0;
+    } else if (_selectedDhikrIndex == globalIndex) {
+      _selectedDhikrIndex = 0;
+      _count = 0;
+      _roundCount = 0;
+    }
+    await _saveCustomDhikrs();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('selectedDhikrIndex', _selectedDhikrIndex);
+    await prefs.setInt('currentDhikrCount', _count);
+    await prefs.setStringList(
+      'perDhikrCounts',
+      _perDhikrCounts.map((e) => e.toString()).toList(),
+    );
+    notifyListeners();
+  }
+
+  Future<void> _saveCustomDhikrs() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(
+      'customDhikrs',
+      _customDhikrs.map((m) => jsonEncode(m)).toList(),
+    );
   }
 }

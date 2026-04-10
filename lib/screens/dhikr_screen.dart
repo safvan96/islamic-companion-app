@@ -78,7 +78,7 @@ class _DhikrScreenState extends State<DhikrScreen>
 
   Future<void> _onTap(DhikrProvider provider) async {
     if (provider.hapticEnabled) HapticFeedback.lightImpact();
-    SystemSound.play(SystemSoundType.click);
+    if (provider.soundEnabled) SystemSound.play(SystemSoundType.click);
     _pulseController.forward().then((_) => _pulseController.reverse());
     await provider.increment();
     if (!mounted) return;
@@ -141,7 +141,7 @@ class _DhikrScreenState extends State<DhikrScreen>
     final isDark = Provider.of<AppProvider>(context).isDarkMode;
     final p = _Palette.of(isDark);
     final currentDhikr =
-        DhikrProvider.dhikrList[dhikrProvider.selectedDhikrIndex];
+        dhikrProvider.allDhikrList[dhikrProvider.selectedDhikrIndex];
     final progress =
         (dhikrProvider.count / dhikrProvider.targetCount).clamp(0.0, 1.0);
     final reached = dhikrProvider.targetReached;
@@ -277,7 +277,35 @@ class _DhikrScreenState extends State<DhikrScreen>
                   },
                 ),
                 const Spacer(flex: 3),
-                // Bottom strip — today + reset
+                // Round indicator (loop mode)
+                if (dhikrProvider.loopMode && dhikrProvider.roundCount > 0)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: p.gold.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.loop_rounded, size: 14, color: p.gold),
+                          const SizedBox(width: 6),
+                          Text(
+                            '${dhikrProvider.roundCount} ${l10n.translate('rounds')}',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: p.gold,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                // Bottom strip — today + streak + total + reset
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -285,6 +313,15 @@ class _DhikrScreenState extends State<DhikrScreen>
                       label: l10n.translate('today').toUpperCase(),
                       value: dhikrProvider.todayCount.toString(),
                       palette: p,
+                    ),
+                    _MiniStat(
+                      label: l10n.translate('streak').toUpperCase(),
+                      value: '${dhikrProvider.streak}',
+                      palette: p,
+                      icon: dhikrProvider.streak > 0
+                          ? Icons.local_fire_department_rounded
+                          : null,
+                      iconColor: p.gold,
                     ),
                     _MiniStat(
                       label: l10n.translate('total').toUpperCase(),
@@ -334,10 +371,14 @@ class _MiniStat extends StatelessWidget {
   final String label;
   final String value;
   final _Palette palette;
+  final IconData? icon;
+  final Color? iconColor;
   const _MiniStat({
     required this.label,
     required this.value,
     required this.palette,
+    this.icon,
+    this.iconColor,
   });
 
   @override
@@ -355,14 +396,23 @@ class _MiniStat extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: palette.fg,
-            height: 1.0,
-          ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon != null) ...[
+              Icon(icon, size: 16, color: iconColor ?? palette.fg),
+              const SizedBox(width: 3),
+            ],
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: palette.fg,
+                height: 1.0,
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -402,10 +452,11 @@ class _DhikrSheet extends StatelessWidget {
           const SizedBox(height: 20),
           _SectionTitle(l10n.translate('chooseDhikr'), palette),
           const SizedBox(height: 8),
-          ...List.generate(DhikrProvider.dhikrList.length, (i) {
-            final d = DhikrProvider.dhikrList[i];
+          ...List.generate(provider.allDhikrList.length, (i) {
+            final d = provider.allDhikrList[i];
             final selected = i == provider.selectedDhikrIndex;
             final lifetime = provider.perDhikrCounts[i];
+            final isCustom = i >= DhikrProvider.dhikrList.length;
             return _DhikrTile(
               arabic: d['arabic']!,
               name: d['transliteration']!,
@@ -413,15 +464,36 @@ class _DhikrSheet extends StatelessWidget {
               lifetime: lifetime,
               selected: selected,
               palette: palette,
+              isCustom: isCustom,
               onTap: () {
                 provider.selectDhikr(i);
                 Navigator.pop(context);
               },
-              onLongPress: lifetime == 0
-                  ? null
-                  : () => _confirmReset(context, i, d['transliteration']!),
+              onLongPress: isCustom
+                  ? () => _confirmDeleteCustom(
+                      context, i - DhikrProvider.dhikrList.length, d['transliteration']!)
+                  : (lifetime == 0
+                      ? null
+                      : () => _confirmReset(context, i, d['transliteration']!)),
             );
           }),
+          const SizedBox(height: 8),
+          // Add custom dhikr button
+          OutlinedButton.icon(
+            onPressed: () => _showAddCustomDhikr(context),
+            icon: Icon(Icons.add_rounded, size: 18, color: palette.accent),
+            label: Text(
+              l10n.translate('addCustomDhikr'),
+              style: TextStyle(color: palette.accent),
+            ),
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(color: palette.divider),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 10),
+            ),
+          ),
           const SizedBox(height: 24),
           _SectionTitle(l10n.translate('target'), palette),
           const SizedBox(height: 10),
@@ -452,6 +524,21 @@ class _DhikrSheet extends StatelessWidget {
           _SectionTitle(l10n.translate('settings'), palette),
           const SizedBox(height: 4),
           SwitchListTile(
+            value: provider.loopMode,
+            onChanged: provider.setLoopMode,
+            activeColor: palette.accent,
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              l10n.translate('loopMode'),
+              style: TextStyle(color: palette.fg, fontSize: 14),
+            ),
+            subtitle: Text(
+              l10n.translate('loopModeDesc'),
+              style: TextStyle(color: palette.muted, fontSize: 11),
+            ),
+            secondary: Icon(Icons.loop_rounded, color: palette.muted, size: 20),
+          ),
+          SwitchListTile(
             value: provider.hapticEnabled,
             onChanged: provider.setHapticEnabled,
             activeColor: palette.accent,
@@ -462,6 +549,17 @@ class _DhikrSheet extends StatelessWidget {
             ),
             secondary: Icon(Icons.vibration, color: palette.muted, size: 20),
           ),
+          SwitchListTile(
+            value: provider.soundEnabled,
+            onChanged: provider.setSoundEnabled,
+            activeColor: palette.accent,
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              l10n.translate('sound'),
+              style: TextStyle(color: palette.fg, fontSize: 14),
+            ),
+            secondary: Icon(Icons.volume_up_rounded, color: palette.muted, size: 20),
+          ),
           const SizedBox(height: 16),
           // Share stats button
           SizedBox(
@@ -470,7 +568,7 @@ class _DhikrSheet extends StatelessWidget {
               onPressed: () {
                 final total = provider.totalCount;
                 final today = provider.todayCount;
-                final current = DhikrProvider.dhikrList[provider.selectedDhikrIndex];
+                final current = provider.allDhikrList[provider.selectedDhikrIndex];
                 Share.share(
                   '${current['arabic']}\n\n'
                   'Today: $today | Total: $total\n\n'
@@ -490,6 +588,128 @@ class _DhikrSheet extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 12),
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _confirmDeleteCustom(
+      BuildContext context, int customIndex, String name) async {
+    final l10n = AppLocalizations.of(context)!;
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: palette.surface,
+        title: Text(name, style: TextStyle(color: palette.fg)),
+        content: Text(
+          l10n.translate('deleteCustomDhikrConfirm'),
+          style: TextStyle(color: palette.muted),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(l10n.translate('cancel'),
+                style: TextStyle(color: palette.muted)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text(l10n.translate('delete'),
+                style: const TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+    if (ok == true) await provider.removeCustomDhikr(customIndex);
+  }
+
+  void _showAddCustomDhikr(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final arabicCtrl = TextEditingController();
+    final translitCtrl = TextEditingController();
+    final meaningCtrl = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: palette.surface,
+        title: Text(
+          l10n.translate('addCustomDhikr'),
+          style: TextStyle(color: palette.fg, fontSize: 16),
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: arabicCtrl,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(color: palette.fg, fontSize: 20),
+                decoration: InputDecoration(
+                  labelText: l10n.translate('arabicText'),
+                  labelStyle: TextStyle(color: palette.muted),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: palette.divider),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: palette.accent),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: translitCtrl,
+                style: TextStyle(color: palette.fg),
+                decoration: InputDecoration(
+                  labelText: l10n.translate('transliteration'),
+                  labelStyle: TextStyle(color: palette.muted),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: palette.divider),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: palette.accent),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: meaningCtrl,
+                style: TextStyle(color: palette.fg),
+                decoration: InputDecoration(
+                  labelText: l10n.translate('meaning'),
+                  labelStyle: TextStyle(color: palette.muted),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: palette.divider),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: palette.accent),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(l10n.translate('cancel'),
+                style: TextStyle(color: palette.muted)),
+          ),
+          TextButton(
+            onPressed: () {
+              final arabic = arabicCtrl.text.trim();
+              final translit = translitCtrl.text.trim();
+              final meaning = meaningCtrl.text.trim();
+              if (arabic.isEmpty && translit.isEmpty) return;
+              provider.addCustomDhikr(
+                arabic: arabic.isEmpty ? translit : arabic,
+                transliteration: translit.isEmpty ? arabic : translit,
+                meaning: meaning,
+              );
+              Navigator.pop(ctx);
+            },
+            child: Text(l10n.translate('add'),
+                style: TextStyle(color: palette.accent)),
           ),
         ],
       ),
@@ -552,6 +772,7 @@ class _DhikrTile extends StatelessWidget {
   final _Palette palette;
   final VoidCallback onTap;
   final VoidCallback? onLongPress;
+  final bool isCustom;
 
   const _DhikrTile({
     required this.arabic,
@@ -562,6 +783,7 @@ class _DhikrTile extends StatelessWidget {
     required this.palette,
     required this.onTap,
     required this.onLongPress,
+    this.isCustom = false,
   });
 
   @override
@@ -618,23 +840,47 @@ class _DhikrTile extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (lifetime > 0)
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: palette.bg,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      _DhikrScreenState._formatNumber(lifetime),
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: palette.muted,
-                        fontWeight: FontWeight.w600,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    if (isCustom)
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: palette.accent.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          'CUSTOM',
+                          style: TextStyle(
+                            fontSize: 8,
+                            color: palette.accent,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    if (lifetime > 0)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: palette.bg,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          _DhikrScreenState._formatNumber(lifetime),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: palette.muted,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
               ],
             ),
           ),

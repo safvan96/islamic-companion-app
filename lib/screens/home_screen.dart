@@ -699,7 +699,7 @@ class _CentralWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentDhikr =
-        DhikrProvider.dhikrList[dhikr.selectedDhikrIndex];
+        dhikr.allDhikrList[dhikr.selectedDhikrIndex];
     final progress =
         (dhikr.count / dhikr.targetCount).clamp(0.0, 1.0);
     final reached = dhikr.targetReached;
