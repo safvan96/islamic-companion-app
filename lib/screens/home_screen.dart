@@ -56,6 +56,8 @@ import 'tayammum_screen.dart';
 import 'hijri_months_screen.dart';
 import 'ghusl_screen.dart';
 import 'fidyah_screen.dart';
+import 'salawat_screen.dart';
+import 'timeline_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1132,6 +1134,10 @@ class _QuickActions extends StatelessWidget {
           const GhuslScreen()),
       _QuickItem(Icons.paid_outlined, l10n.translate('fidyahCalc'),
           const FidyahScreen()),
+      _QuickItem(Icons.mosque_outlined, l10n.translate('salawatCollection'),
+          const SalawatScreen()),
+      _QuickItem(Icons.timeline, l10n.translate('islamicTimeline'),
+          const TimelineScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
