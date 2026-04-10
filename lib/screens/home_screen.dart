@@ -78,6 +78,8 @@ import 'quran_stories_screen.dart';
 import 'dua_timer_screen.dart';
 import 'sunnah_duas_screen.dart';
 import 'mukabele_screen.dart';
+import 'rakat_guide_screen.dart';
+import 'date_converter_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1214,6 +1216,10 @@ class _QuickActions extends StatelessWidget {
           const SunnahDuasScreen()),
       _QuickItem(Icons.grid_view_rounded, l10n.translate('mukabele'),
           const MukabeleScreen()),
+      _QuickItem(Icons.format_list_numbered, l10n.translate('rakatGuide'),
+          const RakatGuideScreen()),
+      _QuickItem(Icons.swap_horiz, l10n.translate('dateConverter'),
+          const DateConverterScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
