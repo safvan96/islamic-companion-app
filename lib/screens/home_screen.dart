@@ -21,6 +21,7 @@ import 'sadaqah_screen.dart';
 import 'asma_al_husna_screen.dart';
 import 'dua_screen.dart';
 import 'favorites_screen.dart';
+import 'quran_reader_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1028,6 +1029,8 @@ class _QuickActions extends StatelessWidget {
           const SadaqahScreen()),
       _QuickItem(Icons.bookmark_outlined, l10n.translate('favorites'),
           const FavoritesScreen()),
+      _QuickItem(Icons.chrome_reader_mode, 'Quran',
+          const QuranReaderScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,

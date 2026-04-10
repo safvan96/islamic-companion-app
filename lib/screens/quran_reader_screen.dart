@@ -1,0 +1,428 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:audioplayers/audioplayers.dart';
+import '../providers/app_provider.dart';
+import '../l10n/app_localizations.dart';
+
+class QuranReaderScreen extends StatefulWidget {
+  const QuranReaderScreen({super.key});
+
+  @override
+  State<QuranReaderScreen> createState() => _QuranReaderScreenState();
+}
+
+class _QuranReaderScreenState extends State<QuranReaderScreen> {
+  List<Map<String, dynamic>> _surahs = [];
+  bool _loading = true;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSurahList();
+  }
+
+  Future<void> _loadSurahList() async {
+    try {
+      final response = await http.get(
+        Uri.parse('https://api.alquran.cloud/v1/surah'),
+      );
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final list = (data['data'] as List).map((s) => {
+          'number': s['number'] as int,
+          'name': s['name'] as String,
+          'englishName': s['englishName'] as String,
+          'englishNameTranslation': s['englishNameTranslation'] as String,
+          'numberOfAyahs': s['numberOfAyahs'] as int,
+          'revelationType': s['revelationType'] as String,
+        }).toList();
+        if (mounted) setState(() { _surahs = list; _loading = false; });
+      } else {
+        if (mounted) setState(() { _error = 'Failed to load'; _loading = false; });
+      }
+    } catch (e) {
+      if (mounted) setState(() { _error = 'No internet connection'; _loading = false; });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Provider.of<AppProvider>(context).isDarkMode;
+    final l10n = AppLocalizations.of(context)!;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Quran / القرآن الكريم'),
+        backgroundColor: const Color(0xFF1B5E20),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: isDark
+                ? [const Color(0xFF0E1A19), const Color(0xFF121212)]
+                : [const Color(0xFFF1F8E9), const Color(0xFFE8F5E9)],
+          ),
+        ),
+        child: _loading
+            ? const Center(child: CircularProgressIndicator(color: Color(0xFF1B5E20)))
+            : _error != null
+                ? Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.cloud_off, size: 48,
+                            color: isDark ? Colors.white38 : Colors.black26),
+                        const SizedBox(height: 12),
+                        Text(_error!, style: TextStyle(
+                            color: isDark ? Colors.white54 : Colors.black45)),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() { _loading = true; _error = null; });
+                            _loadSurahList();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF1B5E20),
+                          ),
+                          child: const Text('Retry', style: TextStyle(color: Colors.white)),
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    padding: const EdgeInsets.all(12),
+                    itemCount: _surahs.length,
+                    itemBuilder: (context, index) {
+                      final surah = _surahs[index];
+                      return Card(
+                        margin: const EdgeInsets.only(bottom: 6),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14)),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 4),
+                          leading: Container(
+                            width: 42,
+                            height: 42,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF1B5E20).withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                surah['number'].toString(),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF1B5E20),
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ),
+                          title: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  surah['englishName'],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600, fontSize: 15),
+                                ),
+                              ),
+                              Text(
+                                surah['name'],
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: isDark
+                                      ? const Color(0xFFD4AF37)
+                                      : const Color(0xFF1B5E20),
+                                ),
+                              ),
+                            ],
+                          ),
+                          subtitle: Text(
+                            '${surah['englishNameTranslation']} • ${surah['numberOfAyahs']} ayahs • ${surah['revelationType']}',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: isDark ? Colors.white38 : Colors.black38,
+                            ),
+                          ),
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => _SurahDetailScreen(
+                                surahNumber: surah['number'],
+                                surahName: surah['englishName'],
+                                arabicName: surah['name'],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+      ),
+    );
+  }
+}
+
+// ─── Surah Detail Screen ────────────────────────────────────────────────────
+
+class _SurahDetailScreen extends StatefulWidget {
+  final int surahNumber;
+  final String surahName;
+  final String arabicName;
+
+  const _SurahDetailScreen({
+    required this.surahNumber,
+    required this.surahName,
+    required this.arabicName,
+  });
+
+  @override
+  State<_SurahDetailScreen> createState() => _SurahDetailScreenState();
+}
+
+class _SurahDetailScreenState extends State<_SurahDetailScreen> {
+  List<Map<String, String>> _ayahs = [];
+  bool _loading = true;
+  String? _error;
+  final AudioPlayer _player = AudioPlayer();
+  int? _playingAyah;
+
+  static const _langMap = {
+    'en': 'en.asad',
+    'tr': 'tr.ates',
+    'ru': 'ru.kuliev',
+    'fr': 'fr.hamidullah',
+    'de': 'de.aburida',
+    'es': 'es.cortes',
+    'id': 'id.indonesian',
+    'ur': 'ur.jalandhry',
+    'fa': 'fa.makarem',
+    'nl': 'nl.keyzer',
+    'pt': 'pt.elhayek',
+    'ms': 'ms.basmeih',
+    'ko': 'ko.korean',
+    'ja': 'ja.japanese',
+    'so': 'so.abduh',
+    'sw': 'sw.barwani',
+    'bn': 'bn.bengali',
+    'zh': 'zh.majian',
+    'hi': 'hi.hindi',
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    _player.onPlayerStateChanged.listen((s) {
+      if (mounted && (s == PlayerState.completed || s == PlayerState.stopped)) {
+        setState(() => _playingAyah = null);
+      }
+    });
+    _loadAyahs();
+  }
+
+  @override
+  void dispose() {
+    _player.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadAyahs() async {
+    try {
+      final langCode =
+          Provider.of<AppProvider>(context, listen: false).locale.languageCode;
+      final edition = _langMap[langCode] ?? 'en.asad';
+
+      final responses = await Future.wait([
+        http.get(Uri.parse(
+            'https://api.alquran.cloud/v1/surah/${widget.surahNumber}/ar.alafasy')),
+        http.get(Uri.parse(
+            'https://api.alquran.cloud/v1/surah/${widget.surahNumber}/$edition')),
+      ]);
+
+      if (responses[0].statusCode == 200 && responses[1].statusCode == 200) {
+        final arabicData = json.decode(responses[0].body)['data']['ayahs'] as List;
+        final transData = json.decode(responses[1].body)['data']['ayahs'] as List;
+
+        final ayahs = <Map<String, String>>[];
+        for (var i = 0; i < arabicData.length; i++) {
+          ayahs.add({
+            'number': arabicData[i]['numberInSurah'].toString(),
+            'arabic': arabicData[i]['text'] as String,
+            'translation': i < transData.length
+                ? transData[i]['text'] as String
+                : '',
+            'audio': arabicData[i]['audio'] as String? ?? '',
+          });
+        }
+        if (mounted) setState(() { _ayahs = ayahs; _loading = false; });
+      } else {
+        if (mounted) setState(() { _error = 'Failed to load'; _loading = false; });
+      }
+    } catch (e) {
+      if (mounted) setState(() { _error = 'No internet connection'; _loading = false; });
+    }
+  }
+
+  Future<void> _playAyah(int index) async {
+    final audio = _ayahs[index]['audio'] ?? '';
+    if (audio.isEmpty) return;
+
+    if (_playingAyah == index) {
+      await _player.stop();
+      if (mounted) setState(() => _playingAyah = null);
+      return;
+    }
+
+    try {
+      await _player.stop();
+      if (mounted) setState(() => _playingAyah = index);
+      await _player.play(UrlSource(audio));
+    } catch (e) {
+      if (mounted) setState(() => _playingAyah = null);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Provider.of<AppProvider>(context).isDarkMode;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('${widget.surahName} ${widget.arabicName}'),
+        backgroundColor: const Color(0xFF1B5E20),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: isDark
+                ? [const Color(0xFF0E1A19), const Color(0xFF121212)]
+                : [const Color(0xFFFFFDE7), const Color(0xFFF1F8E9)],
+          ),
+        ),
+        child: _loading
+            ? const Center(child: CircularProgressIndicator(color: Color(0xFF1B5E20)))
+            : _error != null
+                ? Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.cloud_off, size: 48,
+                            color: isDark ? Colors.white38 : Colors.black26),
+                        const SizedBox(height: 12),
+                        Text(_error!),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() { _loading = true; _error = null; });
+                            _loadAyahs();
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF1B5E20)),
+                          child: const Text('Retry', style: TextStyle(color: Colors.white)),
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: _ayahs.length,
+                    itemBuilder: (context, index) {
+                      final ayah = _ayahs[index];
+                      final isPlaying = _playingAyah == index;
+
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 16),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? const Color(0xFF1A2420)
+                              : Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: isDark
+                                ? const Color(0xFF2A3A34)
+                                : const Color(0xFFE0E0E0),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            // Ayah number + play button
+                            Row(
+                              children: [
+                                Container(
+                                  width: 32,
+                                  height: 32,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF1B5E20)
+                                        .withOpacity(0.1),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      ayah['number']!,
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFF1B5E20),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const Spacer(),
+                                if (ayah['audio']!.isNotEmpty)
+                                  InkWell(
+                                    onTap: () => _playAyah(index),
+                                    child: Icon(
+                                      isPlaying
+                                          ? Icons.stop_circle
+                                          : Icons.play_circle,
+                                      color: const Color(0xFF1B5E20),
+                                      size: 28,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            // Arabic text
+                            Text(
+                              ayah['arabic']!,
+                              textDirection: TextDirection.rtl,
+                              style: TextStyle(
+                                fontSize: 22,
+                                height: 2.0,
+                                color: isDark
+                                    ? const Color(0xFFD4AF37)
+                                    : const Color(0xFF1B5E20),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            // Translation
+                            Text(
+                              ayah['translation']!,
+                              style: TextStyle(
+                                fontSize: 14,
+                                height: 1.6,
+                                color: isDark
+                                    ? Colors.white70
+                                    : Colors.black87,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+      ),
+    );
+  }
+}
