@@ -50,26 +50,40 @@ class PrayerProvider extends ChangeNotifier {
     'Gaziantep': [37.0662, 37.3833],
     'Kayseri': [38.7312, 35.4787],
     'Trabzon': [41.0027, 39.7168],
+    'Diyarbakir': [37.9144, 40.2306],
+    'Samsun': [41.2867, 36.3300],
+    'Mersin': [36.8121, 34.6415],
+    'Eskisehir': [39.7767, 30.5206],
     // Orta Doğu
     'Mecca': [21.4225, 39.8262],
     'Medina': [24.4672, 39.6112],
     'Cairo': [30.0444, 31.2357],
     'Dubai': [25.2048, 55.2708],
     'Riyadh': [24.7136, 46.6753],
+    'Baghdad': [33.3152, 44.3661],
+    'Doha': [25.2854, 51.5310],
     // Avrupa
     'London': [51.5074, -0.1278],
     'Berlin': [52.5200, 13.4050],
     'Paris': [48.8566, 2.3522],
     'Amsterdam': [52.3676, 4.9041],
     'Moscow': [55.7558, 37.6173],
+    'Vienna': [48.2082, 16.3738],
+    'Stockholm': [59.3293, 18.0686],
     // Asya
     'Jakarta': [-6.2088, 106.8456],
     'New Delhi': [28.6139, 77.2090],
     'Beijing': [39.9042, 116.4074],
     'Kuala Lumpur': [3.1390, 101.6869],
-    // Amerika
+    'Karachi': [24.8607, 67.0011],
+    'Dhaka': [23.8103, 90.4125],
+    'Islamabad': [33.6844, 73.0479],
+    'Tokyo': [35.6762, 139.6503],
+    // Amerika & Afrika
     'New York': [40.7128, -74.0060],
+    'Toronto': [43.6532, -79.3832],
     'Madrid': [40.4168, -3.7038],
+    'Lagos': [6.5244, 3.3792],
   };
 
   double get latitude => _latitude;
