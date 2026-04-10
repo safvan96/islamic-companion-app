@@ -50,6 +50,8 @@ import 'wudu_screen.dart';
 import 'prophets_screen.dart';
 import 'ruqyah_screen.dart';
 import 'adab_screen.dart';
+import 'nikah_screen.dart';
+import 'glossary_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1114,6 +1116,10 @@ class _QuickActions extends StatelessWidget {
           const RuqyahScreen()),
       _QuickItem(Icons.auto_fix_high, l10n.translate('islamicAdab'),
           const AdabScreen()),
+      _QuickItem(Icons.favorite_border, l10n.translate('nikahGuide'),
+          const NikahScreen()),
+      _QuickItem(Icons.library_books_outlined, l10n.translate('islamicGlossary'),
+          const GlossaryScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
