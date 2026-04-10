@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
+import '../models/hadith_model.dart';
 import '../providers/app_provider.dart';
 import '../providers/prayer_provider.dart';
 import '../providers/dhikr_provider.dart';
@@ -261,6 +262,9 @@ class _HomeContentState extends State<_HomeContent>
               // ── Stats row ──
               _StatsRow(palette: p, dhikr: dhikr),
               const SizedBox(height: 24),
+              // ── Daily hadith card ──
+              _DailyHadithCard(palette: p, langCode: langCode),
+              const SizedBox(height: 20),
               // ── Quick actions ──
               _SectionLabel(l10n.translate('quickAccess').toUpperCase(), p),
               const SizedBox(height: 10),
@@ -954,4 +958,79 @@ class _QuickItem {
   final String label;
   final Widget screen;
   const _QuickItem(this.icon, this.label, this.screen);
+}
+
+// ─── Daily hadith card ─────────────────────────────────────────────────────
+
+class _DailyHadithCard extends StatelessWidget {
+  final _Palette palette;
+  final String langCode;
+  const _DailyHadithCard({required this.palette, required this.langCode});
+
+  @override
+  Widget build(BuildContext context) {
+    final dayOfYear = DateTime.now()
+        .difference(DateTime(DateTime.now().year, 1, 1))
+        .inDays;
+    final hadith =
+        HadithModel.hadiths[dayOfYear % HadithModel.hadiths.length];
+    final translation =
+        hadith.translations[langCode] ?? hadith.translations['en']!;
+    final l10n = AppLocalizations.of(context)!;
+
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const HadithScreen()),
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: palette.surface,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: palette.divider),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.auto_stories, color: palette.gold, size: 16),
+                const SizedBox(width: 6),
+                Text(
+                  l10n.translate('todayHadith').toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 10,
+                    letterSpacing: 1.2,
+                    color: palette.gold,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Text(
+              translation,
+              style: TextStyle(
+                fontSize: 13,
+                color: palette.fg,
+                height: 1.5,
+                fontStyle: FontStyle.italic,
+              ),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '— ${hadith.source}',
+              style: TextStyle(
+                fontSize: 11,
+                color: palette.muted,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

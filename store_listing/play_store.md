@@ -93,7 +93,7 @@ Everyone
 islamic app, prayer times, namaz vakitleri, qibla, kible, dhikr, zikir, quran, kuran, hadith, hadis, muslim, islam, tasbih, tesbih, ezan, adhan, dua, sadaqah, sadaka, 99 names of allah, esmaul husna
 
 ## Privacy Policy URL
-(You need to create one - use Google Sites or a simple webpage)
+https://safvan96.github.io/islamic-companion-app/privacy.html
 
 ## Target Audience
 Everyone (all ages)
