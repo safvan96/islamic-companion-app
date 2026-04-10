@@ -35,6 +35,8 @@ import 'hajj_guide_screen.dart';
 import 'names_screen.dart';
 import 'hifz_screen.dart';
 import 'charity_screen.dart';
+import 'daily_duas_screen.dart';
+import 'islamic_calendar_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1068,6 +1070,10 @@ class _QuickActions extends StatelessWidget {
           const HifzScreen()),
       _QuickItem(Icons.volunteer_activism, l10n.translate('charityTracker'),
           const CharityScreen()),
+      _QuickItem(Icons.menu_book_outlined, l10n.translate('duaForOccasions'),
+          const DailyDuasScreen()),
+      _QuickItem(Icons.calendar_month, l10n.translate('islamicCalendar'),
+          const IslamicCalendarScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
