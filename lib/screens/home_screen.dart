@@ -72,7 +72,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  static const _currentVersion = '2.2.0';
+  static const _currentVersion = '2.3.0';
 
   @override
   void initState() {
@@ -361,6 +361,9 @@ class _HomeContentState extends State<_HomeContent>
               const SizedBox(height: 20),
               // ── Daily hadith card ──
               _DailyHadithCard(palette: p, langCode: langCode),
+              const SizedBox(height: 12),
+              // ── Daily ayah card ──
+              _DailyAyahCard(palette: p, langCode: langCode),
               const SizedBox(height: 12),
               // ── Daily dua card ──
               _DailyDuaCard(palette: p, langCode: langCode),
@@ -1165,6 +1168,92 @@ class _DailyHadithCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// ─── Daily ayah card ───────────────────────────────────────────────────────
+
+class _DailyAyahCard extends StatelessWidget {
+  final _Palette palette;
+  final String langCode;
+  const _DailyAyahCard({required this.palette, required this.langCode});
+
+  static const _ayahs = [
+    {'ar': 'إِنَّ مَعَ الْعُسْرِ يُسْرًا', 'en': 'Indeed, with hardship comes ease.', 'tr': 'Muhakkak ki zorlukla beraber kolaylık vardır.', 'ref': '94:6'},
+    {'ar': 'وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ', 'en': 'Whoever relies upon Allah - then He is sufficient for him.', 'tr': 'Kim Allah\'a tevekkül ederse O, ona yeter.', 'ref': '65:3'},
+    {'ar': 'فَاذْكُرُونِي أَذْكُرْكُمْ', 'en': 'So remember Me; I will remember you.', 'tr': 'Beni anın ki ben de sizi anayım.', 'ref': '2:152'},
+    {'ar': 'وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ', 'en': 'And your Lord is going to give you, and you will be satisfied.', 'tr': 'Rabbin sana verecek ve sen razı olacaksın.', 'ref': '93:5'},
+    {'ar': 'إِنَّ اللَّهَ مَعَ الصَّابِرِينَ', 'en': 'Indeed, Allah is with the patient.', 'tr': 'Şüphesiz Allah sabredenlerle beraberdir.', 'ref': '2:153'},
+    {'ar': 'وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ', 'en': 'And He is with you wherever you are.', 'tr': 'Nerede olursanız olun O sizinle beraberdir.', 'ref': '57:4'},
+    {'ar': 'رَبِّ اشْرَحْ لِي صَدْرِي', 'en': 'My Lord, expand for me my breast.', 'tr': 'Rabbim! Gönlümü aç.', 'ref': '20:25'},
+    {'ar': 'وَقُل رَّبِّ زِدْنِي عِلْمًا', 'en': 'And say: My Lord, increase me in knowledge.', 'tr': 'Rabbim! İlmimi artır.', 'ref': '20:114'},
+    {'ar': 'لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا', 'en': 'Do not grieve; indeed Allah is with us.', 'tr': 'Üzülme, Allah bizimle beraberdir.', 'ref': '9:40'},
+    {'ar': 'وَنَحْنُ أَقْرَبُ إِلَيْهِ مِنْ حَبْلِ الْوَرِيدِ', 'en': 'And We are closer to him than his jugular vein.', 'tr': 'Biz ona şah damarından daha yakınız.', 'ref': '50:16'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final dayOfYear = DateTime.now()
+        .difference(DateTime(DateTime.now().year, 1, 1))
+        .inDays;
+    final ayah = _ayahs[dayOfYear % _ayahs.length];
+    final text = ayah[langCode] ?? ayah['en']!;
+
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: palette.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: palette.divider),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.auto_awesome, color: palette.accent, size: 14),
+              const SizedBox(width: 6),
+              Text(
+                'AYAH OF THE DAY',
+                style: TextStyle(
+                  fontSize: 9,
+                  letterSpacing: 1.2,
+                  color: palette.accent,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                ayah['ref']!,
+                style: TextStyle(fontSize: 10, color: palette.muted),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            ayah['ar']!,
+            textAlign: TextAlign.center,
+            textDirection: TextDirection.rtl,
+            style: TextStyle(
+              fontSize: 18,
+              color: palette.gold,
+              height: 1.6,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            text,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 12,
+              color: palette.muted,
+              fontStyle: FontStyle.italic,
+              height: 1.4,
+            ),
+          ),
+        ],
       ),
     );
   }

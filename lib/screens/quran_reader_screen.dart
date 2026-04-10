@@ -294,6 +294,7 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
   final AudioPlayer _player = AudioPlayer();
   int? _playingAyah;
   bool _continuousPlay = false;
+  double _arabicFontSize = 22.0;
   Set<String> _bookmarkedAyahs = {};
   final ScrollController _scrollController = ScrollController();
 
@@ -438,6 +439,21 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
         title: Text('${widget.surahName} ${widget.arabicName}'),
         backgroundColor: const Color(0xFF1B5E20),
         actions: [
+          // Font size controls
+          IconButton(
+            icon: const Icon(Icons.text_decrease, size: 20),
+            tooltip: 'Smaller text',
+            onPressed: () {
+              if (_arabicFontSize > 16) setState(() => _arabicFontSize -= 2);
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.text_increase, size: 20),
+            tooltip: 'Larger text',
+            onPressed: () {
+              if (_arabicFontSize < 40) setState(() => _arabicFontSize += 2);
+            },
+          ),
           // Continuous play toggle
           IconButton(
             icon: Icon(
@@ -596,7 +612,7 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
                               ayah['arabic']!,
                               textDirection: TextDirection.rtl,
                               style: TextStyle(
-                                fontSize: 22,
+                                fontSize: _arabicFontSize,
                                 height: 2.0,
                                 color: isDark
                                     ? const Color(0xFFD4AF37)
