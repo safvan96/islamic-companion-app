@@ -1,0 +1,23 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../l10n/app_localizations.dart';
+import '../providers/app_provider.dart';
+class _P{final Color bg,surface,accent,gold,fg,muted,divider;const _P({required this.bg,required this.surface,required this.accent,required this.gold,required this.fg,required this.muted,required this.divider});
+  static _P of(bool d)=>d?const _P(bg:Color(0xFF0E1A19),surface:Color(0xFF182624),accent:Color(0xFF4FBFA8),gold:Color(0xFFE3C77B),fg:Color(0xFFF5F1E8),muted:Color(0xFF8B968F),divider:Color(0xFF243532)):const _P(bg:Color(0xFFF8F5EE),surface:Color(0xFFFFFFFF),accent:Color(0xFF2C7A6B),gold:Color(0xFFB8902B),fg:Color(0xFF1F2937),muted:Color(0xFF6B6359),divider:Color(0xFFE8DDD0));}
+const _fitrSteps=[('ef_1',Icons.restaurant),('ef_2',Icons.clean_hands),('ef_3',Icons.checkroom),('ef_4',Icons.mosque),('ef_5',Icons.celebration),('ef_6',Icons.family_restroom)];
+const _adhaSteps=[('ea_1',Icons.mosque),('ea_2',Icons.pets),('ea_3',Icons.share),('ea_4',Icons.celebration),('ea_5',Icons.family_restroom)];
+class EidGuideScreen extends StatefulWidget{const EidGuideScreen({super.key});@override State<EidGuideScreen>createState()=>_S();}
+class _S extends State<EidGuideScreen>{bool _fitr=true;
+  @override Widget build(BuildContext c){final isDark=Provider.of<AppProvider>(c).isDarkMode;final p=_P.of(isDark);final l=AppLocalizations.of(c)!;
+    final steps=_fitr?_fitrSteps:_adhaSteps;
+    return Scaffold(backgroundColor:p.bg,appBar:AppBar(backgroundColor:Colors.transparent,elevation:0,scrolledUnderElevation:0,foregroundColor:p.fg,title:Text(l.translate('eidGuide'),style:TextStyle(fontSize:15,fontWeight:FontWeight.w500,color:p.muted)),centerTitle:true),
+      body:ListView(padding:const EdgeInsets.fromLTRB(20,0,20,32),children:[
+        Container(decoration:BoxDecoration(color:p.surface,borderRadius:BorderRadius.circular(12),border:Border.all(color:p.divider)),child:Row(children:[
+          Expanded(child:GestureDetector(onTap:()=>setState(()=>_fitr=true),child:AnimatedContainer(duration:const Duration(milliseconds:200),padding:const EdgeInsets.symmetric(vertical:12),decoration:BoxDecoration(color:_fitr?p.gold.withOpacity(0.12):Colors.transparent,borderRadius:BorderRadius.circular(11)),child:Center(child:Text(l.translate('eidFitr'),style:TextStyle(fontSize:13,fontWeight:_fitr?FontWeight.w700:FontWeight.w500,color:_fitr?p.gold:p.muted)))))),
+          Expanded(child:GestureDetector(onTap:()=>setState(()=>_fitr=false),child:AnimatedContainer(duration:const Duration(milliseconds:200),padding:const EdgeInsets.symmetric(vertical:12),decoration:BoxDecoration(color:!_fitr?p.accent.withOpacity(0.12):Colors.transparent,borderRadius:BorderRadius.circular(11)),child:Center(child:Text(l.translate('eidAdha'),style:TextStyle(fontSize:13,fontWeight:!_fitr?FontWeight.w700:FontWeight.w500,color:!_fitr?p.accent:p.muted))))))])),
+        const SizedBox(height:16),
+        ...List.generate(steps.length,(i){final(key,icon)=steps[i];return Container(margin:const EdgeInsets.only(bottom:8),padding:const EdgeInsets.all(14),decoration:BoxDecoration(color:p.surface,borderRadius:BorderRadius.circular(12),border:Border.all(color:p.divider)),
+          child:Row(crossAxisAlignment:CrossAxisAlignment.start,children:[Container(width:28,height:28,decoration:BoxDecoration(shape:BoxShape.circle,color:(_fitr?p.gold:p.accent).withOpacity(0.15)),child:Center(child:Text('${i+1}',style:TextStyle(fontSize:12,fontWeight:FontWeight.w700,color:_fitr?p.gold:p.accent)))),const SizedBox(width:10),Icon(icon,size:16,color:_fitr?p.gold:p.accent),const SizedBox(width:8),Expanded(child:Text(l.translate(key),style:TextStyle(fontSize:13,color:p.fg,height:1.5)))]));}),
+      ]));
+  }
+}

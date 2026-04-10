@@ -104,6 +104,10 @@ import 'friday_guide_screen.dart';
 import 'tasbihat_counter_screen.dart';
 import 'hifz_test_screen.dart';
 import 'fact_cards_screen.dart';
+import 'eid_guide_screen.dart';
+import 'bayram_countdown_screen.dart';
+import 'ashura_guide_screen.dart';
+import 'daily_sadaqah_screen.dart';
 import 'settings_screen.dart';
 import 'friday_guide_screen.dart';
 import 'tasbihat_counter_screen.dart';
@@ -1296,6 +1300,14 @@ class _QuickActions extends StatelessWidget {
           const HifzTestScreen()),
       _QuickItem(Icons.lightbulb_outline, l10n.translate('factCards'),
           const FactCardsScreen()),
+      _QuickItem(Icons.celebration, l10n.translate('eidGuide'),
+          const EidGuideScreen()),
+      _QuickItem(Icons.timer_outlined, l10n.translate('countdown'),
+          const BayramCountdownScreen()),
+      _QuickItem(Icons.star_border, l10n.translate('ashuraGuide'),
+          const AshuraGuideScreen()),
+      _QuickItem(Icons.volunteer_activism_outlined, l10n.translate('dailySadaqah'),
+          const DailySadaqahScreen()),
       _QuickItem(Icons.mosque, l10n.translate('fridayGuide'),
           const FridayGuideScreen()),
       _QuickItem(Icons.touch_app, l10n.translate('tasbihatCounter'),
