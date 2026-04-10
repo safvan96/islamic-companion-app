@@ -2,14 +2,15 @@
 
 <div align="center">
 
-**Your all-in-one Islamic companion for daily spiritual needs**
+**The world's most comprehensive free Islamic app - 100 screens!**
 
-*Prayer Times | Qibla | Dhikr | Quran Recitation | Hadiths | Duas | 99 Names | Sadaqah*
+*Prayer | Quran | Dhikr | Fasting | Zakat | Quiz | Hajj | 99 Names | Duas | Tajweed | and 90+ more*
 
 [![Flutter CI/CD](https://github.com/safvan96/islamic-companion-app/actions/workflows/flutter-ci.yml/badge.svg)](https://github.com/safvan96/islamic-companion-app/actions/workflows/flutter-ci.yml)
 [![Web Demo](https://img.shields.io/badge/Web-Demo-1B5E20)](https://safvan96.github.io/islamic-companion-app/)
+[![Release](https://img.shields.io/github/v/release/safvan96/islamic-companion-app)](https://github.com/safvan96/islamic-companion-app/releases)
 
-**11 Languages | 27 Cities | Dark & Light Theme | Offline Support**
+**100 Screens | 20 Languages | 42 Cities | Dark & Light Theme | Offline**
 
 [Web Demo](https://safvan96.github.io/islamic-companion-app/) | [Privacy Policy](https://safvan96.github.io/islamic-companion-app/privacy.html) | [Download APK](https://github.com/safvan96/islamic-companion-app/releases)
 
