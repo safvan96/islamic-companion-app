@@ -56,6 +56,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  void _showAbout(BuildContext context, bool isDark) {
+    showAboutDialog(
+      context: context,
+      applicationName: 'Islamic Companion',
+      applicationVersion: 'v2.1.0',
+      applicationIcon: Container(
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          color: const Color(0xFF1B5E20),
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(Icons.mosque, color: Color(0xFFD4AF37), size: 24),
+      ),
+      children: [
+        const SizedBox(height: 8),
+        const Text(
+          'Your all-in-one Islamic companion for daily spiritual needs.',
+          style: TextStyle(fontSize: 13),
+        ),
+        const SizedBox(height: 12),
+        const Text('12 Languages | 38 Cities | 20 Hadiths | 12 Surahs',
+            style: TextStyle(fontSize: 11, fontStyle: FontStyle.italic)),
+        const SizedBox(height: 12),
+        const Text('Features: Prayer Times, Qibla, Dhikr, Quran Recitation, '
+            'Hadiths, Duas, 99 Names, Favorites, Notifications, Sadaqah.',
+            style: TextStyle(fontSize: 11)),
+        const SizedBox(height: 16),
+        const Text(
+          'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 16, color: Color(0xFFD4AF37)),
+        ),
+      ],
+    );
+  }
+
   Future<void> _pickHadithTime() async {
     final picked = await showTimePicker(
       context: context,
@@ -343,41 +380,53 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const SizedBox(height: 24),
           // App Info
-          Center(
-            child: Column(
-              children: [
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF1B5E20).withOpacity(0.1),
-                    shape: BoxShape.circle,
+          GestureDetector(
+            onTap: () => _showAbout(context, isDark),
+            child: Center(
+              child: Column(
+                children: [
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1B5E20).withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.mosque,
+                      color: Color(0xFF1B5E20),
+                      size: 30,
+                    ),
                   ),
-                  child: const Icon(
-                    Icons.mosque,
-                    color: Color(0xFF1B5E20),
-                    size: 30,
+                  const SizedBox(height: 8),
+                  Text(
+                    l10n.translate('appTitle'),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  l10n.translate('appTitle'),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                  const SizedBox(height: 4),
+                  Text(
+                    'v2.1.0',
+                    style: TextStyle(
+                      color: isDark ? Colors.white38 : Colors.black38,
+                      fontSize: 13,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'v2.1.0',
-                  style: TextStyle(
-                    color: isDark ? Colors.white38 : Colors.black38,
-                    fontSize: 13,
+                  const SizedBox(height: 4),
+                  Text(
+                    'Tap for about',
+                    style: TextStyle(
+                      color: isDark ? Colors.white24 : Colors.black26,
+                      fontSize: 11,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
+          const SizedBox(height: 20),
         ],
       ),
     );
