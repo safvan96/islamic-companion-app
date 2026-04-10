@@ -77,6 +77,7 @@ class _DhikrScreenState extends State<DhikrScreen>
 
   Future<void> _onTap(DhikrProvider provider) async {
     if (provider.hapticEnabled) HapticFeedback.lightImpact();
+    SystemSound.play(SystemSoundType.click);
     _pulseController.forward().then((_) => _pulseController.reverse());
     await provider.increment();
     if (!mounted) return;

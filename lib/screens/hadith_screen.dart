@@ -30,18 +30,25 @@ class HadithScreen extends StatelessWidget {
                 : [const Color(0xFFFFF3E0), const Color(0xFFFFE0B2)],
           ),
         ),
-        child: ListView.builder(
+        child: Builder(builder: (context) {
+          final dayOfYear = DateTime.now()
+              .difference(DateTime(DateTime.now().year, 1, 1))
+              .inDays;
+          final todayIndex = dayOfYear % HadithModel.hadiths.length;
+
+          return ListView.builder(
           padding: const EdgeInsets.all(16),
           itemCount: HadithModel.hadiths.length,
           itemBuilder: (context, index) {
             final hadith = HadithModel.hadiths[index];
             final translation =
                 hadith.translations[langCode] ?? hadith.translations['en']!;
+            final isToday = index == todayIndex;
 
             return Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Card(
-                elevation: 3,
+                elevation: isToday ? 6 : 3,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -79,6 +86,25 @@ class HadithScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            if (isToday) ...[
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFD4AF37),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  l10n.translate('todayHadith'),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ),
+                            ],
                             const Spacer(),
                             Consumer<FavoritesProvider>(
                               builder: (_, fav, __) => InkWell(
@@ -171,7 +197,8 @@ class HadithScreen extends StatelessWidget {
               ),
             );
           },
-        ),
+        );
+        }),
       ),
     );
   }
