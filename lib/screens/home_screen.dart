@@ -39,6 +39,8 @@ import 'daily_duas_screen.dart';
 import 'islamic_calendar_screen.dart';
 import 'good_deeds_screen.dart';
 import 'dua_journal_screen.dart';
+import 'wisdom_screen.dart';
+import 'visual_tasbih_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1080,6 +1082,10 @@ class _QuickActions extends StatelessWidget {
           const GoodDeedsScreen()),
       _QuickItem(Icons.edit_note, l10n.translate('duaJournal'),
           const DuaJournalScreen()),
+      _QuickItem(Icons.auto_awesome, l10n.translate('wisdomQuotes'),
+          const WisdomScreen()),
+      _QuickItem(Icons.radio_button_checked, l10n.translate('visualTasbih'),
+          const VisualTasbihScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
