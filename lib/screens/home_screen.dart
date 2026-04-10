@@ -86,6 +86,8 @@ import 'quran_etiquette_screen.dart';
 import 'prophet_duas_screen.dart';
 import 'arabic_alphabet_screen.dart';
 import 'daily_checkin_screen.dart';
+import 'prayer_intentions_screen.dart';
+import 'surah_categories_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1238,6 +1240,10 @@ class _QuickActions extends StatelessWidget {
           const ArabicAlphabetScreen()),
       _QuickItem(Icons.fingerprint, l10n.translate('dailyCheckin'),
           const DailyCheckinScreen()),
+      _QuickItem(Icons.speaker_notes, l10n.translate('prayerIntentions'),
+          const PrayerIntentionsScreen()),
+      _QuickItem(Icons.category, l10n.translate('surahCategories'),
+          const SurahCategoriesScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
