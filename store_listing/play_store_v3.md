@@ -1,10 +1,10 @@
-# Google Play Store Listing - v3.2.0
+# Google Play Store Listing - v3.3.0
 
 ## App Name
 Islamic Companion - Quran, Prayer Times, Dhikr & More
 
 ## Short Description (80 chars max)
-82 screens: Prayer, Quran, Dhikr, Fasting, Zakat, Quiz, Hajj guide & more!
+90 screens: Prayer, Quran, Dhikr, Fasting, Zakat, Quiz, Hajj guide & more!
 
 ## Full Description (4000 chars max)
 

@@ -60,7 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     showAboutDialog(
       context: context,
       applicationName: 'Islamic Companion',
-      applicationVersion: 'v3.2.0',
+      applicationVersion: 'v3.3.0',
       applicationIcon: Container(
         width: 48,
         height: 48,
@@ -408,7 +408,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'v3.2.0',
+                    'v3.3.0',
                     style: TextStyle(
                       color: isDark ? Colors.white38 : Colors.black38,
                       fontSize: 13,
