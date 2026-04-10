@@ -41,6 +41,8 @@ import 'good_deeds_screen.dart';
 import 'dua_journal_screen.dart';
 import 'wisdom_screen.dart';
 import 'visual_tasbih_screen.dart';
+import 'stats_dashboard_screen.dart';
+import 'istikhara_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1086,6 +1088,10 @@ class _QuickActions extends StatelessWidget {
           const WisdomScreen()),
       _QuickItem(Icons.radio_button_checked, l10n.translate('visualTasbih'),
           const VisualTasbihScreen()),
+      _QuickItem(Icons.bar_chart_rounded, l10n.translate('statsDashboard'),
+          const StatsDashboardScreen()),
+      _QuickItem(Icons.help_outline, l10n.translate('istikharaGuide'),
+          const IstikharaScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
