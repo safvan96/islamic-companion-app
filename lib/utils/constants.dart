@@ -22,6 +22,8 @@ class AppConstants {
     'es': 'Español',
     'ur': 'اردو',
     'bn': 'বাংলা',
+    'ms': 'Bahasa Melayu',
+    'pt': 'Português',
   };
 
   static const Map<String, String> languageFlags = {
@@ -38,5 +40,7 @@ class AppConstants {
     'es': '🇪🇸',
     'ur': '🇵🇰',
     'bn': '🇧🇩',
+    'ms': '🇲🇾',
+    'pt': '🇧🇷',
   };
 }
