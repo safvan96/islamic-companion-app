@@ -979,6 +979,8 @@ class AppLocalizations {
       'pp_lailaha_desc': 'There is no god but Allah alone with no partner. His is the dominion and praise, and He has power over all things.',
       'pp_dua': 'Personal Dua',
       'pp_dua_desc': 'Raise your hands and make personal dua to Allah. This is one of the best times for dua to be accepted.',
+      'searchFeatures': 'Search all features...',
+      'quranReader': 'Quran Reader',
     },
     'tr': {
       'appTitle': 'İslami Rehber',
@@ -1923,6 +1925,8 @@ class AppLocalizations {
       'pp_lailaha_desc': 'Allahtan baska ilah yoktur, O tektir, ortagi yoktur. Mulk ve hamd Onundur, O her seye kadirdir.',
       'pp_dua': 'Kisisel Dua',
       'pp_dua_desc': 'Ellerinizi kaldirip Allaha dua edin. Duanin kabul edildigi en guzel zamanlardan biridir.',
+      'searchFeatures': 'Tum ozelliklerde ara...',
+      'quranReader': 'Kuran Okuyucu',
     },
     'ar': {
       'appTitle': 'الرفيق الإسلامي',
@@ -2183,6 +2187,8 @@ class AppLocalizations {
       'sajdahTilawah': 'سجدة التلاوة',
       'surahVirtues': 'فضائل السور',
       'postPrayer': 'بعد الصلاة',
+      'searchFeatures': 'بحث...',
+      'quranReader': 'قارئ القرآن',
     },
     'ru': {
       'appTitle': 'Исламский Компаньон',
@@ -2429,6 +2435,8 @@ class AppLocalizations {
       'sajdahTilawah': 'Саджда тилява',
       'surahVirtues': 'Достоинства сур',
       'postPrayer': 'После молитвы',
+      'searchFeatures': 'Поиск...',
+      'quranReader': 'Чтение Корана',
       'istikharaDua': 'Дуа истихара',
     },
     'hi': {
@@ -2676,6 +2684,8 @@ class AppLocalizations {
       'sajdahTilawah': 'सज्दा तिलावत',
       'surahVirtues': 'सूरह की फज़ीलत',
       'postPrayer': 'नमाज़ के बाद',
+      'searchFeatures': 'खोजें...',
+      'quranReader': 'कुरआन',
       'istikharaDua': 'दुआ',
     },
     'id': {
@@ -2923,6 +2933,8 @@ class AppLocalizations {
       'sajdahTilawah': 'Sujud Tilawah',
       'surahVirtues': 'Keutamaan Surah',
       'postPrayer': 'Setelah Sholat',
+      'searchFeatures': 'Cari fitur...',
+      'quranReader': 'Baca Quran',
       'istikharaDua': 'Doa Istikharah',
     },
     'zh': {
@@ -3170,6 +3182,8 @@ class AppLocalizations {
       'sajdahTilawah': '读经叩拜',
       'surahVirtues': '章节功德',
       'postPrayer': '礼拜后',
+      'searchFeatures': '搜索...',
+      'quranReader': '古兰经',
       'istikharaDua': '求吉祈祷',
     },
     'de': {
@@ -3417,6 +3431,8 @@ class AppLocalizations {
       'sajdahTilawah': 'Sajda Tilawah',
       'surahVirtues': 'Surah Tugenden',
       'postPrayer': 'Nach dem Gebet',
+      'searchFeatures': 'Suchen...',
+      'quranReader': 'Quran Leser',
       'istikharaDua': 'Istikhara Dua',
     },
     'nl': {
@@ -3664,6 +3680,8 @@ class AppLocalizations {
       'sajdahTilawah': 'Sajda Tilawah',
       'surahVirtues': 'Soera Deugden',
       'postPrayer': 'Na het Gebed',
+      'searchFeatures': 'Zoeken...',
+      'quranReader': 'Koran Lezer',
       'istikharaDua': 'Istikhara Dua',
     },
     'fr': {
@@ -3911,6 +3929,8 @@ class AppLocalizations {
       'sajdahTilawah': 'Sajda Tilawah',
       'surahVirtues': 'Vertus des Sourates',
       'postPrayer': 'Après la Prière',
+      'searchFeatures': 'Rechercher...',
+      'quranReader': 'Lecteur Coran',
       'istikharaDua': 'Dua Istikhara',
     },
     'es': {
@@ -4158,6 +4178,8 @@ class AppLocalizations {
       'sajdahTilawah': 'Sajda Tilawah',
       'surahVirtues': 'Virtudes de Suras',
       'postPrayer': 'Después del Rezo',
+      'searchFeatures': 'Buscar...',
+      'quranReader': 'Lector Quran',
       'istikharaDua': 'Dua Istikhara',
     },
     'ur': {
@@ -4405,6 +4427,8 @@ class AppLocalizations {
       'sajdahTilawah': 'سجدہ تلاوت',
       'surahVirtues': 'سورتوں کی فضیلت',
       'postPrayer': 'نماز کے بعد',
+      'searchFeatures': 'تلاش...',
+      'quranReader': 'قرآن',
       'istikharaDua': 'دعائے استخارہ',
     },
     'bn': {
@@ -4634,6 +4658,8 @@ class AppLocalizations {
       'sajdahTilawah': 'সিজদা তিলাওয়াত',
       'surahVirtues': 'সূরার ফজিলত',
       'postPrayer': 'নামাজের পরে',
+      'searchFeatures': 'খুঁজুন...',
+      'quranReader': 'কুরআন',
     },
     'ms': {
       'appTitle': 'Teman Islam',
@@ -4862,6 +4888,8 @@ class AppLocalizations {
       'sajdahTilawah': 'Sujud Tilawah',
       'surahVirtues': 'Kelebihan Surah',
       'postPrayer': 'Selepas Solat',
+      'searchFeatures': 'Cari...',
+      'quranReader': 'Baca Quran',
     },
     'pt': {
       'appTitle': 'Companheiro Islâmico',
@@ -5090,6 +5118,8 @@ class AppLocalizations {
       'sajdahTilawah': 'Sajdah Tilawah',
       'surahVirtues': 'Virtudes das Suras',
       'postPrayer': 'Após a Oração',
+      'searchFeatures': 'Buscar...',
+      'quranReader': 'Leitor Quran',
     },
     'fa': {
       'appTitle': 'همراه اسلامی',
@@ -5318,6 +5348,8 @@ class AppLocalizations {
       'sajdahTilawah': 'سجده تلاوت',
       'surahVirtues': 'فضایل سوره',
       'postPrayer': 'بعد از نماز',
+      'searchFeatures': 'جستجو...',
+      'quranReader': 'قرآن',
     },
     'sw': {
       'appTitle': 'Mwandani wa Kiislamu',
@@ -5546,6 +5578,8 @@ class AppLocalizations {
       'sajdahTilawah': 'Sijda Tilawa',
       'surahVirtues': 'Fadhila za Sura',
       'postPrayer': 'Baada ya Swala',
+      'searchFeatures': 'Tafuta...',
+      'quranReader': 'Soma Qurani',
     },
     'ja': {
       'appTitle': 'イスラムの友',
@@ -5763,6 +5797,8 @@ class AppLocalizations {
       'sajdahTilawah': 'サジダ',
       'surahVirtues': '章の功徳',
       'postPrayer': '礼拝後',
+      'searchFeatures': '検索...',
+      'quranReader': 'クルアーン',
       'listenRecitation': '朗読を聴く',
       'translation': '翻訳',
       'transliteration': '音訳',
@@ -5991,6 +6027,8 @@ class AppLocalizations {
       'sajdahTilawah': '사즈다',
       'surahVirtues': '수라 공덕',
       'postPrayer': '예배 후',
+      'searchFeatures': '검색...',
+      'quranReader': '쿠란',
       'listenRecitation': '낭독 듣기',
       'translation': '번역',
       'transliteration': '음역',
@@ -6219,6 +6257,8 @@ class AppLocalizations {
       'sajdahTilawah': 'Sujuudda Tilaawada',
       'surahVirtues': 'Fadliga Suuradaha',
       'postPrayer': 'Salaadda Kadib',
+      'searchFeatures': 'Raadi...',
+      'quranReader': 'Akhri Quraanka',
       'listenRecitation': 'Dhageyso akhris',
       'translation': 'Turjumaad',
       'transliteration': 'Qoraalka codka',

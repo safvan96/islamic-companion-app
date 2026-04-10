@@ -70,6 +70,7 @@ import 'adhan_dua_screen.dart';
 import 'sajdah_screen.dart';
 import 'surah_virtues_screen.dart';
 import 'post_prayer_screen.dart';
+import 'search_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -120,7 +121,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  static const _currentVersion = '2.8.0';
+  static const _currentVersion = '3.0.0';
 
   @override
   void initState() {
@@ -508,6 +509,16 @@ class _TopBar extends StatelessWidget {
               ],
             ),
           ),
+        const SizedBox(width: 8),
+        InkResponse(
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SearchScreen())),
+          radius: 20,
+          child: Container(
+            width: 32, height: 32,
+            decoration: BoxDecoration(shape: BoxShape.circle, color: palette.surface, border: Border.all(color: palette.divider)),
+            child: Icon(Icons.search, size: 16, color: palette.muted),
+          ),
+        ),
       ],
     );
   }
