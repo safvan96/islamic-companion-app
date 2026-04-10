@@ -302,7 +302,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'v1.0.0',
+                  'v2.0.0',
                   style: TextStyle(
                     color: isDark ? Colors.white38 : Colors.black38,
                     fontSize: 13,

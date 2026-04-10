@@ -4,7 +4,7 @@
 İslami Rehber - Namaz Vakitleri, Kıble & Zikir
 
 ## Kısa Açıklama (80 karakter)
-Namaz vakitleri, kıble pusulası, zikirmatik, Kur'an sureleri ve hadisler. 11 dil
+Namaz vakitleri, kıble, zikirmatik, Kur'an tilaveti, hadis, dua ve favoriler
 
 ## Tam Açıklama
 
@@ -37,7 +37,7 @@ Popüler kısa sureleri okuyun ve dinleyin:
 • İhlas, Felak, Nas Sureleri
 • Kevser, Nasr Sureleri
 • Yasin, Mülk, Rahman Sureleri
-Her sure Arapça metin, meal ve YouTube tilavet linkleri içerir.
+Her sure Arapça metin, meal ve Mishary Alafasy sesli tilavet içerir.
 
 **99 ESMAÜL HÜSNA**
 Allah'ın 99 güzel ismi - Arapça, okunuş ve anlamıyla. Arama özelliği dahil.
@@ -52,6 +52,15 @@ Günlük hayat için gerekli dualar kategorilere ayrılmış:
 • Korunma
 • İstiğfar
 
+**FAVORİLER & PAYLAŞIM**
+Sevdiğiniz hadisleri, sureleri ve duaları yer imlerine ekleyin. WhatsApp veya sosyal medya ile paylaşın.
+
+**EZAN BİLDİRİMLERİ**
+Her namaz vaktinde ezan bildirimi alın. 27+ şehir arasından seçim yapın.
+
+**GÜNLÜK HADİS**
+Her sabah bir hadis bildirimi alın. Saatini ayarlardan seçin.
+
 **SADAKA**
 Reklam izle, sadaka kazan! Reklam gelirinin yarısı sizin adınıza sadaka olarak bağışlanır.
 
@@ -61,8 +70,12 @@ Türkçe, English, العربية, Русский, हिन्दी, Bahasa In
 **ÖZELLİKLER**
 ✓ Karanlık & Aydınlık Mod
 ✓ Çevrimdışı Destek
-✓ Hafif (<25MB)
+✓ Hafif (~25MB)
 ✓ Material Design 3
+✓ 27+ Şehir Namaz Vakti
+✓ Sesli Tilavet (Mishary Alafasy)
+✓ Yer İmi & Paylaşım
+✓ Günlük Hadis Bildirimi
 ✓ Kayıt gerektirmez
 ✓ Ücretsiz
 

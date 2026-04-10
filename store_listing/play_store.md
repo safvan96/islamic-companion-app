@@ -4,7 +4,7 @@
 Islamic Companion - Prayer Times, Qibla & Dhikr
 
 ## Short Description (80 chars max)
-Prayer times, Qibla compass, dhikr counter, Quran surahs & hadiths. 11 languages
+Prayer times, Qibla, dhikr, Quran recitation, hadiths, duas & favorites. 11 lang
 
 ## Full Description (4000 chars max)
 
@@ -37,7 +37,7 @@ Read and listen to popular short surahs including:
 • Al-Ikhlas, Al-Falaq, An-Nas
 • Al-Kawthar, An-Nasr
 • Ya-Sin, Al-Mulk, Ar-Rahman
-Each surah includes Arabic text, translation, and YouTube recitation links.
+Each surah includes Arabic text, translation, and audio recitation by Mishary Alafasy.
 
 **99 NAMES OF ALLAH (ESMAÜL HÜSNA)**
 Beautiful listing of all 99 Names of Allah with Arabic text, transliteration, and meaning in your language. Search functionality included.
@@ -52,6 +52,15 @@ Essential duas for daily life organized by category:
 • Protection
 • Forgiveness
 
+**FAVORITES & SHARING**
+Bookmark your favorite hadiths, surahs, and duas. Share them with friends via WhatsApp or any social media.
+
+**ADHAN NOTIFICATIONS**
+Get notified at every prayer time with beautiful adhan alerts. Choose your city from 27+ locations worldwide.
+
+**DAILY HADITH**
+Receive a daily hadith notification every morning. Set your preferred time in settings.
+
 **SADAQAH (CHARITY)**
 Watch an ad and earn charity! Half of the ad revenue is donated as Sadaqah on your behalf. A unique way to give back.
 
@@ -61,8 +70,12 @@ English, Türkçe, العربية, Русский, हिन्दी, Bahasa In
 **FEATURES**
 ✓ Dark & Light Mode
 ✓ Offline Support
-✓ Lightweight (<25MB)
+✓ Lightweight (~25MB)
 ✓ Material Design 3
+✓ 27+ Cities for Prayer Times
+✓ Audio Recitation (Mishary Alafasy)
+✓ Bookmark & Share
+✓ Daily Hadith Notifications
 ✓ No registration required
 ✓ Free to use
 
