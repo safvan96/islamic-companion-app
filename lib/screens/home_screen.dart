@@ -90,6 +90,8 @@ import 'prayer_intentions_screen.dart';
 import 'surah_categories_screen.dart';
 import 'qunut_screen.dart';
 import 'prayer_counter_screen.dart';
+import 'tafakkur_screen.dart';
+import 'weekly_report_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1250,6 +1252,10 @@ class _QuickActions extends StatelessWidget {
           const QunutScreen()),
       _QuickItem(Icons.check_box, l10n.translate('prayerCounter'),
           const PrayerCounterScreen()),
+      _QuickItem(Icons.spa, l10n.translate('tafakkur'),
+          const TafakkurScreen()),
+      _QuickItem(Icons.insights, l10n.translate('weeklyReport'),
+          const WeeklyReportScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
