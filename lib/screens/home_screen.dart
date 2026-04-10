@@ -66,6 +66,8 @@ import 'faq_screen.dart';
 import 'muhasaba_screen.dart';
 import 'quran_words_screen.dart';
 import 'motivation_screen.dart';
+import 'adhan_dua_screen.dart';
+import 'sajdah_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1162,6 +1164,10 @@ class _QuickActions extends StatelessWidget {
           const QuranWordsScreen()),
       _QuickItem(Icons.format_paint, l10n.translate('motivation'),
           const MotivationScreen()),
+      _QuickItem(Icons.notifications_active, l10n.translate('adhanDua'),
+          const AdhanDuaScreen()),
+      _QuickItem(Icons.airline_seat_flat, l10n.translate('sajdahTilawah'),
+          const SajdahScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
