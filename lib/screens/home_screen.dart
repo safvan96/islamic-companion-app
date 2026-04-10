@@ -58,6 +58,8 @@ import 'ghusl_screen.dart';
 import 'fidyah_screen.dart';
 import 'salawat_screen.dart';
 import 'timeline_screen.dart';
+import 'tawbah_screen.dart';
+import 'khatm_planner_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1138,6 +1140,10 @@ class _QuickActions extends StatelessWidget {
           const SalawatScreen()),
       _QuickItem(Icons.timeline, l10n.translate('islamicTimeline'),
           const TimelineScreen()),
+      _QuickItem(Icons.self_improvement, l10n.translate('tawbahGuide'),
+          const TawbahScreen()),
+      _QuickItem(Icons.import_contacts, l10n.translate('khatmPlanner'),
+          const KhatmPlannerScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
