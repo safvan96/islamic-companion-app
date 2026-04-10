@@ -7,7 +7,12 @@ Lightweight, modern, and innovative design targeting Muslim users worldwide.
 ## Features
 - **Prayer Times**: City-based prayer time calculation (27+ cities), adhan notifications
 - **Qibla Compass**: City-based Qibla direction finder
-- **Dhikr Counter (Zikirmatik)**: Digital tasbih with haptic feedback, weekly chart, per-dhikr stats
+- **Dhikr Counter (Zikirmatik)**: Digital tasbih with haptic feedback, weekly chart, per-dhikr stats, loop mode, custom dhikr, streak display, sound toggle
+- **Tasbih Set**: Post-prayer guided 33+33+33 (SubhanAllah, Alhamdulillah, Allahu Akbar)
+- **Qaza Tracker**: Track missed prayers per type (Fajr-Witr), bulk add by years, progress bar
+- **Zakat Calculator**: Gold/silver/cash/investment based, 11 currencies, Nisab calculation
+- **Islamic Quiz**: 15 questions in 5 categories, score tracking, share results
+- **Fasting Tracker**: Calendar view, Ramadan/voluntary/makeup tracking, sunnah fasting info
 - **Hadith Collection**: 10 curated hadiths with bookmark & share
 - **Short Surahs**: Arabic text, translation, audio recitation (Mishary Alafasy), bookmark & share
 - **Daily Duas**: 8 categories with audio playback, bookmark & share
@@ -49,8 +54,8 @@ lib/
 ├── main.dart              # App entry point
 ├── l10n/                  # Localization (11 languages)
 ├── models/                # Data models (hadith, surah, asma)
-├── providers/             # State (app, prayer, dhikr, favorites)
-├── screens/               # Feature screens (12 screens)
+├── providers/             # State (app, prayer, dhikr, favorites, qaza, fasting)
+├── screens/               # Feature screens (20+ screens)
 ├── services/              # Adhan, notifications, sharing, hijri
 ├── utils/                 # Constants, helpers, theme
 └── widgets/               # Reusable UI components
@@ -64,7 +69,7 @@ lib/
 - Keystore: android/app/upload-keystore.jks (password: IslamicApp2026!)
 
 ## Play Store
-- Version: 2.0.0+2
+- Version: 2.5.0+7
 - Target SDK: 35, Min SDK: 21
 - App Bundle: build/app/outputs/bundle/release/app-release.aab
 - Store listings: store_listing/play_store.md (EN) + play_store_tr.md (TR)
