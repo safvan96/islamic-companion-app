@@ -397,6 +397,13 @@ class _NextPrayerCardState extends State<_NextPrayerCard> {
     super.dispose();
   }
 
+  String _formatCountdown(Duration d) {
+    final h = d.inHours;
+    final m = d.inMinutes % 60;
+    if (h > 0) return '${h}h ${m}m';
+    return '${m}m';
+  }
+
   Future<void> _toggleAdhan() async {
     if (_playing) {
       await _player.stop();
@@ -458,13 +465,26 @@ class _NextPrayerCardState extends State<_NextPrayerCard> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                next.isEmpty ? '—' : next,
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                  color: palette.fg,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    next.isEmpty ? '—' : next,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      color: palette.fg,
+                    ),
+                  ),
+                  if (prayer.timeUntilNext.inMinutes > 0)
+                    Text(
+                      _formatCountdown(prayer.timeUntilNext),
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: palette.muted,
+                      ),
+                    ),
+                ],
               ),
               const Spacer(),
               Text(

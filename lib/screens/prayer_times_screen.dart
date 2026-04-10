@@ -8,6 +8,13 @@ import '../services/hijri_calendar.dart';
 class PrayerTimesScreen extends StatelessWidget {
   const PrayerTimesScreen({super.key});
 
+  String _fmtCountdown(Duration d) {
+    final h = d.inHours;
+    final m = d.inMinutes % 60;
+    if (h > 0) return '${h}h ${m}m';
+    return '${m} min';
+  }
+
   void _showCityPicker(BuildContext context) {
     final prayerProvider = Provider.of<PrayerProvider>(context, listen: false);
     final cities = PrayerProvider.cities.keys.toList();
@@ -134,13 +141,25 @@ class PrayerTimesScreen extends StatelessWidget {
                               color: Colors.white.withOpacity(0.15),
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Text(
-                              '${l10n.translate('nextPrayer')}: ${prayerProvider.nextPrayer}',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  '${l10n.translate('nextPrayer')}: ${prayerProvider.nextPrayer}',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                if (prayerProvider.timeUntilNext.inMinutes > 0)
+                                  Text(
+                                    _fmtCountdown(prayerProvider.timeUntilNext),
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.7),
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                              ],
                             ),
                           ),
                       ],

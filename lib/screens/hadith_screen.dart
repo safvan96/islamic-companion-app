@@ -6,8 +6,39 @@ import '../providers/app_provider.dart';
 import '../providers/favorites_provider.dart';
 import '../services/share_service.dart';
 
-class HadithScreen extends StatelessWidget {
+class HadithScreen extends StatefulWidget {
   const HadithScreen({super.key});
+
+  @override
+  State<HadithScreen> createState() => _HadithScreenState();
+}
+
+class _HadithScreenState extends State<HadithScreen> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final dayOfYear = DateTime.now()
+          .difference(DateTime(DateTime.now().year, 1, 1))
+          .inDays;
+      final todayIndex = dayOfYear % HadithModel.hadiths.length;
+      // Each card is roughly 250px, scroll to today's hadith
+      final offset = (todayIndex * 270.0).clamp(0.0, _scrollController.position.maxScrollExtent);
+      _scrollController.animateTo(
+        offset,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeOutCubic,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +68,7 @@ class HadithScreen extends StatelessWidget {
           final todayIndex = dayOfYear % HadithModel.hadiths.length;
 
           return ListView.builder(
+          controller: _scrollController,
           padding: const EdgeInsets.all(16),
           itemCount: HadithModel.hadiths.length,
           itemBuilder: (context, index) {
