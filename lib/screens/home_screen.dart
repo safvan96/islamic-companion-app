@@ -74,6 +74,8 @@ import 'search_screen.dart';
 import 'surah_info_screen.dart';
 import 'pinned_features_screen.dart';
 import 'share_card_screen.dart';
+import 'quran_stories_screen.dart';
+import 'dua_timer_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1202,6 +1204,10 @@ class _QuickActions extends StatelessWidget {
           const SurahInfoScreen()),
       _QuickItem(Icons.style, l10n.translate('shareCard'),
           const ShareCardScreen()),
+      _QuickItem(Icons.auto_stories_rounded, l10n.translate('quranStories'),
+          const QuranStoriesScreen()),
+      _QuickItem(Icons.timer, l10n.translate('duaTimer'),
+          const DuaTimerScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
