@@ -80,6 +80,8 @@ import 'sunnah_duas_screen.dart';
 import 'mukabele_screen.dart';
 import 'rakat_guide_screen.dart';
 import 'date_converter_screen.dart';
+import 'prayer_surahs_screen.dart';
+import 'word_match_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1220,6 +1222,10 @@ class _QuickActions extends StatelessWidget {
           const RakatGuideScreen()),
       _QuickItem(Icons.swap_horiz, l10n.translate('dateConverter'),
           const DateConverterScreen()),
+      _QuickItem(Icons.queue_music, l10n.translate('prayerSurahs'),
+          const PrayerSurahsScreen()),
+      _QuickItem(Icons.extension, l10n.translate('wordMatch'),
+          const WordMatchScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
