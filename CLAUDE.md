@@ -5,61 +5,67 @@ A comprehensive Islamic companion app built with Flutter for Google Play Store.
 Lightweight, modern, and innovative design targeting Muslim users worldwide.
 
 ## Features
-- **Prayer Times (Ezan)**: Location-based prayer time calculation with adhan notifications
-- **Qibla Compass**: Sensor-based Qibla direction finder
-- **Dhikr Counter (Zikirmatik)**: Digital tasbih with haptic feedback and animations
-- **Hadith Collection**: Curated hadiths from authentic sources
-- **Short Surahs**: Popular short surahs with Arabic text, transliteration, translation, and YouTube recitation links
-- **Sadaqah Button**: Watch ads (Google AdMob) as charity - revenue shared as sadaqah
+- **Prayer Times**: City-based prayer time calculation (27+ cities), adhan notifications
+- **Qibla Compass**: City-based Qibla direction finder
+- **Dhikr Counter (Zikirmatik)**: Digital tasbih with haptic feedback, weekly chart, per-dhikr stats
+- **Hadith Collection**: 10 curated hadiths with bookmark & share
+- **Short Surahs**: Arabic text, translation, audio recitation (Mishary Alafasy), bookmark & share
+- **Daily Duas**: 8 categories with audio playback, bookmark & share
+- **99 Names of Allah**: Searchable list with meanings
+- **Sadaqah Button**: Watch ads (Google AdMob) as charity
+- **Favorites**: Bookmark hadiths, surahs, duas - tabbed favorites screen
+- **Daily Hadith Notification**: Scheduled with time picker
+- **Hijri Calendar**: With Ramadan suhoor/iftar banner
 
-## Supported Languages (10)
-English, Arabic (العربية), Russian (Русский), Hindi (हिन्दी), Indonesian (Bahasa Indonesia), Chinese (中文), German (Deutsch), Dutch (Nederlands), French (Français), Spanish (Español)
+## Supported Languages (11)
+English, Türkçe, العربية, Русский, हिन्दी, Bahasa Indonesia, 中文, Deutsch, Nederlands, Français, Español
 
 ## Tech Stack
 - **Framework**: Flutter 3.x / Dart
 - **State Management**: Provider
 - **Ads**: Google Mobile Ads (AdMob)
-- **Location**: Geolocator + Geocoding
-- **Compass**: Flutter Compass
+- **Audio**: audioplayers
+- **Notifications**: flutter_local_notifications + timezone
+- **Sharing**: share_plus
 - **Storage**: SharedPreferences
 - **Architecture**: Feature-based with clean separation
 
 ## Build Commands
 ```bash
+export PATH="/c/Users/Administrator/flutter/bin:$PATH"
+export JAVA_HOME="/c/Users/Administrator/jdk-17.0.13+11"
+export PATH="$JAVA_HOME/bin:$PATH"
+
 flutter pub get          # Install dependencies
-flutter run              # Run in debug mode
+flutter analyze          # Check for errors
 flutter build apk        # Build release APK
 flutter build appbundle  # Build for Play Store
-flutter test             # Run tests
+dart run flutter_launcher_icons  # Regenerate app icons
 ```
 
 ## Project Structure
 ```
 lib/
 ├── main.dart              # App entry point
-├── l10n/                  # Localization files (10 languages)
-├── models/                # Data models
-├── providers/             # State management
-├── screens/               # Feature screens
-├── services/              # Business logic & APIs
+├── l10n/                  # Localization (11 languages)
+├── models/                # Data models (hadith, surah, asma)
+├── providers/             # State (app, prayer, dhikr, favorites)
+├── screens/               # Feature screens (12 screens)
+├── services/              # Adhan, notifications, sharing, hijri
 ├── utils/                 # Constants, helpers, theme
 └── widgets/               # Reusable UI components
 ```
 
 ## Key Design Decisions
-- Auto-detect language from device locale, with manual override on first launch
-- Minimal APK size (<15MB) by using vector graphics and efficient assets
+- City-based prayer times (27+ cities) instead of GPS - more reliable
 - Offline-first: prayer times calculated locally, content bundled
-- Dark/Light theme support with Islamic green accent
-- AdMob rewarded ads for sadaqah feature (user watches ad = charity donation)
+- Dark/Light theme with Islamic green (#1B5E20) + gold (#D4AF37) accent
+- AdMob test IDs in use - **replace with production IDs before release**
+- Keystore: android/app/upload-keystore.jks (password: IslamicApp2026!)
 
-## AdMob Integration
-- Replace test ad unit IDs with production IDs before release
-- Rewarded ads for sadaqah feature
-- Banner ads on secondary screens (optional)
-
-## Play Store Notes
-- Target SDK: 34
-- Min SDK: 21 (Android 5.0+)
-- Category: Lifestyle
-- Content Rating: Everyone
+## Play Store
+- Version: 2.0.0+2
+- Target SDK: 35, Min SDK: 21
+- App Bundle: build/app/outputs/bundle/release/app-release.aab
+- Store listings: store_listing/play_store.md (EN) + play_store_tr.md (TR)
+- Privacy policy: store_listing/privacy_policy.html
