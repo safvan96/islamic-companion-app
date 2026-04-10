@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/app_localizations.dart';
 import '../models/surah_model.dart';
 import '../providers/app_provider.dart';
@@ -18,6 +19,27 @@ class _SurahScreenState extends State<SurahScreen> {
   int? _playingIndex;
   Duration _position = Duration.zero;
   Duration _duration = Duration.zero;
+  Set<int> _readSurahs = {};
+
+  Future<void> _loadReadSurahs() async {
+    final prefs = await SharedPreferences.getInstance();
+    final list = prefs.getStringList('readSurahs') ?? [];
+    setState(() {
+      _readSurahs = list.map((s) => int.tryParse(s) ?? -1).where((i) => i >= 0).toSet();
+    });
+  }
+
+  Future<void> _toggleRead(int surahNumber) async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      if (_readSurahs.contains(surahNumber)) {
+        _readSurahs.remove(surahNumber);
+      } else {
+        _readSurahs.add(surahNumber);
+      }
+    });
+    await prefs.setStringList('readSurahs', _readSurahs.map((e) => e.toString()).toList());
+  }
 
   // Clean Quran recitations — Mishary Alafasy via Islamic Network CDN
   static const String _cdnBase =
@@ -28,6 +50,7 @@ class _SurahScreenState extends State<SurahScreen> {
   @override
   void initState() {
     super.initState();
+    _loadReadSurahs();
     _player.setReleaseMode(ReleaseMode.stop);
     _player.onPlayerStateChanged.listen((s) {
       if (!mounted) return;
@@ -123,6 +146,8 @@ class _SurahScreenState extends State<SurahScreen> {
               duration: _playingIndex == index ? _duration : Duration.zero,
               onToggle: () => _toggle(index, surah),
               fmt: _fmt,
+              isRead: _readSurahs.contains(surah.number),
+              onToggleRead: () => _toggleRead(surah.number),
             );
           },
         ),
@@ -141,6 +166,8 @@ class _SurahCard extends StatelessWidget {
   final Duration duration;
   final VoidCallback onToggle;
   final String Function(Duration) fmt;
+  final bool isRead;
+  final VoidCallback onToggleRead;
 
   const _SurahCard({
     required this.surah,
@@ -152,6 +179,8 @@ class _SurahCard extends StatelessWidget {
     required this.duration,
     required this.onToggle,
     required this.fmt,
+    required this.isRead,
+    required this.onToggleRead,
   });
 
   @override
@@ -172,23 +201,46 @@ class _SurahCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          leading: Container(
-            width: 45,
-            height: 45,
-            decoration: BoxDecoration(
-              color: const Color(0xFF00695C).withOpacity(0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: Text(
-                surah.number.toString(),
-                style: const TextStyle(
+          leading: Stack(
+            children: [
+              Container(
+                width: 45,
+                height: 45,
+                decoration: BoxDecoration(
+                  color: isRead
+                      ? const Color(0xFF00695C).withOpacity(0.2)
+                      : const Color(0xFF00695C).withOpacity(0.1),
+                  shape: BoxShape.circle,
+                  border: isRead
+                      ? Border.all(color: const Color(0xFF00695C), width: 2)
+                      : null,
+                ),
+                child: Center(
+                  child: Text(
+                    surah.number.toString(),
+                    style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF00695C),
                   fontSize: 16,
                 ),
               ),
             ),
+          ),
+          if (isRead)
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: Container(
+                width: 16,
+                height: 16,
+                decoration: const BoxDecoration(
+                  color: Color(0xFF00695C),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.check, color: Colors.white, size: 10),
+              ),
+            ),
+          ],
           ),
           title: Text(
             surah.transliteration,
@@ -294,7 +346,39 @@ class _SurahCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // Inline audio player
+                  // Read toggle + audio player
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: onToggleRead,
+                          icon: Icon(
+                            isRead ? Icons.check_circle : Icons.check_circle_outline,
+                            size: 18,
+                            color: isRead ? const Color(0xFF00695C) : Colors.grey,
+                          ),
+                          label: Text(
+                            isRead ? 'Read' : 'Mark as Read',
+                            style: TextStyle(
+                              color: isRead ? const Color(0xFF00695C) : Colors.grey,
+                              fontSize: 12,
+                            ),
+                          ),
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(
+                              color: isRead
+                                  ? const Color(0xFF00695C)
+                                  : Colors.grey.withOpacity(0.3),
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
                   _buildPlayer(),
                   const SizedBox(height: 16),
                 ],
