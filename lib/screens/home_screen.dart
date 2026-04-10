@@ -92,6 +92,8 @@ import 'qunut_screen.dart';
 import 'prayer_counter_screen.dart';
 import 'tafakkur_screen.dart';
 import 'weekly_report_screen.dart';
+import 'holy_nights_screen.dart';
+import 'reading_log_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1256,6 +1258,10 @@ class _QuickActions extends StatelessWidget {
           const TafakkurScreen()),
       _QuickItem(Icons.insights, l10n.translate('weeklyReport'),
           const WeeklyReportScreen()),
+      _QuickItem(Icons.brightness_3, l10n.translate('holyNights'),
+          const HolyNightsScreen()),
+      _QuickItem(Icons.edit_calendar, l10n.translate('readingLog'),
+          const ReadingLogScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
