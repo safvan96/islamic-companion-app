@@ -281,7 +281,9 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
   String? _error;
   final AudioPlayer _player = AudioPlayer();
   int? _playingAyah;
+  bool _continuousPlay = false;
   Set<String> _bookmarkedAyahs = {};
+  final ScrollController _scrollController = ScrollController();
 
   Future<void> _loadBookmarks() async {
     final prefs = await SharedPreferences.getInstance();
@@ -327,7 +329,14 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
   void initState() {
     super.initState();
     _player.onPlayerStateChanged.listen((s) {
-      if (mounted && (s == PlayerState.completed || s == PlayerState.stopped)) {
+      if (!mounted) return;
+      if (s == PlayerState.completed) {
+        if (_continuousPlay && _playingAyah != null && _playingAyah! + 1 < _ayahs.length) {
+          _playAyah(_playingAyah! + 1);
+        } else {
+          setState(() => _playingAyah = null);
+        }
+      } else if (s == PlayerState.stopped) {
         setState(() => _playingAyah = null);
       }
     });
@@ -338,6 +347,7 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
   @override
   void dispose() {
     _player.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -390,7 +400,17 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
 
     try {
       await _player.stop();
-      if (mounted) setState(() => _playingAyah = index);
+      if (mounted) {
+        setState(() => _playingAyah = index);
+        // Auto-scroll to playing ayah
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(
+            index * 200.0,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        }
+      }
       await _player.play(UrlSource(audio));
     } catch (e) {
       if (mounted) setState(() => _playingAyah = null);
@@ -405,6 +425,36 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
       appBar: AppBar(
         title: Text('${widget.surahName} ${widget.arabicName}'),
         backgroundColor: const Color(0xFF1B5E20),
+        actions: [
+          // Continuous play toggle
+          IconButton(
+            icon: Icon(
+              _continuousPlay ? Icons.repeat_on : Icons.repeat,
+              color: _continuousPlay ? const Color(0xFFD4AF37) : Colors.white70,
+              size: 22,
+            ),
+            tooltip: 'Continuous Play',
+            onPressed: () => setState(() => _continuousPlay = !_continuousPlay),
+          ),
+          // Play all from beginning
+          if (_ayahs.isNotEmpty)
+            IconButton(
+              icon: Icon(
+                _playingAyah != null ? Icons.stop : Icons.play_arrow,
+                color: Colors.white,
+              ),
+              tooltip: _playingAyah != null ? 'Stop' : 'Play All',
+              onPressed: () {
+                if (_playingAyah != null) {
+                  _player.stop();
+                } else {
+                  _continuousPlay = true;
+                  _playAyah(0);
+                }
+              },
+            ),
+          const SizedBox(width: 4),
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -441,6 +491,7 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
                     ),
                   )
                 : ListView.builder(
+                    controller: _scrollController,
                     padding: const EdgeInsets.all(16),
                     itemCount: _ayahs.length,
                     itemBuilder: (context, index) {
@@ -451,14 +502,15 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
                         margin: const EdgeInsets.only(bottom: 16),
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: isDark
-                              ? const Color(0xFF1A2420)
-                              : Colors.white,
+                          color: isPlaying
+                              ? (isDark ? const Color(0xFF1A3020) : const Color(0xFFE8F5E9))
+                              : (isDark ? const Color(0xFF1A2420) : Colors.white),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: isDark
-                                ? const Color(0xFF2A3A34)
-                                : const Color(0xFFE0E0E0),
+                            color: isPlaying
+                                ? const Color(0xFF1B5E20)
+                                : (isDark ? const Color(0xFF2A3A34) : const Color(0xFFE0E0E0)),
+                            width: isPlaying ? 2 : 1,
                           ),
                         ),
                         child: Column(
