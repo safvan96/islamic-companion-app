@@ -176,6 +176,65 @@ void main() {
     });
   });
 
+  group('Prayer calculation', () {
+    test('Turkish cities include major cities', () {
+      final cities = PrayerProvider.cities;
+      expect(cities.containsKey('Konya'), true);
+      expect(cities.containsKey('Izmir'), true);
+      expect(cities.containsKey('Antalya'), true);
+      expect(cities.containsKey('Trabzon'), true);
+    });
+
+    test('Middle East cities include holy cities', () {
+      final cities = PrayerProvider.cities;
+      expect(cities.containsKey('Mecca'), true);
+      expect(cities.containsKey('Medina'), true);
+      expect(cities.containsKey('Cairo'), true);
+    });
+
+    test('Asian cities include major Muslim cities', () {
+      final cities = PrayerProvider.cities;
+      expect(cities.containsKey('Jakarta'), true);
+      expect(cities.containsKey('Karachi'), true);
+      expect(cities.containsKey('Dhaka'), true);
+    });
+  });
+
+  group('Dhikr data', () {
+    test('First dhikr is SubhanAllah', () {
+      expect(DhikrProvider.dhikrList[0]['transliteration'], 'SubhanAllah');
+    });
+
+    test('All dhikr have unique transliterations', () {
+      final names = DhikrProvider.dhikrList.map((d) => d['transliteration']).toSet();
+      expect(names.length, DhikrProvider.dhikrList.length);
+    });
+  });
+
+  group('Hijri special days', () {
+    test('Eid al-Adha is detected', () {
+      final eid = HijriCalendar(year: 1447, month: 12, day: 10);
+      expect(eid.getSpecialDay('en'), 'Eid al-Adha');
+      expect(eid.getSpecialDay('tr'), 'Kurban Bayramı');
+    });
+
+    test('Laylat al-Qadr is detected', () {
+      final qadr = HijriCalendar(year: 1447, month: 9, day: 27);
+      expect(qadr.getSpecialDay('en'), 'Laylat al-Qadr');
+      expect(qadr.getSpecialDay('tr'), 'Kadir Gecesi');
+    });
+
+    test('Non-special day returns null', () {
+      final normal = HijriCalendar(year: 1447, month: 5, day: 15);
+      expect(normal.getSpecialDay('en'), null);
+    });
+
+    test('Dhul Hijjah is detected', () {
+      final dh = HijriCalendar(year: 1447, month: 12, day: 1);
+      expect(dh.isDhulHijjah, true);
+    });
+  });
+
   group('Surah content', () {
     test('Al-Fatiha is in the list', () {
       final fatiha = SurahModel.shortSurahs
