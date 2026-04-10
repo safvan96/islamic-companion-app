@@ -3,8 +3,10 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/app_localizations.dart';
 import '../models/hadith_model.dart';
+import '../models/surah_model.dart';
 import '../providers/app_provider.dart';
 import '../providers/prayer_provider.dart';
 import '../providers/dhikr_provider.dart';
@@ -290,9 +292,15 @@ class _HomeContentState extends State<_HomeContent>
               const SizedBox(height: 16),
               // ── Stats row ──
               _StatsRow(palette: p, dhikr: dhikr),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
+              // ── Quran reading progress ──
+              _QuranProgressBar(palette: p),
+              const SizedBox(height: 20),
               // ── Daily hadith card ──
               _DailyHadithCard(palette: p, langCode: langCode),
+              const SizedBox(height: 12),
+              // ── Daily dua card ──
+              _DailyDuaCard(palette: p, langCode: langCode),
               const SizedBox(height: 20),
               // ── Quick actions ──
               _SectionLabel(l10n.translate('quickAccess').toUpperCase(), p),
@@ -1075,6 +1083,174 @@ class _DailyHadithCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 11,
                 color: palette.muted,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Daily dua card ────────────────────────────────────────────────────────
+
+class _DailyDuaCard extends StatelessWidget {
+  final _Palette palette;
+  final String langCode;
+  const _DailyDuaCard({required this.palette, required this.langCode});
+
+  static const _duaTexts = [
+    {'ar': 'أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ', 'en': 'We have reached the morning and the dominion belongs to Allah.', 'tr': 'Sabaha erdik, mülk de Allah\'a ait olarak sabaha erdi.'},
+    {'ar': 'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا', 'en': 'In Your name, O Allah, I die and I live.', 'tr': 'Senin adınla ölür ve dirilirim, Allah\'ım.'},
+    {'ar': 'بِسْمِ اللَّهِ وَعَلَى بَرَكَةِ اللَّهِ', 'en': 'In the name of Allah and with the blessings of Allah.', 'tr': 'Allah\'ın adıyla ve Allah\'ın bereketine sığınarak.'},
+    {'ar': 'اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ', 'en': 'O Allah, open the gates of Your mercy for me.', 'tr': 'Allah\'ım, bana rahmet kapılarını aç.'},
+    {'ar': 'رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ', 'en': 'My Lord, forgive me and accept my repentance.', 'tr': 'Rabbim, beni bağışla ve tövbemi kabul et.'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final dayOfYear = DateTime.now()
+        .difference(DateTime(DateTime.now().year, 1, 1))
+        .inDays;
+    final dua = _duaTexts[dayOfYear % _duaTexts.length];
+    final text = dua[langCode] ?? dua['en']!;
+
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const DuaScreen()),
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: palette.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: palette.divider),
+        ),
+        child: Row(
+          children: [
+            Icon(Icons.front_hand, color: palette.accent, size: 18),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    dua['ar']!,
+                    textDirection: TextDirection.rtl,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: palette.fg,
+                      height: 1.4,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    text,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: palette.muted,
+                      fontStyle: FontStyle.italic,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            Icon(Icons.chevron_right, color: palette.muted, size: 18),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Quran reading progress ────────────────────────────────────────────────
+
+class _QuranProgressBar extends StatefulWidget {
+  final _Palette palette;
+  const _QuranProgressBar({required this.palette});
+
+  @override
+  State<_QuranProgressBar> createState() => _QuranProgressBarState();
+}
+
+class _QuranProgressBarState extends State<_QuranProgressBar> {
+  int _readCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final prefs = await SharedPreferences.getInstance();
+    final list = prefs.getStringList('readSurahs') ?? [];
+    if (mounted) setState(() => _readCount = list.length);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = widget.palette;
+    final total = SurahModel.shortSurahs.length;
+    final progress = total == 0 ? 0.0 : (_readCount / total).clamp(0.0, 1.0);
+
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const SurahScreen()),
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: p.surface,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: p.divider),
+        ),
+        child: Row(
+          children: [
+            Icon(Icons.menu_book, color: p.accent, size: 20),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Quran',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: p.fg,
+                        ),
+                      ),
+                      const Spacer(),
+                      Text(
+                        '$_readCount / $total',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: p.muted,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: LinearProgressIndicator(
+                      value: progress,
+                      minHeight: 5,
+                      backgroundColor: p.divider,
+                      valueColor: AlwaysStoppedAnimation(p.accent),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
