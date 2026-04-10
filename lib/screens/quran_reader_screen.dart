@@ -281,6 +281,25 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
   String? _error;
   final AudioPlayer _player = AudioPlayer();
   int? _playingAyah;
+  Set<String> _bookmarkedAyahs = {};
+
+  Future<void> _loadBookmarks() async {
+    final prefs = await SharedPreferences.getInstance();
+    final list = prefs.getStringList('quranBookmarks') ?? [];
+    if (mounted) setState(() => _bookmarkedAyahs = list.toSet());
+  }
+
+  Future<void> _toggleBookmark(String ayahKey) async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      if (_bookmarkedAyahs.contains(ayahKey)) {
+        _bookmarkedAyahs.remove(ayahKey);
+      } else {
+        _bookmarkedAyahs.add(ayahKey);
+      }
+    });
+    await prefs.setStringList('quranBookmarks', _bookmarkedAyahs.toList());
+  }
 
   static const _langMap = {
     'en': 'en.asad',
@@ -312,6 +331,7 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
         setState(() => _playingAyah = null);
       }
     });
+    _loadBookmarks();
     _loadAyahs();
   }
 
@@ -467,6 +487,21 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
                                   ),
                                 ),
                                 const Spacer(),
+                                // Bookmark
+                                Builder(builder: (_) {
+                                  final key = '${widget.surahNumber}:${ayah['number']}';
+                                  final isBookmarked = _bookmarkedAyahs.contains(key);
+                                  return InkWell(
+                                    onTap: () => _toggleBookmark(key),
+                                    child: Icon(
+                                      isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                                      color: const Color(0xFFD4AF37),
+                                      size: 22,
+                                    ),
+                                  );
+                                }),
+                                const SizedBox(width: 12),
+                                // Play
                                 if (ayah['audio']!.isNotEmpty)
                                   InkWell(
                                     onTap: () => _playAyah(index),
