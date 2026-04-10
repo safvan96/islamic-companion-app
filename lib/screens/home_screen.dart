@@ -62,6 +62,8 @@ import 'tawbah_screen.dart';
 import 'khatm_planner_screen.dart';
 import 'patience_duas_screen.dart';
 import 'daily_tips_screen.dart';
+import 'faq_screen.dart';
+import 'muhasaba_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1150,6 +1152,10 @@ class _QuickActions extends StatelessWidget {
           const PatienceDuasScreen()),
       _QuickItem(Icons.tips_and_updates, l10n.translate('dailyTips'),
           const DailyTipsScreen()),
+      _QuickItem(Icons.question_answer, l10n.translate('islamicFaq'),
+          const FaqScreen()),
+      _QuickItem(Icons.nightlight_round, l10n.translate('muhasaba'),
+          const MuhasabaScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
