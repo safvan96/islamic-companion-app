@@ -60,6 +60,8 @@ import 'salawat_screen.dart';
 import 'timeline_screen.dart';
 import 'tawbah_screen.dart';
 import 'khatm_planner_screen.dart';
+import 'patience_duas_screen.dart';
+import 'daily_tips_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -110,7 +112,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  static const _currentVersion = '2.6.0';
+  static const _currentVersion = '2.7.0';
 
   @override
   void initState() {
@@ -1144,6 +1146,10 @@ class _QuickActions extends StatelessWidget {
           const TawbahScreen()),
       _QuickItem(Icons.import_contacts, l10n.translate('khatmPlanner'),
           const KhatmPlannerScreen()),
+      _QuickItem(Icons.healing_outlined, l10n.translate('patienceDuas'),
+          const PatienceDuasScreen()),
+      _QuickItem(Icons.tips_and_updates, l10n.translate('dailyTips'),
+          const DailyTipsScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
