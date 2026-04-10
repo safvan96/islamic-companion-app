@@ -4,6 +4,8 @@ import 'package:islamic_companion/models/surah_model.dart';
 import 'package:islamic_companion/models/asma_al_husna_model.dart';
 import 'package:islamic_companion/providers/dhikr_provider.dart';
 import 'package:islamic_companion/providers/prayer_provider.dart';
+import 'package:islamic_companion/services/hijri_calendar.dart';
+import 'package:islamic_companion/utils/constants.dart';
 
 void main() {
   group('Models', () {
@@ -118,6 +120,75 @@ void main() {
       for (final hadith in HadithModel.hadiths) {
         expect(hadith.translations.containsKey('ar'), true,
             reason: '${hadith.source} missing Arabic');
+      }
+    });
+  });
+
+  group('Hijri Calendar', () {
+    test('HijriCalendar.now() returns valid date', () {
+      final hijri = HijriCalendar.now();
+      expect(hijri.year, greaterThan(1440));
+      expect(hijri.month, inInclusiveRange(1, 12));
+      expect(hijri.day, inInclusiveRange(1, 30));
+    });
+
+    test('Hijri month names have 12 entries', () {
+      expect(HijriCalendar.monthNamesArabic.length, 12);
+      expect(HijriCalendar.monthNamesEnglish.length, 12);
+      expect(HijriCalendar.monthNamesTurkish.length, 12);
+    });
+
+    test('format returns non-empty string', () {
+      final hijri = HijriCalendar.now();
+      expect(hijri.format('en').isNotEmpty, true);
+      expect(hijri.format('tr').isNotEmpty, true);
+      expect(hijri.format('ar').isNotEmpty, true);
+    });
+
+    test('Eid al-Fitr is a special day', () {
+      final eid = HijriCalendar(year: 1447, month: 10, day: 1);
+      expect(eid.getSpecialDay('en'), 'Eid al-Fitr');
+      expect(eid.getSpecialDay('tr'), 'Ramazan Bayramı');
+    });
+
+    test('Ramadan month is detected', () {
+      final ramadan = HijriCalendar(year: 1447, month: 9, day: 15);
+      expect(ramadan.isRamadan, true);
+    });
+  });
+
+  group('Constants', () {
+    test('Kaaba coordinates are valid', () {
+      expect(AppConstants.kaabaLatitude, closeTo(21.42, 0.1));
+      expect(AppConstants.kaabaLongitude, closeTo(39.82, 0.1));
+    });
+
+    test('11 languages defined', () {
+      expect(AppConstants.languageNames.length, 11);
+      expect(AppConstants.languageFlags.length, 11);
+    });
+
+    test('All languages have flags', () {
+      for (final lang in AppConstants.languageNames.keys) {
+        expect(AppConstants.languageFlags.containsKey(lang), true,
+            reason: '$lang missing flag');
+      }
+    });
+  });
+
+  group('Surah content', () {
+    test('Al-Fatiha is in the list', () {
+      final fatiha = SurahModel.shortSurahs
+          .where((s) => s.number == 1)
+          .toList();
+      expect(fatiha.length, 1);
+      expect(fatiha.first.transliteration, 'Al-Fatiha');
+    });
+
+    test('All surahs have verse count > 0', () {
+      for (final s in SurahModel.shortSurahs) {
+        expect(s.versesCount, greaterThan(0),
+            reason: '${s.transliteration} has 0 verses');
       }
     });
   });

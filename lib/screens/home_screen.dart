@@ -71,13 +71,75 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+  static const _currentVersion = '2.1.0';
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<PrayerProvider>(context, listen: false).initLocation();
+      _checkWhatsNew();
     });
+  }
+
+  Future<void> _checkWhatsNew() async {
+    final prefs = await SharedPreferences.getInstance();
+    final lastVersion = prefs.getString('lastSeenVersion') ?? '';
+    if (lastVersion != _currentVersion) {
+      await prefs.setString('lastSeenVersion', _currentVersion);
+      if (lastVersion.isNotEmpty && mounted) {
+        _showWhatsNew();
+      }
+    }
+  }
+
+  void _showWhatsNew() {
+    final isDark = Provider.of<AppProvider>(context, listen: false).isDarkMode;
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Row(
+          children: [
+            const Icon(Icons.new_releases, color: Color(0xFFD4AF37)),
+            const SizedBox(width: 10),
+            Text("What's New", style: TextStyle(fontSize: 18)),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _whatsNewItem('Dhikr streak counter'),
+            _whatsNewItem('Islamic special days banner'),
+            _whatsNewItem('Quran reading tracker'),
+            _whatsNewItem('Hadith search'),
+            _whatsNewItem('Daily dua card'),
+            _whatsNewItem('99 Names sharing'),
+            _whatsNewItem('Share App button'),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('OK', style: TextStyle(color: Color(0xFF1B5E20))),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _whatsNewItem(String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 3),
+      child: Row(
+        children: [
+          const Icon(Icons.check_circle, color: Color(0xFF1B5E20), size: 16),
+          const SizedBox(width: 8),
+          Expanded(child: Text(text, style: const TextStyle(fontSize: 13))),
+        ],
+      ),
+    );
   }
 
   @override
