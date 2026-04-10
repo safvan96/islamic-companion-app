@@ -94,6 +94,8 @@ import 'tafakkur_screen.dart';
 import 'weekly_report_screen.dart';
 import 'holy_nights_screen.dart';
 import 'reading_log_screen.dart';
+import 'spouse_duas_screen.dart';
+import 'travel_guide_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1262,6 +1264,10 @@ class _QuickActions extends StatelessWidget {
           const HolyNightsScreen()),
       _QuickItem(Icons.edit_calendar, l10n.translate('readingLog'),
           const ReadingLogScreen()),
+      _QuickItem(Icons.favorite_rounded, l10n.translate('spouseDuas'),
+          const SpouseDuasScreen()),
+      _QuickItem(Icons.flight_takeoff, l10n.translate('travelGuide'),
+          const TravelGuideScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
