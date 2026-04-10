@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_compass/flutter_compass.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 import '../l10n/app_localizations.dart';
@@ -13,21 +15,18 @@ class QiblaScreen extends StatefulWidget {
   State<QiblaScreen> createState() => _QiblaScreenState();
 }
 
-class _QiblaScreenState extends State<QiblaScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animController;
+class _QiblaScreenState extends State<QiblaScreen> {
   double _qiblaDirection = 0;
-  final double _currentHeading = 0;
+  double _currentHeading = 0;
+  bool _hasCompass = false;
+  StreamSubscription<CompassEvent>? _compassSub;
 
   @override
   void initState() {
     super.initState();
-    _animController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _calculateQibla();
+      _startCompass();
     });
   }
 
@@ -49,14 +48,27 @@ class _QiblaScreenState extends State<QiblaScreen>
     var bearing = atan2(y, x) * 180 / pi;
     bearing = (bearing + 360) % 360;
 
-    setState(() {
-      _qiblaDirection = bearing;
-    });
+    setState(() => _qiblaDirection = bearing);
+  }
+
+  Future<void> _startCompass() async {
+    try {
+      _compassSub = FlutterCompass.events?.listen((event) {
+        if (mounted && event.heading != null) {
+          setState(() {
+            _currentHeading = event.heading!;
+            _hasCompass = true;
+          });
+        }
+      });
+    } catch (e) {
+      debugPrint('Compass not available: $e');
+    }
   }
 
   @override
   void dispose() {
-    _animController.dispose();
+    _compassSub?.cancel();
     super.dispose();
   }
 
@@ -229,6 +241,35 @@ class _QiblaScreenState extends State<QiblaScreen>
                 ),
               ),
               const SizedBox(height: 16),
+              // Compass status
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: _hasCompass
+                      ? const Color(0xFF1B5E20).withOpacity(0.1)
+                      : Colors.orange.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      _hasCompass ? Icons.explore : Icons.explore_off,
+                      size: 14,
+                      color: _hasCompass ? const Color(0xFF1B5E20) : Colors.orange,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      _hasCompass ? 'Compass active' : 'No compass sensor',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: _hasCompass ? const Color(0xFF1B5E20) : Colors.orange,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: Text(

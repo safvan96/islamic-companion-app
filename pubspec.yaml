@@ -23,6 +23,7 @@ dependencies:
   flutter_svg: ^2.0.9
   http: ^1.1.2
   share_plus: ^9.0.0
+  flutter_compass: ^0.8.0
 
 dev_dependencies:
   flutter_test:
