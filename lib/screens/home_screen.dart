@@ -37,6 +37,8 @@ import 'hifz_screen.dart';
 import 'charity_screen.dart';
 import 'daily_duas_screen.dart';
 import 'islamic_calendar_screen.dart';
+import 'good_deeds_screen.dart';
+import 'dua_journal_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1074,6 +1076,10 @@ class _QuickActions extends StatelessWidget {
           const DailyDuasScreen()),
       _QuickItem(Icons.calendar_month, l10n.translate('islamicCalendar'),
           const IslamicCalendarScreen()),
+      _QuickItem(Icons.checklist_rounded, l10n.translate('goodDeeds'),
+          const GoodDeedsScreen()),
+      _QuickItem(Icons.edit_note, l10n.translate('duaJournal'),
+          const DuaJournalScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
