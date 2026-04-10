@@ -72,17 +72,27 @@ class PrayerProvider extends ChangeNotifier {
     'Madrid': [40.4168, -3.7038],
   };
 
-  /// Initialize with default or saved city
+  double get latitude => _latitude;
+  double get longitude => _longitude;
+
+  /// Initialize with saved or default city
   Future<void> initLocation() async {
-    if (_prayerTimes.isEmpty) {
+    final prefs = await SharedPreferences.getInstance();
+    final savedCity = prefs.getString('selectedCity') ?? 'Istanbul';
+    final coords = cities[savedCity];
+    if (coords != null) {
+      setLocation(coords[0], coords[1], savedCity);
+    } else {
       setLocation(41.0082, 28.9784, 'Istanbul');
     }
   }
 
-  /// Set city by name
-  void setCity(String name) {
+  /// Set city by name and persist
+  Future<void> setCity(String name) async {
     final coords = cities[name];
     if (coords != null) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('selectedCity', name);
       setLocation(coords[0], coords[1], name);
     }
   }

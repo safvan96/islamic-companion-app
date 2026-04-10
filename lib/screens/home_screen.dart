@@ -213,8 +213,7 @@ class _HomeContentState extends State<_HomeContent>
     final dhikr = Provider.of<DhikrProvider>(context);
     final hijri = HijriCalendar.now();
     final langCode = Provider.of<AppProvider>(context).locale.languageCode;
-    // Use Istanbul as default — same as PrayerProvider init
-    final qibla = _qiblaBearing(41.0082, 28.9784);
+    final qibla = _qiblaBearing(prayer.latitude, prayer.longitude);
 
     return SafeArea(
       child: LayoutBuilder(builder: (context, constraints) {

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'dart:math';
 import '../l10n/app_localizations.dart';
 import '../providers/app_provider.dart';
+import '../providers/prayer_provider.dart';
 import '../utils/constants.dart';
 
 class QiblaScreen extends StatefulWidget {
@@ -16,11 +17,7 @@ class _QiblaScreenState extends State<QiblaScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animController;
   double _qiblaDirection = 0;
-  double _currentHeading = 0;
-
-  // Default location (Istanbul) - in production, use geolocator
-  final double _latitude = 41.0082;
-  final double _longitude = 28.9784;
+  final double _currentHeading = 0;
 
   @override
   void initState() {
@@ -29,12 +26,18 @@ class _QiblaScreenState extends State<QiblaScreen>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    _calculateQibla();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _calculateQibla();
+    });
   }
 
   void _calculateQibla() {
-    final latRad = _latitude * pi / 180;
-    final lngRad = _longitude * pi / 180;
+    final prayer = Provider.of<PrayerProvider>(context, listen: false);
+    final lat = prayer.latitude;
+    final lng = prayer.longitude;
+
+    final latRad = lat * pi / 180;
+    final lngRad = lng * pi / 180;
     final kaabaLatRad = AppConstants.kaabaLatitude * pi / 180;
     final kaabaLngRad = AppConstants.kaabaLongitude * pi / 180;
 
@@ -61,6 +64,7 @@ class _QiblaScreenState extends State<QiblaScreen>
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Provider.of<AppProvider>(context).isDarkMode;
+    final prayer = Provider.of<PrayerProvider>(context);
     // The needle should point towards Qibla relative to current heading
     final needleAngle = (_qiblaDirection - _currentHeading) * pi / 180;
 
@@ -177,6 +181,22 @@ class _QiblaScreenState extends State<QiblaScreen>
                 ),
                 child: Column(
                   children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.location_on, size: 14,
+                            color: isDark ? Colors.white54 : Colors.black38),
+                        const SizedBox(width: 4),
+                        Text(
+                          prayer.locationName,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: isDark ? Colors.white54 : Colors.black38,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
                     Text(
                       l10n.translate('qiblaDirection'),
                       style: TextStyle(
