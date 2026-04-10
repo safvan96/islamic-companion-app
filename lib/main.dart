@@ -12,6 +12,7 @@ import 'providers/prayer_provider.dart';
 import 'providers/dhikr_provider.dart';
 import 'providers/favorites_provider.dart';
 import 'providers/qaza_provider.dart';
+import 'providers/fasting_provider.dart';
 import 'screens/splash_screen.dart';
 import 'services/adhan_service.dart';
 import 'services/notification_service.dart';
@@ -51,6 +52,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => DhikrProvider()),
         ChangeNotifierProvider(create: (_) => FavoritesProvider()),
         ChangeNotifierProvider(create: (_) => QazaProvider()),
+        ChangeNotifierProvider(create: (_) => FastingProvider()),
       ],
       child: const IslamicCompanionApp(),
     ),

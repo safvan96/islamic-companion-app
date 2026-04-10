@@ -29,6 +29,7 @@ import 'tasbih_set_screen.dart';
 import 'qaza_screen.dart';
 import 'zakat_screen.dart';
 import 'quiz_screen.dart';
+import 'fasting_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1050,6 +1051,8 @@ class _QuickActions extends StatelessWidget {
           const ZakatScreen()),
       _QuickItem(Icons.quiz_outlined, l10n.translate('islamicQuiz'),
           const QuizScreen()),
+      _QuickItem(Icons.restaurant_outlined, l10n.translate('fastingTracker'),
+          const FastingScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
