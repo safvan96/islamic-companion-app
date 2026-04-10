@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/app_provider.dart';
 import '../providers/prayer_provider.dart';
@@ -306,6 +307,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 launchUrl(
                   Uri.parse('https://play.google.com/store/apps/details?id=com.islamiccompanion.app'),
                   mode: LaunchMode.externalApplication,
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 24),
+          // Share App
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: ListTile(
+              leading: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.green.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.share, color: Colors.green),
+              ),
+              title: Text(
+                l10n.translate('shareApp'),
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+              trailing: const Icon(Icons.chevron_right),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              onTap: () {
+                Share.share(
+                  '${l10n.translate('appTitle')} - ${l10n.translate('shareAppMessage')}\n\nhttps://play.google.com/store/apps/details?id=com.islamiccompanion.app',
                 );
               },
             ),

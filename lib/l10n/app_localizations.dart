@@ -96,6 +96,8 @@ class AppLocalizations {
       'dailyHadithNotifDesc': 'Receive a hadith every morning',
       'rateUs': 'Rate Us',
       'rateUsDesc': 'Love the app? Leave a review!',
+      'shareApp': 'Share App',
+      'shareAppMessage': 'Prayer times, Qibla, dhikr & more!',
     },
     'tr': {
       'appTitle': 'İslami Rehber',
@@ -166,6 +168,8 @@ class AppLocalizations {
       'dailyHadithNotifDesc': 'Her sabah bir hadis al',
       'rateUs': 'Bizi Değerlendirin',
       'rateUsDesc': 'Uygulamayı beğendiniz mi? Yorum bırakın!',
+      'shareApp': 'Uygulamayı Paylaş',
+      'shareAppMessage': 'Namaz vakitleri, kıble, zikir ve daha fazlası!',
     },
     'ar': {
       'appTitle': 'الرفيق الإسلامي',
@@ -236,6 +240,8 @@ class AppLocalizations {
       'dailyHadithNotifDesc': 'تلقي حديث كل صباح',
       'rateUs': 'قيّمنا',
       'rateUsDesc': 'أعجبك التطبيق؟ اترك تقييماً!',
+      'shareApp': 'شارك التطبيق',
+      'shareAppMessage': 'أوقات الصلاة والقبلة والذكر والمزيد!',
     },
     'ru': {
       'appTitle': 'Исламский Компаньон',
@@ -306,6 +312,8 @@ class AppLocalizations {
       'dailyHadithNotifDesc': 'Получать хадис каждое утро',
       'rateUs': 'Оцените нас',
       'rateUsDesc': 'Нравится приложение? Оставьте отзыв!',
+      'shareApp': 'Поделиться',
+      'shareAppMessage': 'Время намаза, кибла, зикр и другое!',
     },
     'hi': {
       'appTitle': 'इस्लामिक साथी',
@@ -376,6 +384,8 @@ class AppLocalizations {
       'dailyHadithNotifDesc': 'हर सुबह एक हदीस प्राप्त करें',
       'rateUs': 'हमें रेट करें',
       'rateUsDesc': 'ऐप पसंद आया? समीक्षा छोड़ें!',
+      'shareApp': 'ऐप शेयर करें',
+      'shareAppMessage': 'नमाज़ का समय, क़िबला, ज़िक्र और बहुत कुछ!',
     },
     'id': {
       'appTitle': 'Sahabat Islami',
@@ -446,6 +456,8 @@ class AppLocalizations {
       'dailyHadithNotifDesc': 'Terima hadits setiap pagi',
       'rateUs': 'Beri Nilai',
       'rateUsDesc': 'Suka aplikasinya? Beri ulasan!',
+      'shareApp': 'Bagikan Aplikasi',
+      'shareAppMessage': 'Waktu shalat, kiblat, dzikir dan lainnya!',
     },
     'zh': {
       'appTitle': '伊斯兰伴侣',
@@ -516,6 +528,8 @@ class AppLocalizations {
       'dailyHadithNotifDesc': '每天早上收到一则圣训',
       'rateUs': '给我们评分',
       'rateUsDesc': '喜欢这个应用？留下评论！',
+      'shareApp': '分享应用',
+      'shareAppMessage': '礼拜时间、朝向、记念等功能！',
     },
     'de': {
       'appTitle': 'Islamischer Begleiter',
@@ -586,6 +600,8 @@ class AppLocalizations {
       'dailyHadithNotifDesc': 'Jeden Morgen einen Hadith erhalten',
       'rateUs': 'Bewerten Sie uns',
       'rateUsDesc': 'Gefällt Ihnen die App? Hinterlassen Sie eine Bewertung!',
+      'shareApp': 'App teilen',
+      'shareAppMessage': 'Gebetszeiten, Qibla, Dhikr und mehr!',
     },
     'nl': {
       'appTitle': 'Islamitische Metgezel',
@@ -656,6 +672,8 @@ class AppLocalizations {
       'dailyHadithNotifDesc': 'Ontvang elke ochtend een hadith',
       'rateUs': 'Beoordeel ons',
       'rateUsDesc': 'Bevalt de app? Laat een beoordeling achter!',
+      'shareApp': 'App delen',
+      'shareAppMessage': 'Gebedstijden, Qibla, Dhikr en meer!',
     },
     'fr': {
       'appTitle': 'Compagnon Islamique',
@@ -726,6 +744,8 @@ class AppLocalizations {
       'dailyHadithNotifDesc': 'Recevoir un hadith chaque matin',
       'rateUs': 'Notez-nous',
       'rateUsDesc': 'Vous aimez l\'appli ? Laissez un avis !',
+      'shareApp': 'Partager l\'appli',
+      'shareAppMessage': 'Heures de prière, Qibla, Dhikr et plus !',
     },
     'es': {
       'appTitle': 'Compañero Islámico',
@@ -796,6 +816,8 @@ class AppLocalizations {
       'dailyHadithNotifDesc': 'Recibir un hadiz cada mañana',
       'rateUs': 'Califícanos',
       'rateUsDesc': '¿Te gusta la app? ¡Deja una reseña!',
+      'shareApp': 'Compartir app',
+      'shareAppMessage': '¡Horarios de oración, Qibla, Dhikr y más!',
     },
   };
 

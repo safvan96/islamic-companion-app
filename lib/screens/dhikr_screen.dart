@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/dhikr_provider.dart';
 import '../providers/app_provider.dart';
@@ -460,6 +461,35 @@ class _DhikrSheet extends StatelessWidget {
               style: TextStyle(color: palette.fg, fontSize: 14),
             ),
             secondary: Icon(Icons.vibration, color: palette.muted, size: 20),
+          ),
+          const SizedBox(height: 16),
+          // Share stats button
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () {
+                final total = provider.totalCount;
+                final today = provider.todayCount;
+                final current = DhikrProvider.dhikrList[provider.selectedDhikrIndex];
+                Share.share(
+                  '${current['arabic']}\n\n'
+                  'Today: $today | Total: $total\n\n'
+                  '📱 Islamic Companion App',
+                );
+              },
+              icon: Icon(Icons.share_outlined, size: 18, color: palette.accent),
+              label: Text(
+                'Share Stats',
+                style: TextStyle(color: palette.accent),
+              ),
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: palette.divider),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+            ),
           ),
         ],
       ),
