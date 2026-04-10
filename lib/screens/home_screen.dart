@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/app_localizations.dart';
 import '../models/hadith_model.dart';
 import '../models/surah_model.dart';
+import '../services/quran_stats_service.dart';
 import '../providers/app_provider.dart';
 import '../providers/prayer_provider.dart';
 import '../providers/dhikr_provider.dart';
@@ -1349,6 +1350,7 @@ class _QuranProgressBar extends StatefulWidget {
 class _QuranProgressBarState extends State<_QuranProgressBar>
     with WidgetsBindingObserver {
   int _readCount = 0;
+  int _totalAyahs = 0;
 
   @override
   void initState() {
@@ -1371,7 +1373,13 @@ class _QuranProgressBarState extends State<_QuranProgressBar>
   Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
     final list = prefs.getStringList('readSurahs') ?? [];
-    if (mounted) setState(() => _readCount = list.length);
+    final stats = await QuranStatsService.getStats();
+    if (mounted) {
+      setState(() {
+        _readCount = list.length;
+        _totalAyahs = stats['totalAyahs'] ?? 0;
+      });
+    }
   }
 
   @override
@@ -1414,6 +1422,14 @@ class _QuranProgressBarState extends State<_QuranProgressBar>
                         ),
                       ),
                       const Spacer(),
+                      if (_totalAyahs > 0)
+                        Text(
+                          '$_totalAyahs ayahs  ',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: p.accent,
+                          ),
+                        ),
                       Text(
                         '$_readCount / $total',
                         style: TextStyle(

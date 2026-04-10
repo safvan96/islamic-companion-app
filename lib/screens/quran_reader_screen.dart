@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:share_plus/share_plus.dart';
 import '../providers/app_provider.dart';
 import '../l10n/app_localizations.dart';
+import '../services/quran_stats_service.dart';
 import 'quran_search_screen.dart';
 import 'juz_screen.dart';
 
@@ -402,6 +403,8 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
           });
         }
         if (mounted) setState(() { _ayahs = ayahs; _loading = false; });
+        // Track reading stats
+        QuranStatsService.markSurahRead(widget.surahNumber, ayahs.length);
       } else {
         if (mounted) setState(() { _error = 'Failed to load'; _loading = false; });
       }
