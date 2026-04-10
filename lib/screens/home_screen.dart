@@ -22,6 +22,7 @@ import 'asma_al_husna_screen.dart';
 import 'dua_screen.dart';
 import 'favorites_screen.dart';
 import 'quran_reader_screen.dart';
+import 'juz_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────

@@ -8,6 +8,7 @@ import 'package:share_plus/share_plus.dart';
 import '../providers/app_provider.dart';
 import '../l10n/app_localizations.dart';
 import 'quran_search_screen.dart';
+import 'juz_screen.dart';
 
 class QuranReaderScreen extends StatefulWidget {
   const QuranReaderScreen({super.key});
@@ -85,6 +86,14 @@ class _QuranReaderScreenState extends State<QuranReaderScreen> {
         title: const Text('Quran / القرآن الكريم'),
         backgroundColor: const Color(0xFF1B5E20),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.auto_stories),
+            tooltip: 'Browse by Juz',
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const JuzScreen()),
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.search),
             tooltip: 'Search in Quran',
