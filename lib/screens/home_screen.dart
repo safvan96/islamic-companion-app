@@ -88,6 +88,8 @@ import 'arabic_alphabet_screen.dart';
 import 'daily_checkin_screen.dart';
 import 'prayer_intentions_screen.dart';
 import 'surah_categories_screen.dart';
+import 'qunut_screen.dart';
+import 'prayer_counter_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1244,6 +1246,10 @@ class _QuickActions extends StatelessWidget {
           const PrayerIntentionsScreen()),
       _QuickItem(Icons.category, l10n.translate('surahCategories'),
           const SurahCategoriesScreen()),
+      _QuickItem(Icons.meeting_room, l10n.translate('qunutDuas'),
+          const QunutScreen()),
+      _QuickItem(Icons.check_box, l10n.translate('prayerCounter'),
+          const PrayerCounterScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
