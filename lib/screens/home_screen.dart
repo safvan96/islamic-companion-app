@@ -71,7 +71,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  static const _currentVersion = '2.1.0';
+  static const _currentVersion = '2.2.0';
 
   @override
   void initState() {
@@ -110,13 +110,13 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _whatsNewItem('Dhikr streak counter'),
-            _whatsNewItem('Islamic special days banner'),
+            _whatsNewItem('20 languages supported'),
+            _whatsNewItem('42 cities worldwide'),
             _whatsNewItem('Quran reading tracker'),
+            _whatsNewItem('Dhikr streak counter'),
+            _whatsNewItem('Islamic special days'),
             _whatsNewItem('Hadith search'),
-            _whatsNewItem('Daily dua card'),
-            _whatsNewItem('99 Names sharing'),
-            _whatsNewItem('Share App button'),
+            _whatsNewItem('Bug fixes & improvements'),
           ],
         ),
         actions: [
@@ -507,7 +507,20 @@ class _NextPrayerCardState extends State<_NextPrayerCard> {
     if (_playing) {
       await _player.stop();
     } else {
-      await _player.play(UrlSource(_kAdhanUrl));
+      try {
+        await _player.play(UrlSource(_kAdhanUrl));
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('No internet connection'),
+              backgroundColor: Colors.red.shade700,
+              behavior: SnackBarBehavior.floating,
+              duration: const Duration(seconds: 2),
+            ),
+          );
+        }
+      }
     }
   }
 
