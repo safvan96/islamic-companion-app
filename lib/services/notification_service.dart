@@ -1,87 +1,118 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz_data;
+import '../models/hadith_model.dart';
 
-/// Notification service for prayer time reminders.
-/// In production, integrate with flutter_local_notifications and
-/// android_alarm_manager_plus for precise scheduling.
-///
-/// Usage:
-/// ```dart
-/// NotificationService.instance.schedulePrayerNotification(
-///   prayerName: 'Fajr',
-///   scheduledTime: DateTime(...),
-/// );
-/// ```
 class NotificationService {
   static final NotificationService instance = NotificationService._();
   NotificationService._();
 
+  final FlutterLocalNotificationsPlugin _plugin =
+      FlutterLocalNotificationsPlugin();
   bool _initialized = false;
 
   Future<void> initialize() async {
     if (_initialized) return;
-    // TODO: Initialize flutter_local_notifications plugin
-    // final initSettings = InitializationSettings(
-    //   android: AndroidInitializationSettings('@mipmap/ic_launcher'),
-    //   iOS: DarwinInitializationSettings(),
-    // );
-    // await flutterLocalNotificationsPlugin.initialize(initSettings);
+
+    tz_data.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation(_guessTimeZone()));
+
+    const androidSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const initSettings = InitializationSettings(android: androidSettings);
+
+    await _plugin.initialize(initSettings);
+
+    await _plugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
+
     _initialized = true;
     debugPrint('NotificationService initialized');
   }
 
-  Future<void> schedulePrayerNotification({
-    required String prayerName,
-    required DateTime scheduledTime,
-  }) async {
-    // TODO: Schedule notification at exact prayer time
-    // await flutterLocalNotificationsPlugin.zonedSchedule(
-    //   id,
-    //   'Islamic Companion',
-    //   'Time for $prayerName prayer',
-    //   tz.TZDateTime.from(scheduledTime, tz.local),
-    //   notificationDetails,
-    //   androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-    //   matchDateTimeComponents: DateTimeComponents.time,
-    // );
-    debugPrint('Scheduled notification for $prayerName at $scheduledTime');
+  /// Schedule daily hadith notification at given hour:minute.
+  /// Uses a deterministic hadith based on day of year.
+  Future<void> scheduleDailyHadith({int hour = 8, int minute = 0}) async {
+    if (!_initialized) await initialize();
+
+    // Cancel existing daily hadith notification
+    await _plugin.cancel(100);
+
+    final prefs = await SharedPreferences.getInstance();
+    final langCode = prefs.getString('locale') ?? 'en';
+
+    final dayOfYear = DateTime.now()
+        .difference(DateTime(DateTime.now().year, 1, 1))
+        .inDays;
+    final hadithIndex = dayOfYear % HadithModel.hadiths.length;
+    final hadith = HadithModel.hadiths[hadithIndex];
+    final translation =
+        hadith.translations[langCode] ?? hadith.translations['en']!;
+
+    // Truncate for notification body
+    final body = translation.length > 100
+        ? '${translation.substring(0, 100)}...'
+        : translation;
+
+    try {
+      await _plugin.zonedSchedule(
+        100,
+        '📖 ${hadith.source}',
+        body,
+        _nextInstanceOfTime(hour, minute),
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'daily_hadith',
+            'Daily Hadith',
+            channelDescription: 'Daily hadith reminder',
+            importance: Importance.defaultImportance,
+            priority: Priority.defaultPriority,
+          ),
+        ),
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        matchDateTimeComponents: DateTimeComponents.time,
+      );
+      debugPrint('Scheduled daily hadith at $hour:$minute');
+    } catch (e) {
+      debugPrint('Failed to schedule daily hadith: $e');
+    }
+  }
+
+  Future<void> cancelDailyHadith() async {
+    await _plugin.cancel(100);
   }
 
   Future<void> cancelAllNotifications() async {
-    // await flutterLocalNotificationsPlugin.cancelAll();
-    debugPrint('All notifications cancelled');
+    await _plugin.cancelAll();
   }
 
-  Future<void> scheduleAllPrayerNotifications(
-      Map<String, String> prayerTimes) async {
-    await cancelAllNotifications();
-
-    final now = DateTime.now();
-    for (final entry in prayerTimes.entries) {
-      if (entry.key == 'Sunrise') continue; // Skip sunrise
-
-      final parts = entry.value.split(':');
-      if (parts.length != 2) continue;
-
-      final hour = int.tryParse(parts[0]) ?? 0;
-      final minute = int.tryParse(parts[1]) ?? 0;
-
-      var scheduledTime = DateTime(
-        now.year,
-        now.month,
-        now.day,
-        hour,
-        minute,
-      );
-
-      // If the time has already passed today, schedule for tomorrow
-      if (scheduledTime.isBefore(now)) {
-        scheduledTime = scheduledTime.add(const Duration(days: 1));
-      }
-
-      await schedulePrayerNotification(
-        prayerName: entry.key,
-        scheduledTime: scheduledTime,
-      );
+  tz.TZDateTime _nextInstanceOfTime(int hour, int minute) {
+    final now = tz.TZDateTime.now(tz.local);
+    var scheduled =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
+    if (scheduled.isBefore(now)) {
+      scheduled = scheduled.add(const Duration(days: 1));
     }
+    return scheduled;
+  }
+
+  static String _guessTimeZone() {
+    final offset = DateTime.now().timeZoneOffset;
+    if (offset.inHours == 3) return 'Europe/Istanbul';
+    if (offset.inHours == 2) return 'Europe/Berlin';
+    if (offset.inHours == 1) return 'Europe/London';
+    if (offset.inHours == 0) return 'UTC';
+    if (offset.inMinutes == 330) return 'Asia/Kolkata';
+    if (offset.inHours == 7) return 'Asia/Jakarta';
+    if (offset.inHours == 8) return 'Asia/Shanghai';
+    if (offset.inHours == 9) return 'Asia/Tokyo';
+    if (offset.inHours == 4) return 'Asia/Dubai';
+    return 'UTC';
   }
 }

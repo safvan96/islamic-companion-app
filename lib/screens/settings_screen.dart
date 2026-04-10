@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/app_provider.dart';
 import '../providers/prayer_provider.dart';
+import '../services/notification_service.dart';
 import '../utils/constants.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -15,17 +16,23 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _adhanEnabled = true;
+  bool _dailyHadithEnabled = false;
+  int _dailyHadithHour = 8;
+  int _dailyHadithMinute = 0;
 
   @override
   void initState() {
     super.initState();
-    _loadAdhanPref();
+    _loadPrefs();
   }
 
-  Future<void> _loadAdhanPref() async {
+  Future<void> _loadPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _adhanEnabled = prefs.getBool('adhanEnabled') ?? true;
+      _dailyHadithEnabled = prefs.getBool('dailyHadithEnabled') ?? false;
+      _dailyHadithHour = prefs.getInt('dailyHadithHour') ?? 8;
+      _dailyHadithMinute = prefs.getInt('dailyHadithMinute') ?? 0;
     });
   }
 
@@ -33,6 +40,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('adhanEnabled', value);
     setState(() => _adhanEnabled = value);
+  }
+
+  Future<void> _toggleDailyHadith(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('dailyHadithEnabled', value);
+    setState(() => _dailyHadithEnabled = value);
+    if (value) {
+      await NotificationService.instance
+          .scheduleDailyHadith(hour: _dailyHadithHour, minute: _dailyHadithMinute);
+    } else {
+      await NotificationService.instance.cancelDailyHadith();
+    }
+  }
+
+  Future<void> _pickHadithTime() async {
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(hour: _dailyHadithHour, minute: _dailyHadithMinute),
+    );
+    if (picked == null) return;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('dailyHadithHour', picked.hour);
+    await prefs.setInt('dailyHadithMinute', picked.minute);
+    setState(() {
+      _dailyHadithHour = picked.hour;
+      _dailyHadithMinute = picked.minute;
+    });
+    if (_dailyHadithEnabled) {
+      await NotificationService.instance
+          .scheduleDailyHadith(hour: picked.hour, minute: picked.minute);
+    }
   }
 
   @override
@@ -115,6 +153,55 @@ class _SettingsScreenState extends State<SettingsScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          // Daily Hadith Notification
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              children: [
+                SwitchListTile(
+                  secondary: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.amber.withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.auto_stories, color: Colors.amber),
+                  ),
+                  title: Text(
+                    l10n.translate('dailyHadithNotif'),
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  subtitle: Text(
+                    l10n.translate('dailyHadithNotifDesc'),
+                    style: TextStyle(fontSize: 12, color: isDark ? Colors.white54 : Colors.black45),
+                  ),
+                  value: _dailyHadithEnabled,
+                  onChanged: _toggleDailyHadith,
+                  activeColor: Colors.amber,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                if (_dailyHadithEnabled)
+                  ListTile(
+                    contentPadding: const EdgeInsets.only(left: 72, right: 16, bottom: 8),
+                    title: Text(
+                      '${_dailyHadithHour.toString().padLeft(2, '0')}:${_dailyHadithMinute.toString().padLeft(2, '0')}',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.amber.shade700,
+                      ),
+                    ),
+                    trailing: const Icon(Icons.access_time, size: 20),
+                    onTap: _pickHadithTime,
+                  ),
+              ],
             ),
           ),
           const SizedBox(height: 12),

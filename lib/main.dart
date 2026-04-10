@@ -13,6 +13,7 @@ import 'providers/dhikr_provider.dart';
 import 'providers/favorites_provider.dart';
 import 'screens/splash_screen.dart';
 import 'services/adhan_service.dart';
+import 'services/notification_service.dart';
 import 'utils/theme.dart';
 
 void main() async {
@@ -21,9 +22,18 @@ void main() async {
     await MobileAds.instance.initialize();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     await AdhanService.init();
+    await NotificationService.instance.initialize();
   }
 
   final prefs = await SharedPreferences.getInstance();
+
+  // Reschedule daily hadith if enabled
+  final dailyHadithEnabled = prefs.getBool('dailyHadithEnabled') ?? false;
+  if (dailyHadithEnabled) {
+    final h = prefs.getInt('dailyHadithHour') ?? 8;
+    final m = prefs.getInt('dailyHadithMinute') ?? 0;
+    await NotificationService.instance.scheduleDailyHadith(hour: h, minute: m);
+  }
   final savedLocale = prefs.getString('locale') ?? 'en';
   final isDarkMode = prefs.getBool('isDarkMode') ?? false;
 

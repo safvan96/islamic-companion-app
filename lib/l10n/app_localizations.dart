@@ -92,6 +92,8 @@ class AppLocalizations {
       'city': 'City',
       'favorites': 'Favorites',
       'noFavorites': 'No favorites yet',
+      'dailyHadithNotif': 'Daily Hadith',
+      'dailyHadithNotifDesc': 'Receive a hadith every morning',
     },
     'tr': {
       'appTitle': 'İslami Rehber',
@@ -158,6 +160,8 @@ class AppLocalizations {
       'city': 'Şehir',
       'favorites': 'Favoriler',
       'noFavorites': 'Henüz favori yok',
+      'dailyHadithNotif': 'Günlük Hadis',
+      'dailyHadithNotifDesc': 'Her sabah bir hadis al',
     },
     'ar': {
       'appTitle': 'الرفيق الإسلامي',
@@ -224,6 +228,8 @@ class AppLocalizations {
       'city': 'المدينة',
       'favorites': 'المفضلة',
       'noFavorites': 'لا توجد مفضلات بعد',
+      'dailyHadithNotif': 'حديث يومي',
+      'dailyHadithNotifDesc': 'تلقي حديث كل صباح',
     },
     'ru': {
       'appTitle': 'Исламский Компаньон',
@@ -290,6 +296,8 @@ class AppLocalizations {
       'city': 'Город',
       'favorites': 'Избранное',
       'noFavorites': 'Пока нет избранного',
+      'dailyHadithNotif': 'Хадис дня',
+      'dailyHadithNotifDesc': 'Получать хадис каждое утро',
     },
     'hi': {
       'appTitle': 'इस्लामिक साथी',
@@ -356,6 +364,8 @@ class AppLocalizations {
       'city': 'शहर',
       'favorites': 'पसंदीदा',
       'noFavorites': 'अभी कोई पसंदीदा नहीं',
+      'dailyHadithNotif': 'दैनिक हदीस',
+      'dailyHadithNotifDesc': 'हर सुबह एक हदीस प्राप्त करें',
     },
     'id': {
       'appTitle': 'Sahabat Islami',
@@ -422,6 +432,8 @@ class AppLocalizations {
       'city': 'Kota',
       'favorites': 'Favorit',
       'noFavorites': 'Belum ada favorit',
+      'dailyHadithNotif': 'Hadits Harian',
+      'dailyHadithNotifDesc': 'Terima hadits setiap pagi',
     },
     'zh': {
       'appTitle': '伊斯兰伴侣',
@@ -488,6 +500,8 @@ class AppLocalizations {
       'city': '城市',
       'favorites': '收藏',
       'noFavorites': '暂无收藏',
+      'dailyHadithNotif': '每日圣训',
+      'dailyHadithNotifDesc': '每天早上收到一则圣训',
     },
     'de': {
       'appTitle': 'Islamischer Begleiter',
@@ -554,6 +568,8 @@ class AppLocalizations {
       'city': 'Stadt',
       'favorites': 'Favoriten',
       'noFavorites': 'Noch keine Favoriten',
+      'dailyHadithNotif': 'Täglicher Hadith',
+      'dailyHadithNotifDesc': 'Jeden Morgen einen Hadith erhalten',
     },
     'nl': {
       'appTitle': 'Islamitische Metgezel',
@@ -620,6 +636,8 @@ class AppLocalizations {
       'city': 'Stad',
       'favorites': 'Favorieten',
       'noFavorites': 'Nog geen favorieten',
+      'dailyHadithNotif': 'Dagelijkse Hadith',
+      'dailyHadithNotifDesc': 'Ontvang elke ochtend een hadith',
     },
     'fr': {
       'appTitle': 'Compagnon Islamique',
@@ -686,6 +704,8 @@ class AppLocalizations {
       'city': 'Ville',
       'favorites': 'Favoris',
       'noFavorites': 'Pas encore de favoris',
+      'dailyHadithNotif': 'Hadith Quotidien',
+      'dailyHadithNotifDesc': 'Recevoir un hadith chaque matin',
     },
     'es': {
       'appTitle': 'Compañero Islámico',
@@ -752,6 +772,8 @@ class AppLocalizations {
       'city': 'Ciudad',
       'favorites': 'Favoritos',
       'noFavorites': 'Aún no hay favoritos',
+      'dailyHadithNotif': 'Hadiz Diario',
+      'dailyHadithNotifDesc': 'Recibir un hadiz cada mañana',
     },
   };
 

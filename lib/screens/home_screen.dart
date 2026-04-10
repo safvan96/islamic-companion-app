@@ -897,10 +897,10 @@ class _QuickActions extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
+        crossAxisCount: 4,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
-        childAspectRatio: 1.05,
+        childAspectRatio: 0.85,
       ),
       itemCount: items.length,
       itemBuilder: (context, i) {
@@ -921,21 +921,21 @@ class _QuickActions extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: palette.accent.withOpacity(0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(it.icon, color: palette.accent, size: 22),
+                  child: Icon(it.icon, color: palette.accent, size: 20),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 6),
                 Text(
                   it.label,
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: 11,
+                    fontSize: 10,
                     fontWeight: FontWeight.w600,
                     color: palette.fg,
                   ),
