@@ -46,6 +46,8 @@ import 'istikhara_screen.dart';
 import 'tajweed_screen.dart';
 import 'janazah_screen.dart';
 import 'allah_names_detail_screen.dart';
+import 'wudu_screen.dart';
+import 'prophets_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1102,6 +1104,10 @@ class _QuickActions extends StatelessWidget {
           const JanazahScreen()),
       _QuickItem(Icons.format_quote_rounded, l10n.translate('ayahOfDay'),
           const AyahOfDayScreen()),
+      _QuickItem(Icons.water_drop_outlined, l10n.translate('wuduGuide'),
+          const WuduScreen()),
+      _QuickItem(Icons.groups_outlined, l10n.translate('prophetsOfIslam'),
+          const ProphetsScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
