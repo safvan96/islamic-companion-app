@@ -24,6 +24,7 @@ import 'dua_screen.dart';
 import 'favorites_screen.dart';
 import 'quran_reader_screen.dart';
 import 'juz_screen.dart';
+import 'prayer_guide_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1036,6 +1037,8 @@ class _QuickActions extends StatelessWidget {
           const FavoritesScreen()),
       _QuickItem(Icons.chrome_reader_mode, 'Quran',
           const QuranReaderScreen()),
+      _QuickItem(Icons.school, 'Guide',
+          const PrayerGuideScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
