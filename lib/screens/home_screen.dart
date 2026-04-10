@@ -100,7 +100,15 @@ import 'sadaqah_jariyah_screen.dart';
 import 'death_reminder_screen.dart';
 import 'rabbana_screen.dart';
 import 'sleep_guide_screen.dart';
+import 'friday_guide_screen.dart';
+import 'tasbihat_counter_screen.dart';
+import 'hifz_test_screen.dart';
+import 'fact_cards_screen.dart';
 import 'settings_screen.dart';
+import 'friday_guide_screen.dart';
+import 'tasbihat_counter_screen.dart';
+import 'hifz_test_screen.dart';
+import 'fact_cards_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
 class _Palette {
@@ -1280,6 +1288,22 @@ class _QuickActions extends StatelessWidget {
           const RabbanaScreen()),
       _QuickItem(Icons.bedtime_outlined, l10n.translate('sleepGuide'),
           const SleepGuideScreen()),
+      _QuickItem(Icons.mosque_rounded, l10n.translate('fridayGuide'),
+          const FridayGuideScreen()),
+      _QuickItem(Icons.one_k_rounded, l10n.translate('tasbihatCounter'),
+          const TasbihatCounterScreen()),
+      _QuickItem(Icons.school_outlined, l10n.translate('hifzTest'),
+          const HifzTestScreen()),
+      _QuickItem(Icons.lightbulb_outline, l10n.translate('factCards'),
+          const FactCardsScreen()),
+      _QuickItem(Icons.mosque, l10n.translate('fridayGuide'),
+          const FridayGuideScreen()),
+      _QuickItem(Icons.touch_app, l10n.translate('tasbihatCounter'),
+          const TasbihatCounterScreen()),
+      _QuickItem(Icons.school_outlined, l10n.translate('hifzTest'),
+          const HifzTestScreen()),
+      _QuickItem(Icons.style_outlined, l10n.translate('factCards'),
+          const FactCardsScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
