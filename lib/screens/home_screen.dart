@@ -43,6 +43,8 @@ import 'wisdom_screen.dart';
 import 'visual_tasbih_screen.dart';
 import 'stats_dashboard_screen.dart';
 import 'istikhara_screen.dart';
+import 'tajweed_screen.dart';
+import 'janazah_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1092,6 +1094,10 @@ class _QuickActions extends StatelessWidget {
           const StatsDashboardScreen()),
       _QuickItem(Icons.help_outline, l10n.translate('istikharaGuide'),
           const IstikharaScreen()),
+      _QuickItem(Icons.record_voice_over, l10n.translate('tajweedGuide'),
+          const TajweedScreen()),
+      _QuickItem(Icons.people_outline, l10n.translate('janazahGuide'),
+          const JanazahScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
