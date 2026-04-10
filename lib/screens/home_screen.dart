@@ -64,6 +64,8 @@ import 'patience_duas_screen.dart';
 import 'daily_tips_screen.dart';
 import 'faq_screen.dart';
 import 'muhasaba_screen.dart';
+import 'quran_words_screen.dart';
+import 'motivation_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -114,7 +116,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  static const _currentVersion = '2.7.0';
+  static const _currentVersion = '2.8.0';
 
   @override
   void initState() {
@@ -1156,6 +1158,10 @@ class _QuickActions extends StatelessWidget {
           const FaqScreen()),
       _QuickItem(Icons.nightlight_round, l10n.translate('muhasaba'),
           const MuhasabaScreen()),
+      _QuickItem(Icons.translate, l10n.translate('quranWords'),
+          const QuranWordsScreen()),
+      _QuickItem(Icons.format_paint, l10n.translate('motivation'),
+          const MotivationScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
