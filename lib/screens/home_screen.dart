@@ -31,6 +31,8 @@ import 'zakat_screen.dart';
 import 'quiz_screen.dart';
 import 'fasting_screen.dart';
 import 'adhkar_screen.dart';
+import 'hajj_guide_screen.dart';
+import 'names_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1056,6 +1058,10 @@ class _QuickActions extends StatelessWidget {
           const FastingScreen()),
       _QuickItem(Icons.wb_twilight_rounded, l10n.translate('adhkar'),
           const AdhkarScreen()),
+      _QuickItem(Icons.location_city, l10n.translate('hajjUmrah'),
+          const HajjGuideScreen()),
+      _QuickItem(Icons.child_care, l10n.translate('islamicNames'),
+          const NamesScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
