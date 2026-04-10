@@ -33,6 +33,8 @@ import 'fasting_screen.dart';
 import 'adhkar_screen.dart';
 import 'hajj_guide_screen.dart';
 import 'names_screen.dart';
+import 'hifz_screen.dart';
+import 'charity_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1062,6 +1064,10 @@ class _QuickActions extends StatelessWidget {
           const HajjGuideScreen()),
       _QuickItem(Icons.child_care, l10n.translate('islamicNames'),
           const NamesScreen()),
+      _QuickItem(Icons.auto_stories_outlined, l10n.translate('hifzTracker'),
+          const HifzScreen()),
+      _QuickItem(Icons.volunteer_activism, l10n.translate('charityTracker'),
+          const CharityScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
