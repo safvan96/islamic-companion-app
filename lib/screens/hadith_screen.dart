@@ -15,16 +15,17 @@ class HadithScreen extends StatefulWidget {
 
 class _HadithScreenState extends State<HadithScreen> {
   final ScrollController _scrollController = ScrollController();
+  String _searchQuery = '';
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_searchQuery.isNotEmpty) return;
       final dayOfYear = DateTime.now()
           .difference(DateTime(DateTime.now().year, 1, 1))
           .inDays;
       final todayIndex = dayOfYear % HadithModel.hadiths.length;
-      // Each card is roughly 250px, scroll to today's hadith
       final offset = (todayIndex * 270.0).clamp(0.0, _scrollController.position.maxScrollExtent);
       _scrollController.animateTo(
         offset,
@@ -50,6 +51,28 @@ class _HadithScreenState extends State<HadithScreen> {
       appBar: AppBar(
         title: Text(l10n.translate('hadiths')),
         backgroundColor: const Color(0xFFE65100),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(50),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+            child: TextField(
+              onChanged: (v) => setState(() => _searchQuery = v),
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                hintText: 'Search...',
+                hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+                prefixIcon: Icon(Icons.search, color: Colors.white.withOpacity(0.7)),
+                filled: true,
+                fillColor: Colors.white.withOpacity(0.15),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              ),
+            ),
+          ),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -67,11 +90,29 @@ class _HadithScreenState extends State<HadithScreen> {
               .inDays;
           final todayIndex = dayOfYear % HadithModel.hadiths.length;
 
+          final filtered = <int>[];
+          for (var i = 0; i < HadithModel.hadiths.length; i++) {
+            if (_searchQuery.isEmpty) {
+              filtered.add(i);
+            } else {
+              final h = HadithModel.hadiths[i];
+              final t = h.translations[langCode] ?? h.translations['en']!;
+              final q = _searchQuery.toLowerCase();
+              if (t.toLowerCase().contains(q) ||
+                  h.arabic.contains(_searchQuery) ||
+                  h.source.toLowerCase().contains(q) ||
+                  h.narrator.toLowerCase().contains(q)) {
+                filtered.add(i);
+              }
+            }
+          }
+
           return ListView.builder(
           controller: _scrollController,
           padding: const EdgeInsets.all(16),
-          itemCount: HadithModel.hadiths.length,
-          itemBuilder: (context, index) {
+          itemCount: filtered.length,
+          itemBuilder: (context, fi) {
+            final index = filtered[fi];
             final hadith = HadithModel.hadiths[index];
             final translation =
                 hadith.translations[langCode] ?? hadith.translations['en']!;

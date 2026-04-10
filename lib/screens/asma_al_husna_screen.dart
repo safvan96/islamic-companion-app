@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../models/asma_al_husna_model.dart';
 import '../providers/app_provider.dart';
 
@@ -84,6 +85,15 @@ class _AsmaAlHusnaScreenState extends State<AsmaAlHusnaScreen> {
               child: ListTile(
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                trailing: IconButton(
+                  icon: Icon(Icons.share_outlined,
+                      size: 18, color: isDark ? Colors.white38 : Colors.black26),
+                  onPressed: () {
+                    Share.share(
+                      '${name.arabic}\n${name.transliteration}\n$meaning\n\n📱 Islamic Companion App',
+                    );
+                  },
+                ),
                 leading: Container(
                   width: 48,
                   height: 48,
