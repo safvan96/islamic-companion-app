@@ -62,6 +62,7 @@ class PrayerProvider extends ChangeNotifier {
     'Riyadh': [24.7136, 46.6753],
     'Baghdad': [33.3152, 44.3661],
     'Doha': [25.2854, 51.5310],
+    'Tehran': [35.6892, 51.3890],
     // Avrupa
     'London': [51.5074, -0.1278],
     'Berlin': [52.5200, 13.4050],
@@ -84,6 +85,7 @@ class PrayerProvider extends ChangeNotifier {
     'Toronto': [43.6532, -79.3832],
     'Madrid': [40.4168, -3.7038],
     'Lagos': [6.5244, 3.3792],
+    'Dar es Salaam': [-6.7924, 39.2083],
   };
 
   double get latitude => _latitude;
