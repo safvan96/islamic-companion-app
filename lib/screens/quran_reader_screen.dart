@@ -4,8 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:share_plus/share_plus.dart';
 import '../providers/app_provider.dart';
 import '../l10n/app_localizations.dart';
+import 'quran_search_screen.dart';
 
 class QuranReaderScreen extends StatefulWidget {
   const QuranReaderScreen({super.key});
@@ -82,6 +84,16 @@ class _QuranReaderScreenState extends State<QuranReaderScreen> {
       appBar: AppBar(
         title: const Text('Quran / القرآن الكريم'),
         backgroundColor: const Color(0xFF1B5E20),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            tooltip: 'Search in Quran',
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const QuranSearchScreen()),
+            ),
+          ),
+        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(50),
           child: Padding(
@@ -552,6 +564,17 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
                                     ),
                                   );
                                 }),
+                                const SizedBox(width: 8),
+                                // Share ayah
+                                InkWell(
+                                  onTap: () {
+                                    Share.share(
+                                      '${ayah['arabic']}\n\n${ayah['translation']}\n\n— ${widget.surahName} ${ayah['number']}\n\n📱 Islamic Companion App',
+                                    );
+                                  },
+                                  child: Icon(Icons.share_outlined,
+                                      color: isDark ? Colors.white38 : Colors.black26, size: 20),
+                                ),
                                 const SizedBox(width: 12),
                                 // Play
                                 if (ayah['audio']!.isNotEmpty)
