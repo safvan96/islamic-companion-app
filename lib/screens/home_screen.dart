@@ -84,6 +84,8 @@ import 'prayer_surahs_screen.dart';
 import 'word_match_screen.dart';
 import 'quran_etiquette_screen.dart';
 import 'prophet_duas_screen.dart';
+import 'arabic_alphabet_screen.dart';
+import 'daily_checkin_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1232,6 +1234,10 @@ class _QuickActions extends StatelessWidget {
           const QuranEtiquetteScreen()),
       _QuickItem(Icons.record_voice_over_outlined, l10n.translate('prophetDuas'),
           const ProphetDuasScreen()),
+      _QuickItem(Icons.abc, l10n.translate('arabicAlphabet'),
+          const ArabicAlphabetScreen()),
+      _QuickItem(Icons.fingerprint, l10n.translate('dailyCheckin'),
+          const DailyCheckinScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
