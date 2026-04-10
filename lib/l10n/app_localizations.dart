@@ -1048,6 +1048,8 @@ class AppLocalizations {
       'sunnah_d9': 'O Allah, I ask You for pardon and well-being.',
       'sunnah_c10': 'After wudu',
       'sunnah_d10': 'O Allah, make me among those who repent and make me among those who purify themselves.',
+      'mukabele': 'Mukabele',
+      'mukabeleComplete': 'Alhamdulillah! You have completed the entire Quran!',
       'si_1': 'The Opening. Essence of the Quran. Recited in every prayer. A cure and a light.',
       'si_2': 'The Cow. Longest surah. Laws, stories of prophets, Ayatul Kursi. Protects from evil.',
       'si_3': 'Family of Imran. Battle of Uhud, story of Maryam, patience in trials.',
@@ -2079,6 +2081,8 @@ class AppLocalizations {
       'sunnah_d9': 'Allahim, af ve afiyet istiyorum.',
       'sunnah_c10': 'Abdestten sonra',
       'sunnah_d10': 'Allahim, beni tovbe edenlerden ve temizlenenlerden kil.',
+      'mukabele': 'Mukabele',
+      'mukabeleComplete': 'Elhamdulillah! Tum Kurani tamamladiniz!',
       'si_1': 'Fatiha. Kuranin ozu. Her namazda okunur. Sifa ve nurdur.',
       'si_2': 'Bakara. En uzun sure. Hukumler, peygamber kissalari, Ayetel Kursi.',
       'si_3': 'Al-i Imran. Uhud savasi, Meryemin kissasi, imtihanlarda sabir.',
@@ -2368,6 +2372,7 @@ class AppLocalizations {
       'quranStories': 'قصص القرآن',
       'duaTimer': 'مؤقت الدعاء',
       'sunnahDuas': 'أدعية سنية',
+      'mukabele': 'مقابلة',
     },
     'ru': {
       'appTitle': 'Исламский Компаньон',
@@ -2625,6 +2630,7 @@ class AppLocalizations {
       'quranStories': 'Истории Корана',
       'duaTimer': 'Таймер дуа',
       'sunnahDuas': 'Сунна дуа',
+      'mukabele': 'Мукабеле',
       'istikharaDua': 'Дуа истихара',
     },
     'hi': {
@@ -2883,6 +2889,7 @@ class AppLocalizations {
       'quranStories': 'कुरआन कहानियां',
       'duaTimer': 'दुआ टाइमर',
       'sunnahDuas': 'सुन्नत दुआ',
+      'mukabele': 'मुकाबला',
       'istikharaDua': 'दुआ',
     },
     'id': {
@@ -3141,6 +3148,7 @@ class AppLocalizations {
       'quranStories': 'Kisah Quran',
       'duaTimer': 'Timer Doa',
       'sunnahDuas': 'Doa Sunnah',
+      'mukabele': 'Mukabele',
       'istikharaDua': 'Doa Istikharah',
     },
     'zh': {
@@ -3399,6 +3407,7 @@ class AppLocalizations {
       'quranStories': '古兰经故事',
       'duaTimer': '祈祷计时器',
       'sunnahDuas': '圣行祈祷',
+      'mukabele': '读经圈',
       'istikharaDua': '求吉祈祷',
     },
     'de': {
@@ -3657,6 +3666,7 @@ class AppLocalizations {
       'quranStories': 'Quran Geschichten',
       'duaTimer': 'Dua Timer',
       'sunnahDuas': 'Sunnah Duas',
+      'mukabele': 'Mukabele',
       'istikharaDua': 'Istikhara Dua',
     },
     'nl': {
@@ -3915,6 +3925,7 @@ class AppLocalizations {
       'quranStories': 'Koran Verhalen',
       'duaTimer': 'Dua Timer',
       'sunnahDuas': 'Soennah Duas',
+      'mukabele': 'Moekabele',
       'istikharaDua': 'Istikhara Dua',
     },
     'fr': {
@@ -4173,6 +4184,7 @@ class AppLocalizations {
       'quranStories': 'Histoires du Coran',
       'duaTimer': 'Minuteur Dua',
       'sunnahDuas': 'Duas Sunna',
+      'mukabele': 'Mouqabala',
       'istikharaDua': 'Dua Istikhara',
     },
     'es': {
@@ -4431,6 +4443,7 @@ class AppLocalizations {
       'quranStories': 'Historias del Coran',
       'duaTimer': 'Temporizador Dua',
       'sunnahDuas': 'Duas Sunnah',
+      'mukabele': 'Muqabala',
       'istikharaDua': 'Dua Istikhara',
     },
     'ur': {
@@ -4689,6 +4702,7 @@ class AppLocalizations {
       'quranStories': 'قرآنی قصے',
       'duaTimer': 'دعا ٹائمر',
       'sunnahDuas': 'سنت دعائیں',
+      'mukabele': 'مقابلہ',
       'istikharaDua': 'دعائے استخارہ',
     },
     'bn': {
@@ -4929,6 +4943,7 @@ class AppLocalizations {
       'quranStories': 'কুরআন গল্প',
       'duaTimer': 'দোয়া টাইমার',
       'sunnahDuas': 'সুন্নত দোয়া',
+      'mukabele': 'মুকাবালা',
     },
     'ms': {
       'appTitle': 'Teman Islam',
@@ -5168,6 +5183,7 @@ class AppLocalizations {
       'quranStories': 'Kisah Quran',
       'duaTimer': 'Pemasa Doa',
       'sunnahDuas': 'Doa Sunnah',
+      'mukabele': 'Muqabalah',
     },
     'pt': {
       'appTitle': 'Companheiro Islâmico',
@@ -5407,6 +5423,7 @@ class AppLocalizations {
       'quranStories': 'Historias do Alcorao',
       'duaTimer': 'Timer Dua',
       'sunnahDuas': 'Duas Sunnah',
+      'mukabele': 'Muqabala',
     },
     'fa': {
       'appTitle': 'همراه اسلامی',
@@ -5646,6 +5663,7 @@ class AppLocalizations {
       'quranStories': 'داستان قرآن',
       'duaTimer': 'تایمر دعا',
       'sunnahDuas': 'دعای سنت',
+      'mukabele': 'مقابله',
     },
     'sw': {
       'appTitle': 'Mwandani wa Kiislamu',
@@ -5885,6 +5903,7 @@ class AppLocalizations {
       'quranStories': 'Hadithi za Qurani',
       'duaTimer': 'Kipima Dua',
       'sunnahDuas': 'Dua za Sunna',
+      'mukabele': 'Mukabala',
     },
     'ja': {
       'appTitle': 'イスラムの友',
@@ -6113,6 +6132,7 @@ class AppLocalizations {
       'quranStories': 'クルアーン物語',
       'duaTimer': '祈りタイマー',
       'sunnahDuas': 'スンナの祈り',
+      'mukabele': 'ムカーバラ',
       'listenRecitation': '朗読を聴く',
       'translation': '翻訳',
       'transliteration': '音訳',
@@ -6352,6 +6372,7 @@ class AppLocalizations {
       'quranStories': '쿠란 이야기',
       'duaTimer': '기도 타이머',
       'sunnahDuas': '순나 기도',
+      'mukabele': '무카바라',
       'listenRecitation': '낭독 듣기',
       'translation': '번역',
       'transliteration': '음역',
@@ -6591,6 +6612,7 @@ class AppLocalizations {
       'quranStories': 'Sheekada Quraanka',
       'duaTimer': 'Timer Ducada',
       'sunnahDuas': 'Ducada Sunnada',
+      'mukabele': 'Muqaabalo',
       'listenRecitation': 'Dhageyso akhris',
       'translation': 'Turjumaad',
       'transliteration': 'Qoraalka codka',

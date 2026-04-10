@@ -77,6 +77,7 @@ import 'share_card_screen.dart';
 import 'quran_stories_screen.dart';
 import 'dua_timer_screen.dart';
 import 'sunnah_duas_screen.dart';
+import 'mukabele_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1211,6 +1212,8 @@ class _QuickActions extends StatelessWidget {
           const DuaTimerScreen()),
       _QuickItem(Icons.sunny, l10n.translate('sunnahDuas'),
           const SunnahDuasScreen()),
+      _QuickItem(Icons.grid_view_rounded, l10n.translate('mukabele'),
+          const MukabeleScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
