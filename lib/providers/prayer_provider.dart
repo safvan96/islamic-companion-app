@@ -80,6 +80,8 @@ class PrayerProvider extends ChangeNotifier {
     'Dhaka': [23.8103, 90.4125],
     'Islamabad': [33.6844, 73.0479],
     'Tokyo': [35.6762, 139.6503],
+    'Seoul': [37.5665, 126.9780],
+    'Mogadishu': [2.0469, 45.3182],
     // Amerika & Afrika
     'New York': [40.7128, -74.0060],
     'Toronto': [43.6532, -79.3832],

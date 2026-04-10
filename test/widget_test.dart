@@ -163,9 +163,9 @@ void main() {
       expect(AppConstants.kaabaLongitude, closeTo(39.82, 0.1));
     });
 
-    test('17 languages defined', () {
-      expect(AppConstants.languageNames.length, 17);
-      expect(AppConstants.languageFlags.length, 17);
+    test('20 languages defined', () {
+      expect(AppConstants.languageNames.length, 20);
+      expect(AppConstants.languageFlags.length, 20);
     });
 
     test('All languages have flags', () {
