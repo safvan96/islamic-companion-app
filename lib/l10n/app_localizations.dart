@@ -987,6 +987,9 @@ class AppLocalizations {
       'pinnedFeatures': 'Pinned Features',
       'pinnedInfo': 'Pin up to 8 features for quick access on the home screen. Tap to toggle.',
       'pinned': 'pinned',
+      'shareCard': 'Share Card',
+      'changeAyah': 'Change Ayah',
+      'changeColor': 'Change Color',
       'si_1': 'The Opening. Essence of the Quran. Recited in every prayer. A cure and a light.',
       'si_2': 'The Cow. Longest surah. Laws, stories of prophets, Ayatul Kursi. Protects from evil.',
       'si_3': 'Family of Imran. Battle of Uhud, story of Maryam, patience in trials.',
@@ -1957,6 +1960,9 @@ class AppLocalizations {
       'pinnedFeatures': 'Sabitlenen Ozellikler',
       'pinnedInfo': 'Ana ekranda hizli erisim icin 8 ozellige kadar sabitleyin. Dokunarak degistirin.',
       'pinned': 'sabitlendi',
+      'shareCard': 'Paylasim Karti',
+      'changeAyah': 'Ayet Degistir',
+      'changeColor': 'Renk Degistir',
       'si_1': 'Fatiha. Kuranin ozu. Her namazda okunur. Sifa ve nurdur.',
       'si_2': 'Bakara. En uzun sure. Hukumler, peygamber kissalari, Ayetel Kursi.',
       'si_3': 'Al-i Imran. Uhud savasi, Meryemin kissasi, imtihanlarda sabir.',
@@ -2242,6 +2248,7 @@ class AppLocalizations {
       'medinan': 'مدنية',
       'pinnedFeatures': 'مثبتة',
       'pinned': 'مثبت',
+      'shareCard': 'بطاقة مشاركة',
     },
     'ru': {
       'appTitle': 'Исламский Компаньон',
@@ -2495,6 +2502,7 @@ class AppLocalizations {
       'medinan': 'Мединская',
       'pinnedFeatures': 'Закрепленные',
       'pinned': 'закреплено',
+      'shareCard': 'Карточка',
       'istikharaDua': 'Дуа истихара',
     },
     'hi': {
@@ -2749,6 +2757,7 @@ class AppLocalizations {
       'medinan': 'मदनी',
       'pinnedFeatures': 'पिन किए',
       'pinned': 'पिन',
+      'shareCard': 'शेयर कार्ड',
       'istikharaDua': 'दुआ',
     },
     'id': {
@@ -3003,6 +3012,7 @@ class AppLocalizations {
       'medinan': 'Madaniyah',
       'pinnedFeatures': 'Disematkan',
       'pinned': 'disematkan',
+      'shareCard': 'Kartu Berbagi',
       'istikharaDua': 'Doa Istikharah',
     },
     'zh': {
@@ -3257,6 +3267,7 @@ class AppLocalizations {
       'medinan': '麦地那',
       'pinnedFeatures': '固定',
       'pinned': '已固定',
+      'shareCard': '分享卡片',
       'istikharaDua': '求吉祈祷',
     },
     'de': {
@@ -3511,6 +3522,7 @@ class AppLocalizations {
       'medinan': 'Medinensisch',
       'pinnedFeatures': 'Angepinnt',
       'pinned': 'angepinnt',
+      'shareCard': 'Teilen Karte',
       'istikharaDua': 'Istikhara Dua',
     },
     'nl': {
@@ -3765,6 +3777,7 @@ class AppLocalizations {
       'medinan': 'Medinens',
       'pinnedFeatures': 'Vastgezet',
       'pinned': 'vastgezet',
+      'shareCard': 'Deel Kaart',
       'istikharaDua': 'Istikhara Dua',
     },
     'fr': {
@@ -4019,6 +4032,7 @@ class AppLocalizations {
       'medinan': 'Médinoise',
       'pinnedFeatures': 'Épinglés',
       'pinned': 'épinglé',
+      'shareCard': 'Carte Partage',
       'istikharaDua': 'Dua Istikhara',
     },
     'es': {
@@ -4273,6 +4287,7 @@ class AppLocalizations {
       'medinan': 'Medinesa',
       'pinnedFeatures': 'Fijados',
       'pinned': 'fijado',
+      'shareCard': 'Tarjeta',
       'istikharaDua': 'Dua Istikhara',
     },
     'ur': {
@@ -4527,6 +4542,7 @@ class AppLocalizations {
       'medinan': 'مدنی',
       'pinnedFeatures': 'پن کیے',
       'pinned': 'پن',
+      'shareCard': 'شیئر کارڈ',
       'istikharaDua': 'دعائے استخارہ',
     },
     'bn': {
@@ -4763,6 +4779,7 @@ class AppLocalizations {
       'medinan': 'মদনী',
       'pinnedFeatures': 'পিন করা',
       'pinned': 'পিন',
+      'shareCard': 'শেয়ার কার্ড',
     },
     'ms': {
       'appTitle': 'Teman Islam',
@@ -4998,6 +5015,7 @@ class AppLocalizations {
       'medinan': 'Madaniyyah',
       'pinnedFeatures': 'Disemat',
       'pinned': 'disemat',
+      'shareCard': 'Kad Kongsi',
     },
     'pt': {
       'appTitle': 'Companheiro Islâmico',
@@ -5233,6 +5251,7 @@ class AppLocalizations {
       'medinan': 'Medinense',
       'pinnedFeatures': 'Fixados',
       'pinned': 'fixado',
+      'shareCard': 'Cartao',
     },
     'fa': {
       'appTitle': 'همراه اسلامی',
@@ -5468,6 +5487,7 @@ class AppLocalizations {
       'medinan': 'مدنی',
       'pinnedFeatures': 'سنجاق شده',
       'pinned': 'سنجاق',
+      'shareCard': 'کارت اشتراک',
     },
     'sw': {
       'appTitle': 'Mwandani wa Kiislamu',
@@ -5703,6 +5723,7 @@ class AppLocalizations {
       'medinan': 'Madina',
       'pinnedFeatures': 'Zimebandikwa',
       'pinned': 'bandika',
+      'shareCard': 'Kadi ya Kushiriki',
     },
     'ja': {
       'appTitle': 'イスラムの友',
@@ -5927,6 +5948,7 @@ class AppLocalizations {
       'medinan': 'メディナ',
       'pinnedFeatures': 'ピン留め',
       'pinned': 'ピン',
+      'shareCard': 'シェアカード',
       'listenRecitation': '朗読を聴く',
       'translation': '翻訳',
       'transliteration': '音訳',
@@ -6162,6 +6184,7 @@ class AppLocalizations {
       'medinan': '매디나',
       'pinnedFeatures': '고정됨',
       'pinned': '고정',
+      'shareCard': '공유 카드',
       'listenRecitation': '낭독 듣기',
       'translation': '번역',
       'transliteration': '음역',
@@ -6397,6 +6420,7 @@ class AppLocalizations {
       'medinan': 'Madani',
       'pinnedFeatures': 'La xidhay',
       'pinned': 'xidhan',
+      'shareCard': 'Kaarka',
       'listenRecitation': 'Dhageyso akhris',
       'translation': 'Turjumaad',
       'transliteration': 'Qoraalka codka',

@@ -73,6 +73,7 @@ import 'post_prayer_screen.dart';
 import 'search_screen.dart';
 import 'surah_info_screen.dart';
 import 'pinned_features_screen.dart';
+import 'share_card_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1199,6 +1200,8 @@ class _QuickActions extends StatelessWidget {
           const PostPrayerScreen()),
       _QuickItem(Icons.info_outline, l10n.translate('surahInfo'),
           const SurahInfoScreen()),
+      _QuickItem(Icons.style, l10n.translate('shareCard'),
+          const ShareCardScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
