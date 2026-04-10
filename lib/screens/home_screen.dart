@@ -98,6 +98,8 @@ import 'spouse_duas_screen.dart';
 import 'travel_guide_screen.dart';
 import 'sadaqah_jariyah_screen.dart';
 import 'death_reminder_screen.dart';
+import 'rabbana_screen.dart';
+import 'sleep_guide_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1274,6 +1276,10 @@ class _QuickActions extends StatelessWidget {
           const SadaqahJariyahScreen()),
       _QuickItem(Icons.hourglass_bottom, l10n.translate('deathReminder'),
           const DeathReminderScreen()),
+      _QuickItem(Icons.menu_book_rounded, l10n.translate('rabbanaDuas'),
+          const RabbanaScreen()),
+      _QuickItem(Icons.bedtime_outlined, l10n.translate('sleepGuide'),
+          const SleepGuideScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
