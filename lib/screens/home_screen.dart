@@ -52,6 +52,8 @@ import 'ruqyah_screen.dart';
 import 'adab_screen.dart';
 import 'nikah_screen.dart';
 import 'glossary_screen.dart';
+import 'tayammum_screen.dart';
+import 'hijri_months_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1120,6 +1122,10 @@ class _QuickActions extends StatelessWidget {
           const NikahScreen()),
       _QuickItem(Icons.library_books_outlined, l10n.translate('islamicGlossary'),
           const GlossaryScreen()),
+      _QuickItem(Icons.landscape, l10n.translate('tayammumGuide'),
+          const TayammumScreen()),
+      _QuickItem(Icons.date_range, l10n.translate('hijriMonthsGuide'),
+          const HijriMonthsScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
