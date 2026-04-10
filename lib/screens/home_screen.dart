@@ -27,6 +27,7 @@ import 'juz_screen.dart';
 import 'prayer_guide_screen.dart';
 import 'tasbih_set_screen.dart';
 import 'qaza_screen.dart';
+import 'zakat_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1044,6 +1045,8 @@ class _QuickActions extends StatelessWidget {
           const TasbihSetScreen()),
       _QuickItem(Icons.history_rounded, l10n.translate('qazaTracker'),
           const QazaScreen()),
+      _QuickItem(Icons.calculate_outlined, l10n.translate('zakatCalculator'),
+          const ZakatScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
