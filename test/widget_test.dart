@@ -5,8 +5,8 @@ import 'package:islamic_companion/models/asma_al_husna_model.dart';
 import 'package:islamic_companion/providers/dhikr_provider.dart';
 
 void main() {
-  test('Hadith model has 10 hadiths', () {
-    expect(HadithModel.hadiths.length, 10);
+  test('Hadith model has 20 hadiths', () {
+    expect(HadithModel.hadiths.length, 20);
   });
 
   test('Surah model has short surahs', () {
