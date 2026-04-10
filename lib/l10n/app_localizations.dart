@@ -98,6 +98,7 @@ class AppLocalizations {
       'rateUsDesc': 'Love the app? Leave a review!',
       'shareApp': 'Share App',
       'shareAppMessage': 'Prayer times, Qibla, dhikr & more!',
+      'streak': 'Streak',
     },
     'tr': {
       'appTitle': 'İslami Rehber',
@@ -170,6 +171,7 @@ class AppLocalizations {
       'rateUsDesc': 'Uygulamayı beğendiniz mi? Yorum bırakın!',
       'shareApp': 'Uygulamayı Paylaş',
       'shareAppMessage': 'Namaz vakitleri, kıble, zikir ve daha fazlası!',
+      'streak': 'Seri',
     },
     'ar': {
       'appTitle': 'الرفيق الإسلامي',
@@ -242,6 +244,7 @@ class AppLocalizations {
       'rateUsDesc': 'أعجبك التطبيق؟ اترك تقييماً!',
       'shareApp': 'شارك التطبيق',
       'shareAppMessage': 'أوقات الصلاة والقبلة والذكر والمزيد!',
+      'streak': 'تتابع',
     },
     'ru': {
       'appTitle': 'Исламский Компаньон',
@@ -314,6 +317,7 @@ class AppLocalizations {
       'rateUsDesc': 'Нравится приложение? Оставьте отзыв!',
       'shareApp': 'Поделиться',
       'shareAppMessage': 'Время намаза, кибла, зикр и другое!',
+      'streak': 'Серия',
     },
     'hi': {
       'appTitle': 'इस्लामिक साथी',
@@ -386,6 +390,7 @@ class AppLocalizations {
       'rateUsDesc': 'ऐप पसंद आया? समीक्षा छोड़ें!',
       'shareApp': 'ऐप शेयर करें',
       'shareAppMessage': 'नमाज़ का समय, क़िबला, ज़िक्र और बहुत कुछ!',
+      'streak': 'लगातार',
     },
     'id': {
       'appTitle': 'Sahabat Islami',
@@ -458,6 +463,7 @@ class AppLocalizations {
       'rateUsDesc': 'Suka aplikasinya? Beri ulasan!',
       'shareApp': 'Bagikan Aplikasi',
       'shareAppMessage': 'Waktu shalat, kiblat, dzikir dan lainnya!',
+      'streak': 'Beruntun',
     },
     'zh': {
       'appTitle': '伊斯兰伴侣',
@@ -530,6 +536,7 @@ class AppLocalizations {
       'rateUsDesc': '喜欢这个应用？留下评论！',
       'shareApp': '分享应用',
       'shareAppMessage': '礼拜时间、朝向、记念等功能！',
+      'streak': '连续',
     },
     'de': {
       'appTitle': 'Islamischer Begleiter',
@@ -602,6 +609,7 @@ class AppLocalizations {
       'rateUsDesc': 'Gefällt Ihnen die App? Hinterlassen Sie eine Bewertung!',
       'shareApp': 'App teilen',
       'shareAppMessage': 'Gebetszeiten, Qibla, Dhikr und mehr!',
+      'streak': 'Serie',
     },
     'nl': {
       'appTitle': 'Islamitische Metgezel',
@@ -674,6 +682,7 @@ class AppLocalizations {
       'rateUsDesc': 'Bevalt de app? Laat een beoordeling achter!',
       'shareApp': 'App delen',
       'shareAppMessage': 'Gebedstijden, Qibla, Dhikr en meer!',
+      'streak': 'Reeks',
     },
     'fr': {
       'appTitle': 'Compagnon Islamique',
@@ -746,6 +755,7 @@ class AppLocalizations {
       'rateUsDesc': 'Vous aimez l\'appli ? Laissez un avis !',
       'shareApp': 'Partager l\'appli',
       'shareAppMessage': 'Heures de prière, Qibla, Dhikr et plus !',
+      'streak': 'Série',
     },
     'es': {
       'appTitle': 'Compañero Islámico',
@@ -818,6 +828,7 @@ class AppLocalizations {
       'rateUsDesc': '¿Te gusta la app? ¡Deja una reseña!',
       'shareApp': 'Compartir app',
       'shareAppMessage': '¡Horarios de oración, Qibla, Dhikr y más!',
+      'streak': 'Racha',
     },
   };
 

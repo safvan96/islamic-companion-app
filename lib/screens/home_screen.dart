@@ -832,8 +832,8 @@ class _StatsRow extends StatelessWidget {
                 l10n.translate('total').toUpperCase(), _fmt(dhikr.totalCount))),
         const SizedBox(width: 10),
         Expanded(
-            child: _statTile(l10n.translate('target').toUpperCase(),
-                dhikr.targetCount.toString())),
+            child: _statTile(l10n.translate('streak').toUpperCase(),
+                '${dhikr.streak}d')),
       ],
     );
   }

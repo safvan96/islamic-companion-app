@@ -13,6 +13,29 @@ class DhikrProvider extends ChangeNotifier {
   String _todayKey = '';
   int get todayCount => _todayCount;
 
+  /// Current daily streak (consecutive days with dhikr > 0)
+  int get streak {
+    final now = DateTime.now();
+    int count = 0;
+    // Start from yesterday (today may not have dhikr yet)
+    // But if today has dhikr, include it
+    for (var i = 0; i < 365; i++) {
+      final d = now.subtract(Duration(days: i));
+      final key = _dateKey(d);
+      if (i == 0 && _todayCount > 0) {
+        count++;
+        continue;
+      }
+      if (i == 0 && _todayCount == 0) continue; // today not counted yet
+      if ((_history[key] ?? 0) > 0) {
+        count++;
+      } else {
+        break;
+      }
+    }
+    return count;
+  }
+
   // Map of date key -> count, kept trimmed to last 7 days
   Map<String, int> _history = {};
   /// Last 7 days oldest→newest as (label, count). Missing days = 0.
