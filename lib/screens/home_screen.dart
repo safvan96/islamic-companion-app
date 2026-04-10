@@ -72,6 +72,7 @@ import 'surah_virtues_screen.dart';
 import 'post_prayer_screen.dart';
 import 'search_screen.dart';
 import 'surah_info_screen.dart';
+import 'pinned_features_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -510,14 +511,24 @@ class _TopBar extends StatelessWidget {
               ],
             ),
           ),
-        const SizedBox(width: 8),
+        const SizedBox(width: 6),
         InkResponse(
           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SearchScreen())),
           radius: 20,
           child: Container(
-            width: 32, height: 32,
+            width: 30, height: 30,
             decoration: BoxDecoration(shape: BoxShape.circle, color: palette.surface, border: Border.all(color: palette.divider)),
-            child: Icon(Icons.search, size: 16, color: palette.muted),
+            child: Icon(Icons.search, size: 15, color: palette.muted),
+          ),
+        ),
+        const SizedBox(width: 4),
+        InkResponse(
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PinnedFeaturesScreen())),
+          radius: 20,
+          child: Container(
+            width: 30, height: 30,
+            decoration: BoxDecoration(shape: BoxShape.circle, color: palette.surface, border: Border.all(color: palette.divider)),
+            child: Icon(Icons.push_pin_outlined, size: 14, color: palette.muted),
           ),
         ),
       ],
