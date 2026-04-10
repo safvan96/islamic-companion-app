@@ -94,6 +94,8 @@ class AppLocalizations {
       'noFavorites': 'No favorites yet',
       'dailyHadithNotif': 'Daily Hadith',
       'dailyHadithNotifDesc': 'Receive a hadith every morning',
+      'rateUs': 'Rate Us',
+      'rateUsDesc': 'Love the app? Leave a review!',
     },
     'tr': {
       'appTitle': 'İslami Rehber',
@@ -162,6 +164,8 @@ class AppLocalizations {
       'noFavorites': 'Henüz favori yok',
       'dailyHadithNotif': 'Günlük Hadis',
       'dailyHadithNotifDesc': 'Her sabah bir hadis al',
+      'rateUs': 'Bizi Değerlendirin',
+      'rateUsDesc': 'Uygulamayı beğendiniz mi? Yorum bırakın!',
     },
     'ar': {
       'appTitle': 'الرفيق الإسلامي',
@@ -230,6 +234,8 @@ class AppLocalizations {
       'noFavorites': 'لا توجد مفضلات بعد',
       'dailyHadithNotif': 'حديث يومي',
       'dailyHadithNotifDesc': 'تلقي حديث كل صباح',
+      'rateUs': 'قيّمنا',
+      'rateUsDesc': 'أعجبك التطبيق؟ اترك تقييماً!',
     },
     'ru': {
       'appTitle': 'Исламский Компаньон',
@@ -298,6 +304,8 @@ class AppLocalizations {
       'noFavorites': 'Пока нет избранного',
       'dailyHadithNotif': 'Хадис дня',
       'dailyHadithNotifDesc': 'Получать хадис каждое утро',
+      'rateUs': 'Оцените нас',
+      'rateUsDesc': 'Нравится приложение? Оставьте отзыв!',
     },
     'hi': {
       'appTitle': 'इस्लामिक साथी',
@@ -366,6 +374,8 @@ class AppLocalizations {
       'noFavorites': 'अभी कोई पसंदीदा नहीं',
       'dailyHadithNotif': 'दैनिक हदीस',
       'dailyHadithNotifDesc': 'हर सुबह एक हदीस प्राप्त करें',
+      'rateUs': 'हमें रेट करें',
+      'rateUsDesc': 'ऐप पसंद आया? समीक्षा छोड़ें!',
     },
     'id': {
       'appTitle': 'Sahabat Islami',
@@ -434,6 +444,8 @@ class AppLocalizations {
       'noFavorites': 'Belum ada favorit',
       'dailyHadithNotif': 'Hadits Harian',
       'dailyHadithNotifDesc': 'Terima hadits setiap pagi',
+      'rateUs': 'Beri Nilai',
+      'rateUsDesc': 'Suka aplikasinya? Beri ulasan!',
     },
     'zh': {
       'appTitle': '伊斯兰伴侣',
@@ -502,6 +514,8 @@ class AppLocalizations {
       'noFavorites': '暂无收藏',
       'dailyHadithNotif': '每日圣训',
       'dailyHadithNotifDesc': '每天早上收到一则圣训',
+      'rateUs': '给我们评分',
+      'rateUsDesc': '喜欢这个应用？留下评论！',
     },
     'de': {
       'appTitle': 'Islamischer Begleiter',
@@ -570,6 +584,8 @@ class AppLocalizations {
       'noFavorites': 'Noch keine Favoriten',
       'dailyHadithNotif': 'Täglicher Hadith',
       'dailyHadithNotifDesc': 'Jeden Morgen einen Hadith erhalten',
+      'rateUs': 'Bewerten Sie uns',
+      'rateUsDesc': 'Gefällt Ihnen die App? Hinterlassen Sie eine Bewertung!',
     },
     'nl': {
       'appTitle': 'Islamitische Metgezel',
@@ -638,6 +654,8 @@ class AppLocalizations {
       'noFavorites': 'Nog geen favorieten',
       'dailyHadithNotif': 'Dagelijkse Hadith',
       'dailyHadithNotifDesc': 'Ontvang elke ochtend een hadith',
+      'rateUs': 'Beoordeel ons',
+      'rateUsDesc': 'Bevalt de app? Laat een beoordeling achter!',
     },
     'fr': {
       'appTitle': 'Compagnon Islamique',
@@ -706,6 +724,8 @@ class AppLocalizations {
       'noFavorites': 'Pas encore de favoris',
       'dailyHadithNotif': 'Hadith Quotidien',
       'dailyHadithNotifDesc': 'Recevoir un hadith chaque matin',
+      'rateUs': 'Notez-nous',
+      'rateUsDesc': 'Vous aimez l\'appli ? Laissez un avis !',
     },
     'es': {
       'appTitle': 'Compañero Islámico',
@@ -774,6 +794,8 @@ class AppLocalizations {
       'noFavorites': 'Aún no hay favoritos',
       'dailyHadithNotif': 'Hadiz Diario',
       'dailyHadithNotifDesc': 'Recibir un hadiz cada mañana',
+      'rateUs': 'Califícanos',
+      'rateUsDesc': '¿Te gusta la app? ¡Deja una reseña!',
     },
   };
 

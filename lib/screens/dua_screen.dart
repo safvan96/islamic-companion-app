@@ -128,6 +128,7 @@ class _DuaScreenState extends State<DuaScreen> {
       'transliteration': 'Asbahna wa asbahal mulku lillah, walhamdu lillah, la ilaha illAllahu wahdahu la sharika lah.',
       'translations': {
         'en': 'We have reached the morning and the dominion belongs to Allah. Praise is to Allah. There is no god but Allah alone, with no partner.',
+        'tr': 'Sabaha erdik, mülk de Allah\'a ait olarak sabaha erdi. Hamd Allah\'a mahsustur. Allah\'tan başka ilah yoktur, O tektir, ortağı yoktur.',
         'ar': 'أصبحنا وأصبح الملك لله والحمد لله لا إله إلا الله وحده لا شريك له',
         'ru': 'Мы встретили утро, и вся власть принадлежит Аллаху. Хвала Аллаху. Нет бога, кроме Аллаха, Единого, без сотоварища.',
         'hi': 'हमने सुबह की और सारा राज्य अल्लाह का है। सारी प्रशंसा अल्लाह के लिए है। अल्लाह के सिवा कोई पूज्य नहीं, अकेला, उसका कोई साझीदार नहीं।',
@@ -146,6 +147,7 @@ class _DuaScreenState extends State<DuaScreen> {
       'transliteration': 'Amsayna wa amsal mulku lillah, walhamdu lillah, la ilaha illAllahu wahdahu la sharika lah.',
       'translations': {
         'en': 'We have reached the evening and the dominion belongs to Allah. Praise is to Allah. There is no god but Allah alone, with no partner.',
+        'tr': 'Akşama erdik, mülk de Allah\'a ait olarak akşama erdi. Hamd Allah\'a mahsustur.',
         'ar': 'أمسينا وأمسى الملك لله والحمد لله لا إله إلا الله وحده لا شريك له',
         'ru': 'Мы встретили вечер, и вся власть принадлежит Аллаху. Хвала Аллаху. Нет бога, кроме Аллаха, Единого, без сотоварища.',
         'hi': 'हमने शाम की और सारा राज्य अल्लाह का है। सारी प्रशंसा अल्लाह के लिए है।',
@@ -164,6 +166,7 @@ class _DuaScreenState extends State<DuaScreen> {
       'transliteration': 'Bismika Allahumma amutu wa ahya.',
       'translations': {
         'en': 'In Your name, O Allah, I die and I live.',
+        'tr': 'Senin adınla ölür ve dirilirim, Allah\'ım.',
         'ar': 'باسمك اللهم أموت وأحيا',
         'ru': 'С Твоим именем, о Аллах, я умираю и живу.',
         'hi': 'तेरे नाम से, ऐ अल्लाह, मैं मरता और जीता हूँ।',
@@ -182,6 +185,7 @@ class _DuaScreenState extends State<DuaScreen> {
       'transliteration': 'Bismillahi wa ala barakatillah.',
       'translations': {
         'en': 'In the name of Allah and with the blessings of Allah.',
+        'tr': 'Allah\'ın adıyla ve Allah\'ın bereketine sığınarak.',
         'ar': 'بسم الله وعلى بركة الله',
         'ru': 'Во имя Аллаха и с благословением Аллаха.',
         'hi': 'अल्लाह के नाम से और अल्लाह की बरकत से।',
@@ -200,6 +204,7 @@ class _DuaScreenState extends State<DuaScreen> {
       'transliteration': 'Subhanal-ladhi sakh-khara lana hadha wa ma kunna lahu muqrinin, wa inna ila Rabbina lamunqalibun.',
       'translations': {
         'en': 'Glory to Him who has subjected this to us, and we could never have it. And to our Lord, surely, we are to return.',
+        'tr': 'Bunu bizim hizmetimize vereni tespih ederiz. Yoksa biz buna güç yetiremezdik. Şüphesiz biz Rabbimize döneceğiz.',
         'ar': 'سبحان الذي سخر لنا هذا وما كنا له مقرنين وإنا إلى ربنا لمنقلبون',
         'ru': 'Пречист Тот, Кто подчинил нам это, ведь сами мы не могли бы этого. И мы к нашему Господу вернёмся.',
         'hi': 'पाक है वह जिसने इसे हमारे वश में किया और हम इसे वश में करने की ताक़त नहीं रखते। और हम अपने रब की ओर लौटने वाले हैं।',
@@ -218,6 +223,7 @@ class _DuaScreenState extends State<DuaScreen> {
       'transliteration': 'Allahumma iftah li abwaba rahmatik.',
       'translations': {
         'en': 'O Allah, open the gates of Your mercy for me.',
+        'tr': 'Allah\'ım, bana rahmet kapılarını aç.',
         'ar': 'اللهم افتح لي أبواب رحمتك',
         'ru': 'О Аллах, открой для меня врата Твоей милости.',
         'hi': 'ऐ अल्लाह, मेरे लिए अपनी रहमत के दरवाज़े खोल दे।',
@@ -236,6 +242,7 @@ class _DuaScreenState extends State<DuaScreen> {
       'transliteration': 'Bismillahil-ladhi la yadurru ma\'asmihi shay\'un fil-ardi wa la fis-sama\'i wa huwas-Sami\'ul-Alim.',
       'translations': {
         'en': 'In the name of Allah with whose name nothing can cause harm in the earth or in the heavens. He is the All-Hearing, the All-Knowing.',
+        'tr': 'Allah\'ın adıyla. O\'nun adı anıldığında yerde ve gökte hiçbir şey zarar veremez. O, her şeyi işiten ve bilendir.',
         'ar': 'بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم',
         'ru': 'Во имя Аллаха, с именем Которого ничто не причинит вреда ни на земле, ни на небесах. Он Всеслышащий, Всезнающий.',
         'hi': 'अल्लाह के नाम से, जिसके नाम के साथ ज़मीन और आसमान में कोई चीज़ नुकसान नहीं पहुँचा सकती। वह सब सुनने वाला, सब जानने वाला है।',
@@ -254,6 +261,7 @@ class _DuaScreenState extends State<DuaScreen> {
       'transliteration': 'Rabbighfir li wa tub alayya, innaka Antat-Tawwabur-Rahim.',
       'translations': {
         'en': 'My Lord, forgive me and accept my repentance. You are the Acceptor of Repentance, the Most Merciful.',
+        'tr': 'Rabbim, beni bağışla ve tövbemi kabul et. Şüphesiz sen tövbeleri kabul eden ve çok merhametli olansın.',
         'ar': 'رب اغفر لي وتب عليّ إنك أنت التواب الرحيم',
         'ru': 'Господь мой, прости меня и прими моё покаяние. Ты — Принимающий покаяние, Милосердный.',
         'hi': 'मेरे रब, मुझे माफ़ कर और मेरी तौबा कबूल कर। बेशक तू तौबा कबूल करने वाला, रहम करने वाला है।',
@@ -268,14 +276,14 @@ class _DuaScreenState extends State<DuaScreen> {
   ];
 
   static const Map<String, Map<String, String>> _categoryNames = {
-    'morning': {'en': 'Morning', 'ar': 'الصباح', 'ru': 'Утро', 'hi': 'सुबह', 'id': 'Pagi', 'zh': '早晨', 'de': 'Morgen', 'nl': 'Ochtend', 'fr': 'Matin', 'es': 'Mañana'},
-    'evening': {'en': 'Evening', 'ar': 'المساء', 'ru': 'Вечер', 'hi': 'शाम', 'id': 'Petang', 'zh': '晚上', 'de': 'Abend', 'nl': 'Avond', 'fr': 'Soir', 'es': 'Noche'},
-    'sleep': {'en': 'Before Sleep', 'ar': 'قبل النوم', 'ru': 'Перед сном', 'hi': 'सोने से पहले', 'id': 'Sebelum Tidur', 'zh': '睡前', 'de': 'Vor dem Schlafen', 'nl': 'Voor het Slapen', 'fr': 'Avant de Dormir', 'es': 'Antes de Dormir'},
-    'food': {'en': 'Before Eating', 'ar': 'قبل الأكل', 'ru': 'Перед едой', 'hi': 'खाने से पहले', 'id': 'Sebelum Makan', 'zh': '饭前', 'de': 'Vor dem Essen', 'nl': 'Voor het Eten', 'fr': 'Avant de Manger', 'es': 'Antes de Comer'},
-    'travel': {'en': 'Travel', 'ar': 'السفر', 'ru': 'Путешествие', 'hi': 'यात्रा', 'id': 'Perjalanan', 'zh': '旅行', 'de': 'Reise', 'nl': 'Reis', 'fr': 'Voyage', 'es': 'Viaje'},
-    'mosque': {'en': 'Entering Mosque', 'ar': 'دخول المسجد', 'ru': 'Вход в мечеть', 'hi': 'मस्जिद में प्रवेश', 'id': 'Masuk Masjid', 'zh': '进入清真寺', 'de': 'Betreten der Moschee', 'nl': 'Betreden van de Moskee', 'fr': 'Entrée à la Mosquée', 'es': 'Entrando a la Mezquita'},
-    'protection': {'en': 'Protection', 'ar': 'الحماية', 'ru': 'Защита', 'hi': 'सुरक्षा', 'id': 'Perlindungan', 'zh': '保护', 'de': 'Schutz', 'nl': 'Bescherming', 'fr': 'Protection', 'es': 'Protección'},
-    'forgiveness': {'en': 'Forgiveness', 'ar': 'الاستغفار', 'ru': 'Прощение', 'hi': 'क्षमा', 'id': 'Ampunan', 'zh': '宽恕', 'de': 'Vergebung', 'nl': 'Vergiffenis', 'fr': 'Pardon', 'es': 'Perdón'},
+    'morning': {'en': 'Morning', 'tr': 'Sabah', 'ar': 'الصباح', 'ru': 'Утро', 'hi': 'सुबह', 'id': 'Pagi', 'zh': '早晨', 'de': 'Morgen', 'nl': 'Ochtend', 'fr': 'Matin', 'es': 'Mañana'},
+    'evening': {'en': 'Evening', 'tr': 'Akşam', 'ar': 'المساء', 'ru': 'Вечер', 'hi': 'शाम', 'id': 'Petang', 'zh': '晚上', 'de': 'Abend', 'nl': 'Avond', 'fr': 'Soir', 'es': 'Noche'},
+    'sleep': {'en': 'Before Sleep', 'tr': 'Uyku Öncesi', 'ar': 'قبل النوم', 'ru': 'Перед сном', 'hi': 'सोने से पहले', 'id': 'Sebelum Tidur', 'zh': '睡前', 'de': 'Vor dem Schlafen', 'nl': 'Voor het Slapen', 'fr': 'Avant de Dormir', 'es': 'Antes de Dormir'},
+    'food': {'en': 'Before Eating', 'tr': 'Yemek Öncesi', 'ar': 'قبل الأكل', 'ru': 'Перед едой', 'hi': 'खाने से पहले', 'id': 'Sebelum Makan', 'zh': '饭前', 'de': 'Vor dem Essen', 'nl': 'Voor het Eten', 'fr': 'Avant de Manger', 'es': 'Antes de Comer'},
+    'travel': {'en': 'Travel', 'tr': 'Yolculuk', 'ar': 'السفر', 'ru': 'Путешествие', 'hi': 'यात्रा', 'id': 'Perjalanan', 'zh': '旅行', 'de': 'Reise', 'nl': 'Reis', 'fr': 'Voyage', 'es': 'Viaje'},
+    'mosque': {'en': 'Entering Mosque', 'tr': 'Camiye Giriş', 'ar': 'دخول المسجد', 'ru': 'Вход в мечеть', 'hi': 'मस्जिद में प्रवेश', 'id': 'Masuk Masjid', 'zh': '进入清真寺', 'de': 'Betreten der Moschee', 'nl': 'Betreden van de Moskee', 'fr': 'Entrée à la Mosquée', 'es': 'Entrando a la Mezquita'},
+    'protection': {'en': 'Protection', 'tr': 'Korunma', 'ar': 'الحماية', 'ru': 'Защита', 'hi': 'सुरक्षा', 'id': 'Perlindungan', 'zh': '保护', 'de': 'Schutz', 'nl': 'Bescherming', 'fr': 'Protection', 'es': 'Protección'},
+    'forgiveness': {'en': 'Forgiveness', 'tr': 'İstiğfar', 'ar': 'الاستغفار', 'ru': 'Прощение', 'hi': 'क्षमा', 'id': 'Ampunan', 'zh': '宽恕', 'de': 'Vergebung', 'nl': 'Vergiffenis', 'fr': 'Pardon', 'es': 'Perdón'},
   };
 
   @override

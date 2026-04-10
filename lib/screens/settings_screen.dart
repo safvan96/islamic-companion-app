@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/app_provider.dart';
 import '../providers/prayer_provider.dart';
@@ -270,6 +271,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   builder: (context) => _LanguageBottomSheet(
                     currentLang: currentLang,
                   ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 12),
+          // Rate Us
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: ListTile(
+              leading: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.orange.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.star_rate_rounded, color: Colors.orange),
+              ),
+              title: Text(
+                l10n.translate('rateUs'),
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+              subtitle: Text(
+                l10n.translate('rateUsDesc'),
+                style: TextStyle(fontSize: 12, color: isDark ? Colors.white54 : Colors.black45),
+              ),
+              trailing: const Icon(Icons.chevron_right),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              onTap: () {
+                launchUrl(
+                  Uri.parse('https://play.google.com/store/apps/details?id=com.islamiccompanion.app'),
+                  mode: LaunchMode.externalApplication,
                 );
               },
             ),
