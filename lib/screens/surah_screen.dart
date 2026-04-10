@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
 import '../models/surah_model.dart';
 import '../providers/app_provider.dart';
+import '../providers/favorites_provider.dart';
+import '../services/share_service.dart';
 
 class SurahScreen extends StatefulWidget {
   const SurahScreen({super.key});
@@ -264,6 +266,34 @@ class _SurahCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
+                  // Bookmark + Share row
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Consumer<FavoritesProvider>(
+                        builder: (_, fav, __) => IconButton(
+                          icon: Icon(
+                            fav.isSurahFav(surah.number)
+                                ? Icons.bookmark
+                                : Icons.bookmark_border,
+                            color: const Color(0xFFD4AF37),
+                          ),
+                          onPressed: () => fav.toggleSurah(surah.number),
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.share_outlined,
+                          color: isDark ? Colors.white38 : Colors.black38,
+                        ),
+                        onPressed: () {
+                          final lang = Provider.of<AppProvider>(context, listen: false)
+                              .locale.languageCode;
+                          ShareService.shareSurah(surah, lang);
+                        },
+                      ),
+                    ],
+                  ),
                   // Inline audio player
                   _buildPlayer(),
                   const SizedBox(height: 16),

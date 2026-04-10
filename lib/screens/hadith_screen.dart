@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
 import '../models/hadith_model.dart';
 import '../providers/app_provider.dart';
+import '../providers/favorites_provider.dart';
+import '../services/share_service.dart';
 
 class HadithScreen extends StatelessWidget {
   const HadithScreen({super.key});
@@ -78,10 +80,26 @@ class HadithScreen extends StatelessWidget {
                               ),
                             ),
                             const Spacer(),
-                            Icon(
-                              Icons.auto_stories,
-                              color: const Color(0xFFD4AF37),
-                              size: 20,
+                            Consumer<FavoritesProvider>(
+                              builder: (_, fav, __) => InkWell(
+                                onTap: () => fav.toggleHadith(index),
+                                child: Icon(
+                                  fav.isHadithFav(index)
+                                      ? Icons.bookmark
+                                      : Icons.bookmark_border,
+                                  color: const Color(0xFFD4AF37),
+                                  size: 22,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            InkWell(
+                              onTap: () => ShareService.shareHadith(hadith, langCode),
+                              child: Icon(
+                                Icons.share_outlined,
+                                color: isDark ? Colors.white38 : Colors.black38,
+                                size: 20,
+                              ),
                             ),
                           ],
                         ),

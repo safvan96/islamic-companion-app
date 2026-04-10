@@ -17,6 +17,7 @@ import 'surah_screen.dart';
 import 'sadaqah_screen.dart';
 import 'asma_al_husna_screen.dart';
 import 'dua_screen.dart';
+import 'favorites_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -889,6 +890,8 @@ class _QuickActions extends StatelessWidget {
           Icons.star_outline, l10n.translate('names99'), const AsmaAlHusnaScreen()),
       _QuickItem(Icons.favorite_border, l10n.translate('sadaqah'),
           const SadaqahScreen()),
+      _QuickItem(Icons.bookmark_outlined, l10n.translate('favorites'),
+          const FavoritesScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,

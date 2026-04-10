@@ -2,6 +2,8 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/app_provider.dart';
+import '../providers/favorites_provider.dart';
+import '../services/share_service.dart';
 
 class DuaScreen extends StatefulWidget {
   const DuaScreen({super.key});
@@ -396,7 +398,32 @@ class _DuaScreenState extends State<DuaScreen> {
                               height: 1.6,
                             ),
                           ),
-                          const SizedBox(height: 14),
+                          const SizedBox(height: 10),
+                          // Bookmark + Share row
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Consumer<FavoritesProvider>(
+                                builder: (_, fav, __) => IconButton(
+                                  icon: Icon(
+                                    fav.isDuaFav(index)
+                                        ? Icons.bookmark
+                                        : Icons.bookmark_border,
+                                    color: const Color(0xFFD4AF37),
+                                  ),
+                                  onPressed: () => fav.toggleDua(index),
+                                ),
+                              ),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.share_outlined,
+                                  color: isDark ? Colors.white38 : Colors.black38,
+                                ),
+                                onPressed: () =>
+                                    ShareService.shareDua(dua, langCode),
+                              ),
+                            ],
+                          ),
                           // Inline audio player
                           Builder(builder: (_) {
                             final isPlaying = _playingCategory == category;

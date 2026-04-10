@@ -10,6 +10,7 @@ import 'l10n/app_localizations.dart';
 import 'providers/app_provider.dart';
 import 'providers/prayer_provider.dart';
 import 'providers/dhikr_provider.dart';
+import 'providers/favorites_provider.dart';
 import 'screens/splash_screen.dart';
 import 'services/adhan_service.dart';
 import 'utils/theme.dart';
@@ -37,6 +38,7 @@ void main() async {
         ),
         ChangeNotifierProvider(create: (_) => PrayerProvider()),
         ChangeNotifierProvider(create: (_) => DhikrProvider()),
+        ChangeNotifierProvider(create: (_) => FavoritesProvider()),
       ],
       child: const IslamicCompanionApp(),
     ),

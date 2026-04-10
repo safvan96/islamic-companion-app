@@ -90,6 +90,8 @@ class AppLocalizations {
       'adhanNotifications': 'Adhan Notifications',
       'adhanNotificationsDesc': 'Get notified at prayer times',
       'city': 'City',
+      'favorites': 'Favorites',
+      'noFavorites': 'No favorites yet',
     },
     'tr': {
       'appTitle': 'İslami Rehber',
@@ -154,6 +156,8 @@ class AppLocalizations {
       'adhanNotifications': 'Ezan Bildirimleri',
       'adhanNotificationsDesc': 'Namaz vakitlerinde bildirim al',
       'city': 'Şehir',
+      'favorites': 'Favoriler',
+      'noFavorites': 'Henüz favori yok',
     },
     'ar': {
       'appTitle': 'الرفيق الإسلامي',
@@ -218,6 +222,8 @@ class AppLocalizations {
       'adhanNotifications': 'إشعارات الأذان',
       'adhanNotificationsDesc': 'إشعار عند وقت الصلاة',
       'city': 'المدينة',
+      'favorites': 'المفضلة',
+      'noFavorites': 'لا توجد مفضلات بعد',
     },
     'ru': {
       'appTitle': 'Исламский Компаньон',
@@ -282,6 +288,8 @@ class AppLocalizations {
       'adhanNotifications': 'Уведомления азана',
       'adhanNotificationsDesc': 'Уведомление во время намаза',
       'city': 'Город',
+      'favorites': 'Избранное',
+      'noFavorites': 'Пока нет избранного',
     },
     'hi': {
       'appTitle': 'इस्लामिक साथी',
@@ -346,6 +354,8 @@ class AppLocalizations {
       'adhanNotifications': 'अज़ान सूचनाएँ',
       'adhanNotificationsDesc': 'नमाज़ के समय सूचना प्राप्त करें',
       'city': 'शहर',
+      'favorites': 'पसंदीदा',
+      'noFavorites': 'अभी कोई पसंदीदा नहीं',
     },
     'id': {
       'appTitle': 'Sahabat Islami',
@@ -410,6 +420,8 @@ class AppLocalizations {
       'adhanNotifications': 'Notifikasi Adzan',
       'adhanNotificationsDesc': 'Dapatkan notifikasi saat waktu shalat',
       'city': 'Kota',
+      'favorites': 'Favorit',
+      'noFavorites': 'Belum ada favorit',
     },
     'zh': {
       'appTitle': '伊斯兰伴侣',
@@ -474,6 +486,8 @@ class AppLocalizations {
       'adhanNotifications': '宣礼通知',
       'adhanNotificationsDesc': '在礼拜时间收到通知',
       'city': '城市',
+      'favorites': '收藏',
+      'noFavorites': '暂无收藏',
     },
     'de': {
       'appTitle': 'Islamischer Begleiter',
@@ -538,6 +552,8 @@ class AppLocalizations {
       'adhanNotifications': 'Adhan-Benachrichtigungen',
       'adhanNotificationsDesc': 'Benachrichtigung zur Gebetszeit erhalten',
       'city': 'Stadt',
+      'favorites': 'Favoriten',
+      'noFavorites': 'Noch keine Favoriten',
     },
     'nl': {
       'appTitle': 'Islamitische Metgezel',
@@ -602,6 +618,8 @@ class AppLocalizations {
       'adhanNotifications': 'Adhan-meldingen',
       'adhanNotificationsDesc': 'Melding ontvangen bij gebedstijd',
       'city': 'Stad',
+      'favorites': 'Favorieten',
+      'noFavorites': 'Nog geen favorieten',
     },
     'fr': {
       'appTitle': 'Compagnon Islamique',
@@ -666,6 +684,8 @@ class AppLocalizations {
       'adhanNotifications': 'Notifications d\'Adhan',
       'adhanNotificationsDesc': 'Recevoir une notification à l\'heure de la prière',
       'city': 'Ville',
+      'favorites': 'Favoris',
+      'noFavorites': 'Pas encore de favoris',
     },
     'es': {
       'appTitle': 'Compañero Islámico',
@@ -730,6 +750,8 @@ class AppLocalizations {
       'adhanNotifications': 'Notificaciones de Adhan',
       'adhanNotificationsDesc': 'Recibir notificación en la hora de oración',
       'city': 'Ciudad',
+      'favorites': 'Favoritos',
+      'noFavorites': 'Aún no hay favoritos',
     },
   };
 
