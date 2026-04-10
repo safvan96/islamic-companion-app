@@ -28,7 +28,7 @@ Digital tasbih with haptic feedback. Choose from 8 different dhikr:
 Set your target (33, 99, 100, 500, 1000) and track your lifetime count.
 
 **HADITH COLLECTION**
-10 curated authentic hadiths from Sahih al-Bukhari, Sahih Muslim, and Jami at-Tirmidhi. All translated in 11 languages with Arabic text.
+20 curated authentic hadiths from Sahih al-Bukhari, Sahih Muslim, and Jami at-Tirmidhi. All translated in 11 languages with Arabic text.
 
 **QURAN - SHORT SURAHS**
 Read and listen to popular short surahs including:

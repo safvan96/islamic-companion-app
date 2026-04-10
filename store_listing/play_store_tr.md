@@ -28,7 +28,7 @@ Titreşim geri bildirimli dijital tesbih. 8 farklı zikirden seçin:
 Hedefinizi belirleyin (33, 99, 100, 500, 1000) ve ömür boyu sayacınızı takip edin.
 
 **HADİS KOLEKSİYONU**
-Buhari, Müslim ve Tirmizi'den 10 sahih hadis. Tamamı Arapça metin ve 11 dilde çeviri ile.
+Buhari, Müslim ve Tirmizi'den 20 sahih hadis. Tamamı Arapça metin ve 11 dilde çeviri ile.
 
 **KUR'AN - KISA SURELER**
 Popüler kısa sureleri okuyun ve dinleyin:
