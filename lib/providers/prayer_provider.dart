@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
+import '../services/adhan_service.dart';
 
 class PrayerProvider extends ChangeNotifier {
   Map<String, String> _prayerTimes = {};
@@ -8,11 +11,81 @@ class PrayerProvider extends ChangeNotifier {
   double _latitude = 0;
   double _longitude = 0;
   String _locationName = '';
+  Timer? _ticker;
 
   Map<String, String> get prayerTimes => _prayerTimes;
   String get nextPrayer => _nextPrayer;
   Duration get timeUntilNext => _timeUntilNext;
   String get locationName => _locationName;
+
+  PrayerProvider() {
+    _startTicker();
+  }
+
+  void _startTicker() {
+    _ticker = Timer.periodic(const Duration(seconds: 60), (_) {
+      if (_prayerTimes.isNotEmpty) {
+        _calculateNextPrayer(DateTime.now());
+        notifyListeners();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _ticker?.cancel();
+    super.dispose();
+  }
+
+  /// Known cities for prayer times
+  static const Map<String, List<double>> cities = {
+    // Türkiye
+    'Istanbul': [41.0082, 28.9784],
+    'Ankara': [39.9334, 32.8597],
+    'Konya': [37.8746, 32.4932],
+    'Izmir': [38.4237, 27.1428],
+    'Bursa': [40.1885, 29.0610],
+    'Antalya': [36.8969, 30.7133],
+    'Adana': [37.0000, 35.3213],
+    'Gaziantep': [37.0662, 37.3833],
+    'Kayseri': [38.7312, 35.4787],
+    'Trabzon': [41.0027, 39.7168],
+    // Orta Doğu
+    'Mecca': [21.4225, 39.8262],
+    'Medina': [24.4672, 39.6112],
+    'Cairo': [30.0444, 31.2357],
+    'Dubai': [25.2048, 55.2708],
+    'Riyadh': [24.7136, 46.6753],
+    // Avrupa
+    'London': [51.5074, -0.1278],
+    'Berlin': [52.5200, 13.4050],
+    'Paris': [48.8566, 2.3522],
+    'Amsterdam': [52.3676, 4.9041],
+    'Moscow': [55.7558, 37.6173],
+    // Asya
+    'Jakarta': [-6.2088, 106.8456],
+    'New Delhi': [28.6139, 77.2090],
+    'Beijing': [39.9042, 116.4074],
+    'Kuala Lumpur': [3.1390, 101.6869],
+    // Amerika
+    'New York': [40.7128, -74.0060],
+    'Madrid': [40.4168, -3.7038],
+  };
+
+  /// Initialize with default or saved city
+  Future<void> initLocation() async {
+    if (_prayerTimes.isEmpty) {
+      setLocation(41.0082, 28.9784, 'Istanbul');
+    }
+  }
+
+  /// Set city by name
+  void setCity(String name) {
+    final coords = cities[name];
+    if (coords != null) {
+      setLocation(coords[0], coords[1], name);
+    }
+  }
 
   void setLocation(double lat, double lng, String name) {
     _latitude = lat;
@@ -26,33 +99,28 @@ class PrayerProvider extends ChangeNotifier {
     final dayOfYear = _getDayOfYear(now);
     final timeZoneOffset = now.timeZoneOffset.inHours.toDouble();
 
-    // Simplified prayer time calculation using astronomical formulas
     final declination = -23.45 * cos(2 * pi * (dayOfYear + 10) / 365);
     final declinationRad = declination * pi / 180;
     final latRad = _latitude * pi / 180;
 
-    // Equation of time (simplified)
     final b = 2 * pi * (dayOfYear - 81) / 365;
     final eot = 9.87 * sin(2 * b) - 7.53 * cos(b) - 1.5 * sin(b);
 
-    // Solar noon
     final solarNoon = 12.0 - _longitude / 15.0 + timeZoneOffset - eot / 60.0;
 
-    // Hour angle for sunrise/sunset
     final cosHA = -tan(latRad) * tan(declinationRad);
     final ha = acos(cosHA.clamp(-1.0, 1.0)) * 180 / pi / 15;
 
-    // Fajr (18 degrees below horizon)
-    final cosFajr = (cos(108 * pi / 180) - sin(latRad) * sin(declinationRad)) /
-        (cos(latRad) * cos(declinationRad));
+    final cosFajr =
+        (cos(108 * pi / 180) - sin(latRad) * sin(declinationRad)) /
+            (cos(latRad) * cos(declinationRad));
     final fajrHA = acos(cosFajr.clamp(-1.0, 1.0)) * 180 / pi / 15;
 
-    // Isha (17 degrees below horizon)
-    final cosIsha = (cos(107 * pi / 180) - sin(latRad) * sin(declinationRad)) /
-        (cos(latRad) * cos(declinationRad));
+    final cosIsha =
+        (cos(107 * pi / 180) - sin(latRad) * sin(declinationRad)) /
+            (cos(latRad) * cos(declinationRad));
     final ishaHA = acos(cosIsha.clamp(-1.0, 1.0)) * 180 / pi / 15;
 
-    // Asr (Hanafi: shadow = 2x object height)
     final asrAngle = atan(1 / (1 + tan((latRad - declinationRad).abs())));
     final cosAsr = (sin(asrAngle) - sin(latRad) * sin(declinationRad)) /
         (cos(latRad) * cos(declinationRad));
@@ -60,7 +128,7 @@ class PrayerProvider extends ChangeNotifier {
 
     final fajr = solarNoon - fajrHA;
     final sunrise = solarNoon - ha;
-    final dhuhr = solarNoon + 0.0167; // slight adjustment
+    final dhuhr = solarNoon + 0.0167;
     final asr = solarNoon + asrHA;
     final maghrib = solarNoon + ha;
     final isha = solarNoon + ishaHA;
@@ -75,7 +143,17 @@ class PrayerProvider extends ChangeNotifier {
     };
 
     _calculateNextPrayer(now);
+    // Schedule adhan notifications if enabled
+    _scheduleAdhanIfEnabled();
     notifyListeners();
+  }
+
+  Future<void> _scheduleAdhanIfEnabled() async {
+    final prefs = await SharedPreferences.getInstance();
+    final enabled = prefs.getBool('adhanEnabled') ?? true;
+    if (enabled) {
+      AdhanService.scheduleAdhan(_prayerTimes);
+    }
   }
 
   void _calculateNextPrayer(DateTime now) {

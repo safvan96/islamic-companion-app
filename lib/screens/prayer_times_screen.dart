@@ -8,6 +8,56 @@ import '../services/hijri_calendar.dart';
 class PrayerTimesScreen extends StatelessWidget {
   const PrayerTimesScreen({super.key});
 
+  void _showCityPicker(BuildContext context) {
+    final prayerProvider = Provider.of<PrayerProvider>(context, listen: false);
+    final cities = PrayerProvider.cities.keys.toList();
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (_) => Container(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40, height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: 16),
+            ...cities.map((city) {
+              final isSelected = city == prayerProvider.locationName;
+              return ListTile(
+                leading: Icon(
+                  Icons.location_city,
+                  color: isSelected ? const Color(0xFF1B5E20) : Colors.grey,
+                ),
+                title: Text(
+                  city,
+                  style: TextStyle(
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    color: isSelected ? const Color(0xFF1B5E20) : null,
+                  ),
+                ),
+                trailing: isSelected
+                    ? const Icon(Icons.check_circle, color: Color(0xFF1B5E20))
+                    : null,
+                onTap: () {
+                  prayerProvider.setCity(city);
+                  Navigator.pop(context);
+                },
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -56,11 +106,21 @@ class PrayerTimesScreen extends StatelessWidget {
                         Icon(Icons.location_on,
                             color: Colors.white70, size: 20),
                         const SizedBox(height: 4),
-                        Text(
-                          prayerProvider.locationName,
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14,
+                        GestureDetector(
+                          onTap: () => _showCityPicker(context),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                prayerProvider.locationName,
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              const Icon(Icons.arrow_drop_down, color: Colors.white70, size: 20),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 8),

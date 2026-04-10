@@ -11,6 +11,7 @@ import 'providers/app_provider.dart';
 import 'providers/prayer_provider.dart';
 import 'providers/dhikr_provider.dart';
 import 'screens/splash_screen.dart';
+import 'services/adhan_service.dart';
 import 'utils/theme.dart';
 
 void main() async {
@@ -18,6 +19,7 @@ void main() async {
   if (!kIsWeb) {
     await MobileAds.instance.initialize();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    await AdhanService.init();
   }
 
   final prefs = await SharedPreferences.getInstance();

@@ -1,16 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/app_provider.dart';
+import '../providers/prayer_provider.dart';
 import '../utils/constants.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool _adhanEnabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAdhanPref();
+  }
+
+  Future<void> _loadAdhanPref() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _adhanEnabled = prefs.getBool('adhanEnabled') ?? true;
+    });
+  }
+
+  Future<void> _toggleAdhan(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('adhanEnabled', value);
+    setState(() => _adhanEnabled = value);
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final appProvider = Provider.of<AppProvider>(context);
+    final prayerProvider = Provider.of<PrayerProvider>(context);
     final isDark = appProvider.isDarkMode;
     final currentLang = appProvider.locale.languageCode;
 
@@ -21,6 +50,74 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          // City Selection
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: ListTile(
+              leading: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF1B5E20).withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.location_city, color: Color(0xFF1B5E20)),
+              ),
+              title: Text(
+                l10n.translate('city'),
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+              subtitle: Text(prayerProvider.locationName),
+              trailing: const Icon(Icons.chevron_right),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  ),
+                  builder: (_) => _CityBottomSheet(
+                    currentCity: prayerProvider.locationName,
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 12),
+          // Adhan Notifications
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: SwitchListTile(
+              secondary: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.teal.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.notifications_active, color: Colors.teal),
+              ),
+              title: Text(
+                l10n.translate('adhanNotifications'),
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+              subtitle: Text(
+                l10n.translate('adhanNotificationsDesc'),
+                style: TextStyle(fontSize: 12, color: isDark ? Colors.white54 : Colors.black45),
+              ),
+              value: _adhanEnabled,
+              onChanged: _toggleAdhan,
+              activeColor: Colors.teal,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
           // Dark Mode
           Card(
             shape: RoundedRectangleBorder(
@@ -127,6 +224,67 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CityBottomSheet extends StatelessWidget {
+  final String currentCity;
+  const _CityBottomSheet({required this.currentCity});
+
+  @override
+  Widget build(BuildContext context) {
+    final cities = PrayerProvider.cities.keys.toList();
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 40,
+            height: 4,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade300,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              AppLocalizations.of(context)!.translate('selectCity'),
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          ...cities.map((city) {
+            final isSelected = city == currentCity;
+            return ListTile(
+              leading: Icon(
+                Icons.location_city,
+                color: isSelected ? const Color(0xFF1B5E20) : Colors.grey,
+              ),
+              title: Text(
+                city,
+                style: TextStyle(
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                  color: isSelected ? const Color(0xFF1B5E20) : null,
+                ),
+              ),
+              trailing: isSelected
+                  ? const Icon(Icons.check_circle, color: Color(0xFF1B5E20))
+                  : null,
+              onTap: () {
+                Provider.of<PrayerProvider>(context, listen: false).setCity(city);
+                Navigator.pop(context);
+              },
+            );
+          }),
         ],
       ),
     );

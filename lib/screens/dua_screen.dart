@@ -1,9 +1,122 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/app_provider.dart';
 
-class DuaScreen extends StatelessWidget {
+class DuaScreen extends StatefulWidget {
   const DuaScreen({super.key});
+
+  // Public-domain dua MP3s — direct CDN URLs (skip /download redirect)
+  static const Map<String, String> audioUrls = {
+    'morning':
+        'https://dn711104.ca.archive.org/0/items/islamic-dua-in-audio/dua-after-waking-up-from-sleep.mp3',
+    'evening':
+        'https://dn711104.ca.archive.org/0/items/islamic-dua-in-audio/dua-at-the-time-of-sunset.mp3',
+    'sleep':
+        'https://dn711104.ca.archive.org/0/items/islamic-dua-in-audio/dua-before-sleeping.mp3',
+    'food':
+        'https://dn711104.ca.archive.org/0/items/islamic-dua-in-audio/dua-before-eating.mp3',
+    'travel':
+        'https://ia600508.us.archive.org/8/items/islamic-dua-in-audio/dua-to-be-recited-after-being-settled-onto-a-carriage.mp3',
+    'mosque':
+        'https://dn711104.ca.archive.org/0/items/islamic-dua-in-audio/dua-for-entering-masjid.mp3',
+    'protection':
+        'https://dn711104.ca.archive.org/0/items/islamic-dua-in-audio/dua-for-trouble.mp3',
+    'forgiveness':
+        'https://dn711104.ca.archive.org/0/items/islamic-dua-in-audio/dua-for-asking-forgiveness.mp3',
+  };
+
+  @override
+  State<DuaScreen> createState() => _DuaScreenState();
+}
+
+class _DuaScreenState extends State<DuaScreen> {
+  final AudioPlayer _player = AudioPlayer();
+  String? _playingCategory;
+  Duration _position = Duration.zero;
+  Duration _duration = Duration.zero;
+
+  @override
+  void initState() {
+    super.initState();
+    _player.setReleaseMode(ReleaseMode.stop);
+    _player.onPlayerStateChanged.listen((s) {
+      if (!mounted) return;
+      setState(() {
+        if (s == PlayerState.completed || s == PlayerState.stopped) {
+          _playingCategory = null;
+        }
+      });
+    });
+    _player.onDurationChanged.listen((d) {
+      if (mounted) setState(() => _duration = d);
+    });
+    _player.onPositionChanged.listen((p) {
+      if (mounted) setState(() => _position = p);
+    });
+    _player.onLog.listen((msg) {
+      if (mounted && msg.toLowerCase().contains('error')) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Player log: $msg'),
+            backgroundColor: Colors.orange,
+            duration: const Duration(seconds: 6),
+          ),
+        );
+      }
+    });
+  }
+
+  Future<void> _toggle(String category) async {
+    final url = DuaScreen.audioUrls[category];
+    if (url == null) return;
+    if (_playingCategory == category) {
+      await _player.stop();
+      if (mounted) setState(() => _playingCategory = null);
+      return;
+    }
+    try {
+      await _player.stop();
+      if (mounted) {
+        setState(() {
+          _playingCategory = category;
+          _position = Duration.zero;
+          _duration = Duration.zero;
+        });
+      }
+      // Two-step: setSource + resume — more reliable on web than play(UrlSource)
+      await _player.setSourceUrl(url);
+      await _player.resume();
+      // Skip intro announcement (~7 seconds)
+      await Future.delayed(const Duration(milliseconds: 500));
+      await _player.seek(const Duration(seconds: 7));
+    } catch (e, st) {
+      debugPrint('Audio error: $e\n$st');
+      if (mounted) {
+        setState(() => _playingCategory = null);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Audio error: $e',
+                style: const TextStyle(color: Colors.white)),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 6),
+          ),
+        );
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _player.dispose();
+    super.dispose();
+  }
+
+  String _fmt(Duration d) {
+    final m = d.inMinutes.toString().padLeft(2, '0');
+    final s = (d.inSeconds % 60).toString().padLeft(2, '0');
+    return '$m:$s';
+  }
 
   static const List<Map<String, dynamic>> _duas = [
     {
@@ -283,6 +396,102 @@ class DuaScreen extends StatelessWidget {
                               height: 1.6,
                             ),
                           ),
+                          const SizedBox(height: 14),
+                          // Inline audio player
+                          Builder(builder: (_) {
+                            final isPlaying = _playingCategory == category;
+                            final progress = (_duration.inMilliseconds == 0)
+                                ? 0.0
+                                : (_position.inMilliseconds /
+                                        _duration.inMilliseconds)
+                                    .clamp(0.0, 1.0);
+                            return Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 14, vertical: 12),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF00838F).withOpacity(0.08),
+                                borderRadius: BorderRadius.circular(14),
+                                border: Border.all(
+                                  color:
+                                      const Color(0xFF00838F).withOpacity(0.25),
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  Material(
+                                    color: const Color(0xFF00838F),
+                                    shape: const CircleBorder(),
+                                    child: InkWell(
+                                      customBorder: const CircleBorder(),
+                                      onTap: () => _toggle(category),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Icon(
+                                          isPlaying
+                                              ? Icons.stop_rounded
+                                              : Icons.play_arrow_rounded,
+                                          color: Colors.white,
+                                          size: 24,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                          child: LinearProgressIndicator(
+                                            value: isPlaying ? progress : 0,
+                                            minHeight: 4,
+                                            backgroundColor:
+                                                const Color(0xFF00838F)
+                                                    .withOpacity(0.15),
+                                            valueColor:
+                                                const AlwaysStoppedAnimation(
+                                                    Color(0xFF00838F)),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 6),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              isPlaying
+                                                  ? _fmt(_position)
+                                                  : '00:00',
+                                              style: TextStyle(
+                                                fontSize: 11,
+                                                color: isDark
+                                                    ? Colors.white60
+                                                    : Colors.black54,
+                                              ),
+                                            ),
+                                            Text(
+                                              isPlaying && _duration > Duration.zero
+                                                  ? _fmt(_duration)
+                                                  : 'Recitation',
+                                              style: TextStyle(
+                                                fontSize: 11,
+                                                color: isDark
+                                                    ? Colors.white60
+                                                    : Colors.black54,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
                         ],
                       ),
                     ),

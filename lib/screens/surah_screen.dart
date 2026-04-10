@@ -1,12 +1,90 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../l10n/app_localizations.dart';
 import '../models/surah_model.dart';
 import '../providers/app_provider.dart';
 
-class SurahScreen extends StatelessWidget {
+class SurahScreen extends StatefulWidget {
   const SurahScreen({super.key});
+  @override
+  State<SurahScreen> createState() => _SurahScreenState();
+}
+
+class _SurahScreenState extends State<SurahScreen> {
+  final AudioPlayer _player = AudioPlayer();
+  int? _playingIndex;
+  Duration _position = Duration.zero;
+  Duration _duration = Duration.zero;
+
+  // Clean Quran recitations — Mishary Alafasy via Islamic Network CDN
+  static const String _cdnBase =
+      'https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy';
+
+  String _audioUrl(SurahModel surah) => '$_cdnBase/${surah.number}.mp3';
+
+  @override
+  void initState() {
+    super.initState();
+    _player.setReleaseMode(ReleaseMode.stop);
+    _player.onPlayerStateChanged.listen((s) {
+      if (!mounted) return;
+      if (s == PlayerState.completed || s == PlayerState.stopped) {
+        setState(() => _playingIndex = null);
+      }
+    });
+    _player.onDurationChanged.listen((d) {
+      if (mounted) setState(() => _duration = d);
+    });
+    _player.onPositionChanged.listen((p) {
+      if (mounted) setState(() => _position = p);
+    });
+  }
+
+  Future<void> _toggle(int index, SurahModel surah) async {
+    if (_playingIndex == index) {
+      await _player.stop();
+      if (mounted) setState(() => _playingIndex = null);
+      return;
+    }
+    try {
+      await _player.stop();
+      if (mounted) {
+        setState(() {
+          _playingIndex = index;
+          _position = Duration.zero;
+          _duration = Duration.zero;
+        });
+      }
+      await _player.setSourceUrl(_audioUrl(surah));
+      await _player.resume();
+    } catch (e) {
+      debugPrint('Surah audio error: $e');
+      if (mounted) {
+        setState(() => _playingIndex = null);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Audio error: $e',
+                style: const TextStyle(color: Colors.white)),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 5),
+          ),
+        );
+      }
+    }
+  }
+
+  String _fmt(Duration d) {
+    final m = d.inMinutes.toString().padLeft(2, '0');
+    final s = (d.inSeconds % 60).toString().padLeft(2, '0');
+    return '$m:$s';
+  }
+
+  @override
+  void dispose() {
+    _player.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +111,17 @@ class SurahScreen extends StatelessWidget {
           itemCount: SurahModel.shortSurahs.length,
           itemBuilder: (context, index) {
             final surah = SurahModel.shortSurahs[index];
-            return _SurahCard(surah: surah, isDark: isDark, l10n: l10n);
+            return _SurahCard(
+              surah: surah,
+              index: index,
+              isDark: isDark,
+              l10n: l10n,
+              isPlaying: _playingIndex == index,
+              position: _playingIndex == index ? _position : Duration.zero,
+              duration: _playingIndex == index ? _duration : Duration.zero,
+              onToggle: () => _toggle(index, surah),
+              fmt: _fmt,
+            );
           },
         ),
       ),
@@ -43,13 +131,25 @@ class SurahScreen extends StatelessWidget {
 
 class _SurahCard extends StatelessWidget {
   final SurahModel surah;
+  final int index;
   final bool isDark;
   final AppLocalizations l10n;
+  final bool isPlaying;
+  final Duration position;
+  final Duration duration;
+  final VoidCallback onToggle;
+  final String Function(Duration) fmt;
 
   const _SurahCard({
     required this.surah,
+    required this.index,
     required this.isDark,
     required this.l10n,
+    required this.isPlaying,
+    required this.position,
+    required this.duration,
+    required this.onToggle,
+    required this.fmt,
   });
 
   @override
@@ -101,7 +201,9 @@ class _SurahCard extends StatelessWidget {
                 surah.nameArabic,
                 style: TextStyle(
                   fontSize: 14,
-                  color: isDark ? const Color(0xFFD4AF37) : const Color(0xFF00695C),
+                  color: isDark
+                      ? const Color(0xFFD4AF37)
+                      : const Color(0xFF00695C),
                 ),
               ),
               const SizedBox(width: 8),
@@ -143,7 +245,7 @@ class _SurahCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 14),
-                  // Translation header
+                  // Translation
                   Text(
                     l10n.translate('translation'),
                     style: TextStyle(
@@ -162,20 +264,8 @@ class _SurahCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  // YouTube button
-                  ElevatedButton.icon(
-                    onPressed: () => _launchYouTube(surah.youtubeUrl),
-                    icon: const Icon(Icons.play_circle_fill, size: 20),
-                    label: Text(l10n.translate('listenRecitation')),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFC62828),
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                  ),
+                  // Inline audio player
+                  _buildPlayer(),
                   const SizedBox(height: 16),
                 ],
               ),
@@ -186,10 +276,80 @@ class _SurahCard extends StatelessWidget {
     );
   }
 
-  Future<void> _launchYouTube(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
+  Widget _buildPlayer() {
+    final progress = (duration.inMilliseconds == 0)
+        ? 0.0
+        : (position.inMilliseconds / duration.inMilliseconds).clamp(0.0, 1.0);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      decoration: BoxDecoration(
+        color: const Color(0xFF00695C).withOpacity(0.08),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(
+          color: const Color(0xFF00695C).withOpacity(0.25),
+        ),
+      ),
+      child: Row(
+        children: [
+          Material(
+            color: const Color(0xFF00695C),
+            shape: const CircleBorder(),
+            child: InkWell(
+              customBorder: const CircleBorder(),
+              onTap: onToggle,
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Icon(
+                  isPlaying ? Icons.stop_rounded : Icons.play_arrow_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: LinearProgressIndicator(
+                    value: isPlaying ? progress : 0,
+                    minHeight: 4,
+                    backgroundColor:
+                        const Color(0xFF00695C).withOpacity(0.15),
+                    valueColor: const AlwaysStoppedAnimation(
+                        Color(0xFF00695C)),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      isPlaying ? fmt(position) : '00:00',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: isDark ? Colors.white60 : Colors.black54,
+                      ),
+                    ),
+                    Text(
+                      isPlaying && duration > Duration.zero
+                          ? fmt(duration)
+                          : 'Mishary Alafasy',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: isDark ? Colors.white60 : Colors.black54,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
