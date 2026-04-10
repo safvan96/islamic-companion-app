@@ -45,6 +45,7 @@ import 'stats_dashboard_screen.dart';
 import 'istikhara_screen.dart';
 import 'tajweed_screen.dart';
 import 'janazah_screen.dart';
+import 'allah_names_detail_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -95,7 +96,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  static const _currentVersion = '2.5.0';
+  static const _currentVersion = '2.6.0';
 
   @override
   void initState() {
@@ -134,12 +135,13 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _whatsNewItem('Post-prayer Tasbih Set (33+33+33)'),
-            _whatsNewItem('Custom dhikr: add your own'),
-            _whatsNewItem('Loop mode & round counter'),
-            _whatsNewItem('Dhikr streak display'),
-            _whatsNewItem('Sound on/off toggle'),
-            _whatsNewItem('Bug fixes & improvements'),
+            _whatsNewItem('30+ new features!'),
+            _whatsNewItem('Tasbih Set, Qaza Tracker, Zakat Calculator'),
+            _whatsNewItem('Islamic Quiz, Fasting Tracker, Adhkar'),
+            _whatsNewItem('Hajj/Umrah Guide, Islamic Names, Hifz Tracker'),
+            _whatsNewItem('Tajweed Guide, Janazah Guide, Istikhara'),
+            _whatsNewItem('Good Deeds, Dua Journal, Wisdom Quotes'),
+            _whatsNewItem('Statistics Dashboard, Islamic Calendar'),
           ],
         ),
         actions: [
@@ -1098,6 +1100,8 @@ class _QuickActions extends StatelessWidget {
           const TajweedScreen()),
       _QuickItem(Icons.people_outline, l10n.translate('janazahGuide'),
           const JanazahScreen()),
+      _QuickItem(Icons.format_quote_rounded, l10n.translate('ayahOfDay'),
+          const AyahOfDayScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
