@@ -64,7 +64,7 @@ Her sabah bir hadis bildirimi alın. Saatini ayarlardan seçin.
 **SADAKA**
 Reklam izle, sadaka kazan! Reklam gelirinin yarısı sizin adınıza sadaka olarak bağışlanır.
 
-**11 DİL DESTEĞİ**
+**12 DİL DESTEĞİ**
 Türkçe, English, العربية, Русский, हिन्दी, Bahasa Indonesia, 中文, Deutsch, Nederlands, Français, Español
 
 **ÖZELLİKLER**
@@ -72,7 +72,7 @@ Türkçe, English, العربية, Русский, हिन्दी, Bahasa In
 ✓ Çevrimdışı Destek
 ✓ Hafif (~25MB)
 ✓ Material Design 3
-✓ 27+ Şehir Namaz Vakti
+✓ 38 Şehir Namaz Vakti
 ✓ Sesli Tilavet (Mishary Alafasy)
 ✓ Yer İmi & Paylaşım
 ✓ Günlük Hadis Bildirimi

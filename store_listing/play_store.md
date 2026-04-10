@@ -64,15 +64,15 @@ Receive a daily hadith notification every morning. Set your preferred time in se
 **SADAQAH (CHARITY)**
 Watch an ad and earn charity! Half of the ad revenue is donated as Sadaqah on your behalf. A unique way to give back.
 
-**11 LANGUAGES**
-English, Türkçe, العربية, Русский, हिन्दी, Bahasa Indonesia, 中文, Deutsch, Nederlands, Français, Español
+**12 LANGUAGES**
+English, Türkçe, العربية, Русский, हिन्दी, Bahasa Indonesia, 中文, Deutsch, Nederlands, Français, Español, اردو (Urdu)
 
 **FEATURES**
 ✓ Dark & Light Mode
 ✓ Offline Support
 ✓ Lightweight (~25MB)
 ✓ Material Design 3
-✓ 27+ Cities for Prayer Times
+✓ 38 Cities for Prayer Times
 ✓ Audio Recitation (Mishary Alafasy)
 ✓ Bookmark & Share
 ✓ Daily Hadith Notifications
