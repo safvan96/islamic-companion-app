@@ -305,6 +305,7 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
   int? _playingAyah;
   bool _continuousPlay = false;
   double _arabicFontSize = 22.0;
+  int _themeMode = 0; // 0=default, 1=sepia, 2=dark
   Set<String> _bookmarkedAyahs = {};
   final ScrollController _scrollController = ScrollController();
 
@@ -442,15 +443,52 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
     }
   }
 
+  Color _bgColor(bool isDark) {
+    if (_themeMode == 1) return const Color(0xFFF5E6C8); // sepia
+    if (_themeMode == 2) return const Color(0xFF0A0A0A); // dark
+    return isDark ? const Color(0xFF0E1A19) : const Color(0xFFFFFDE7);
+  }
+
+  Color _cardColor(bool isDark) {
+    if (_themeMode == 1) return const Color(0xFFFAF0DC);
+    if (_themeMode == 2) return const Color(0xFF1A1A1A);
+    return isDark ? const Color(0xFF1A2420) : Colors.white;
+  }
+
+  Color _textColor(bool isDark) {
+    if (_themeMode == 1) return const Color(0xFF3E2723);
+    if (_themeMode == 2) return const Color(0xFFE0E0E0);
+    return isDark ? Colors.white70 : Colors.black87;
+  }
+
+  Color _arabicColor(bool isDark) {
+    if (_themeMode == 1) return const Color(0xFF5D4037);
+    if (_themeMode == 2) return const Color(0xFFD4AF37);
+    return isDark ? const Color(0xFFD4AF37) : const Color(0xFF1B5E20);
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Provider.of<AppProvider>(context).isDarkMode;
 
     return Scaffold(
+      backgroundColor: _bgColor(isDark),
       appBar: AppBar(
         title: Text('${widget.surahName} ${widget.arabicName}'),
         backgroundColor: const Color(0xFF1B5E20),
         actions: [
+          // Reading theme toggle
+          IconButton(
+            icon: Icon(
+              _themeMode == 0 ? Icons.brightness_auto
+                  : _themeMode == 1 ? Icons.brightness_5
+                  : Icons.brightness_2,
+              size: 20,
+              color: _themeMode == 1 ? const Color(0xFFD4AF37) : Colors.white,
+            ),
+            tooltip: 'Reading theme',
+            onPressed: () => setState(() => _themeMode = (_themeMode + 1) % 3),
+          ),
           // Font size controls
           IconButton(
             icon: const Icon(Icons.text_decrease, size: 20),
@@ -544,7 +582,7 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
                         decoration: BoxDecoration(
                           color: isPlaying
                               ? (isDark ? const Color(0xFF1A3020) : const Color(0xFFE8F5E9))
-                              : (isDark ? const Color(0xFF1A2420) : Colors.white),
+                              : _cardColor(isDark),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
                             color: isPlaying
@@ -626,9 +664,7 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
                               style: TextStyle(
                                 fontSize: _arabicFontSize,
                                 height: 2.0,
-                                color: isDark
-                                    ? const Color(0xFFD4AF37)
-                                    : const Color(0xFF1B5E20),
+                                color: _arabicColor(isDark),
                               ),
                             ),
                             const SizedBox(height: 12),
@@ -638,9 +674,7 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
                               style: TextStyle(
                                 fontSize: 14,
                                 height: 1.6,
-                                color: isDark
-                                    ? Colors.white70
-                                    : Colors.black87,
+                                color: _textColor(isDark),
                               ),
                             ),
                           ],
