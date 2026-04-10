@@ -30,6 +30,7 @@ import 'qaza_screen.dart';
 import 'zakat_screen.dart';
 import 'quiz_screen.dart';
 import 'fasting_screen.dart';
+import 'adhkar_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1053,6 +1054,8 @@ class _QuickActions extends StatelessWidget {
           const QuizScreen()),
       _QuickItem(Icons.restaurant_outlined, l10n.translate('fastingTracker'),
           const FastingScreen()),
+      _QuickItem(Icons.wb_twilight_rounded, l10n.translate('adhkar'),
+          const AdhkarScreen()),
     ];
     return GridView.builder(
       shrinkWrap: true,
