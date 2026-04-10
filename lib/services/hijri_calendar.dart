@@ -117,6 +117,32 @@ class HijriCalendar {
   bool get isDhulHijjah => month == 12;
   bool get isMuharram => month == 1;
 
+  /// Get special Islamic day if today is one, or null
+  String? getSpecialDay(String langCode) {
+    final key = '$month-$day';
+    final days = _specialDays[key];
+    if (days == null) return null;
+    return days[langCode] ?? days['en'];
+  }
+
+  static const Map<String, Map<String, String>> _specialDays = {
+    '1-1': {'en': 'Islamic New Year', 'tr': 'Hicri Yılbaşı', 'ar': 'رأس السنة الهجرية'},
+    '1-10': {'en': 'Day of Ashura', 'tr': 'Aşure Günü', 'ar': 'يوم عاشوراء'},
+    '3-12': {'en': 'Mawlid al-Nabi', 'tr': 'Mevlid Kandili', 'ar': 'المولد النبوي'},
+    '7-27': {'en': 'Isra and Miraj', 'tr': 'Miraç Kandili', 'ar': 'الإسراء والمعراج'},
+    '8-15': {'en': 'Mid-Shaban', 'tr': 'Berat Kandili', 'ar': 'ليلة النصف من شعبان'},
+    '9-1': {'en': 'Ramadan Begins', 'tr': 'Ramazan Başlangıcı', 'ar': 'بداية رمضان'},
+    '9-27': {'en': 'Laylat al-Qadr', 'tr': 'Kadir Gecesi', 'ar': 'ليلة القدر'},
+    '10-1': {'en': 'Eid al-Fitr', 'tr': 'Ramazan Bayramı', 'ar': 'عيد الفطر'},
+    '10-2': {'en': 'Eid al-Fitr (2nd day)', 'tr': 'Ramazan Bayramı 2. gün', 'ar': 'عيد الفطر'},
+    '10-3': {'en': 'Eid al-Fitr (3rd day)', 'tr': 'Ramazan Bayramı 3. gün', 'ar': 'عيد الفطر'},
+    '12-9': {'en': 'Day of Arafah', 'tr': 'Arefe Günü', 'ar': 'يوم عرفة'},
+    '12-10': {'en': 'Eid al-Adha', 'tr': 'Kurban Bayramı', 'ar': 'عيد الأضحى'},
+    '12-11': {'en': 'Eid al-Adha (2nd day)', 'tr': 'Kurban Bayramı 2. gün', 'ar': 'عيد الأضحى'},
+    '12-12': {'en': 'Eid al-Adha (3rd day)', 'tr': 'Kurban Bayramı 3. gün', 'ar': 'عيد الأضحى'},
+    '12-13': {'en': 'Eid al-Adha (4th day)', 'tr': 'Kurban Bayramı 4. gün', 'ar': 'عيد الأضحى'},
+  };
+
   String getMonthName(String langCode) {
     switch (langCode) {
       case 'ar':

@@ -243,6 +243,35 @@ class _HomeContentState extends State<_HomeContent>
                 ),
               ),
               const SizedBox(height: 16),
+              // ── Special day banner ──
+              if (hijri.getSpecialDay(langCode) != null)
+                Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [p.gold.withOpacity(0.15), p.gold.withOpacity(0.05)],
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: p.gold.withOpacity(0.3)),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.star, color: p.gold, size: 20),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          hijri.getSpecialDay(langCode)!,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: p.gold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               // ── Next prayer card ──
               _NextPrayerCard(prayer: prayer, palette: p, l10n: l10n),
               const SizedBox(height: 24),
