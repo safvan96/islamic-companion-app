@@ -65,8 +65,20 @@ class _QiblaScreenState extends State<QiblaScreen>
     final l10n = AppLocalizations.of(context)!;
     final isDark = Provider.of<AppProvider>(context).isDarkMode;
     final prayer = Provider.of<PrayerProvider>(context);
-    // The needle should point towards Qibla relative to current heading
-    final needleAngle = (_qiblaDirection - _currentHeading) * pi / 180;
+
+    // Recalculate qibla when city changes
+    final lat = prayer.latitude;
+    final lng = prayer.longitude;
+    final latRad2 = lat * pi / 180;
+    final lngRad2 = lng * pi / 180;
+    const kLat2 = AppConstants.kaabaLatitude * pi / 180;
+    const kLng2 = AppConstants.kaabaLongitude * pi / 180;
+    final dLng2 = kLng2 - lngRad2;
+    final y2 = sin(dLng2) * cos(kLat2);
+    final x2 = cos(latRad2) * sin(kLat2) - sin(latRad2) * cos(kLat2) * cos(dLng2);
+    final qiblaDir = (atan2(y2, x2) * 180 / pi + 360) % 360;
+
+    final needleAngle = (qiblaDir - _currentHeading) * pi / 180;
 
     return Scaffold(
       appBar: AppBar(
@@ -206,7 +218,7 @@ class _QiblaScreenState extends State<QiblaScreen>
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${_qiblaDirection.toStringAsFixed(1)}° ${l10n.translate('degrees')}',
+                      '${qiblaDir.toStringAsFixed(1)}° ${l10n.translate('degrees')}',
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,

@@ -1240,13 +1240,26 @@ class _QuranProgressBar extends StatefulWidget {
   State<_QuranProgressBar> createState() => _QuranProgressBarState();
 }
 
-class _QuranProgressBarState extends State<_QuranProgressBar> {
+class _QuranProgressBarState extends State<_QuranProgressBar>
+    with WidgetsBindingObserver {
   int _readCount = 0;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _load();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) _load();
   }
 
   Future<void> _load() async {
@@ -1262,10 +1275,13 @@ class _QuranProgressBarState extends State<_QuranProgressBar> {
     final progress = total == 0 ? 0.0 : (_readCount / total).clamp(0.0, 1.0);
 
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => const SurahScreen()),
-      ),
+      onTap: () async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const SurahScreen()),
+        );
+        _load();
+      },
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(

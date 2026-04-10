@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/app_provider.dart';
 import '../utils/constants.dart';
@@ -32,7 +33,19 @@ class _SadaqahScreenState extends State<SadaqahScreen>
     _heartAnimation = Tween<double>(begin: 1.0, end: 1.3).animate(
       CurvedAnimation(parent: _heartController, curve: Curves.elasticOut),
     );
+    _loadSadaqahCount();
     if (!kIsWeb) _loadRewardedAd();
+  }
+
+  Future<void> _loadSadaqahCount() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() => _sadaqahCount = prefs.getInt('sadaqahCount') ?? 0);
+  }
+
+  Future<void> _incrementSadaqah() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() => _sadaqahCount++);
+    await prefs.setInt('sadaqahCount', _sadaqahCount);
   }
 
   void _loadRewardedAd() {
@@ -84,10 +97,8 @@ class _SadaqahScreenState extends State<SadaqahScreen>
 
     _rewardedAd!.show(
       onUserEarnedReward: (ad, reward) {
-        setState(() {
-          _showThankYou = true;
-          _sadaqahCount++;
-        });
+        _incrementSadaqah();
+        setState(() => _showThankYou = true);
         _heartController.forward().then((_) {
           _heartController.reverse();
         });
