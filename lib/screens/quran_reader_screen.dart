@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../providers/app_provider.dart';
 import '../l10n/app_localizations.dart';
 
@@ -17,11 +18,35 @@ class _QuranReaderScreenState extends State<QuranReaderScreen> {
   List<Map<String, dynamic>> _surahs = [];
   bool _loading = true;
   String? _error;
+  String _searchQuery = '';
+  int? _lastReadSurah;
+  String? _lastReadName;
 
   @override
   void initState() {
     super.initState();
+    _loadLastRead();
     _loadSurahList();
+  }
+
+  Future<void> _loadLastRead() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (mounted) {
+      setState(() {
+        _lastReadSurah = prefs.getInt('lastReadSurah');
+        _lastReadName = prefs.getString('lastReadSurahName');
+      });
+    }
+  }
+
+  Future<void> _saveLastRead(int number, String name) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('lastReadSurah', number);
+    await prefs.setString('lastReadSurahName', name);
+    setState(() {
+      _lastReadSurah = number;
+      _lastReadName = name;
+    });
   }
 
   Future<void> _loadSurahList() async {
@@ -57,6 +82,28 @@ class _QuranReaderScreenState extends State<QuranReaderScreen> {
       appBar: AppBar(
         title: const Text('Quran / القرآن الكريم'),
         backgroundColor: const Color(0xFF1B5E20),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(50),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+            child: TextField(
+              onChanged: (v) => setState(() => _searchQuery = v),
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                hintText: 'Search surah...',
+                hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+                prefixIcon: Icon(Icons.search, color: Colors.white.withOpacity(0.7)),
+                filled: true,
+                fillColor: Colors.white.withOpacity(0.15),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              ),
+            ),
+          ),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -94,11 +141,48 @@ class _QuranReaderScreenState extends State<QuranReaderScreen> {
                       ],
                     ),
                   )
-                : ListView.builder(
+                : Builder(builder: (context) {
+                    final filtered = _searchQuery.isEmpty
+                        ? _surahs
+                        : _surahs.where((s) {
+                            final q = _searchQuery.toLowerCase();
+                            return s['englishName'].toString().toLowerCase().contains(q) ||
+                                s['name'].toString().contains(_searchQuery) ||
+                                s['number'].toString() == _searchQuery;
+                          }).toList();
+
+                    return ListView.builder(
                     padding: const EdgeInsets.all(12),
-                    itemCount: _surahs.length,
+                    itemCount: filtered.length + (_lastReadSurah != null && _searchQuery.isEmpty ? 1 : 0),
                     itemBuilder: (context, index) {
-                      final surah = _surahs[index];
+                      // Last read banner
+                      if (_lastReadSurah != null && _searchQuery.isEmpty && index == 0) {
+                        return Card(
+                          margin: const EdgeInsets.only(bottom: 12),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          color: isDark ? const Color(0xFF1A2A20) : const Color(0xFFE8F5E9),
+                          child: ListTile(
+                            leading: const Icon(Icons.history, color: Color(0xFF1B5E20)),
+                            title: Text('Continue: $_lastReadName',
+                                style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                            subtitle: Text('Surah $_lastReadSurah',
+                                style: TextStyle(fontSize: 11, color: isDark ? Colors.white38 : Colors.black38)),
+                            trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF1B5E20)),
+                            onTap: () {
+                              final s = _surahs.firstWhere((s) => s['number'] == _lastReadSurah, orElse: () => {});
+                              if (s.isNotEmpty) {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (_) => _SurahDetailScreen(
+                                    surahNumber: s['number'], surahName: s['englishName'], arabicName: s['name']),
+                                ));
+                              }
+                            },
+                          ),
+                        );
+                      }
+
+                      final adjustedIndex = (_lastReadSurah != null && _searchQuery.isEmpty) ? index - 1 : index;
+                      final surah = filtered[adjustedIndex];
                       return Card(
                         margin: const EdgeInsets.only(bottom: 6),
                         shape: RoundedRectangleBorder(
@@ -151,20 +235,24 @@ class _QuranReaderScreenState extends State<QuranReaderScreen> {
                               color: isDark ? Colors.white38 : Colors.black38,
                             ),
                           ),
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => _SurahDetailScreen(
-                                surahNumber: surah['number'],
-                                surahName: surah['englishName'],
-                                arabicName: surah['name'],
+                          onTap: () {
+                            _saveLastRead(surah['number'], surah['englishName']);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => _SurahDetailScreen(
+                                  surahNumber: surah['number'],
+                                  surahName: surah['englishName'],
+                                  arabicName: surah['name'],
+                                ),
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         ),
                       );
                     },
-                  ),
+                  );
+                }),
       ),
     );
   }
