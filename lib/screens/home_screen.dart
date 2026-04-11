@@ -113,6 +113,11 @@ import 'iftar_dua_screen.dart';
 import 'suhoor_guide_screen.dart';
 import 'prayer_times_table_screen.dart';
 import 'allah_attributes_screen.dart';
+import 'islamic_months_virtues_screen.dart';
+import 'morning_routine_screen.dart';
+import 'night_routine_screen.dart';
+import 'islamic_finance_screen.dart';
+import 'health_sunnah_screen.dart';
 import 'settings_screen.dart';
 import 'friday_guide_screen.dart';
 import 'tasbihat_counter_screen.dart';
@@ -1323,6 +1328,16 @@ class _QuickActions extends StatelessWidget {
           const PrayerTimesTableScreen()),
       _QuickItem(Icons.brightness_7, l10n.translate('allahAttributes'),
           const AllahAttributesScreen()),
+      _QuickItem(Icons.calendar_today, l10n.translate('monthsVirtues'),
+          const IslamicMonthsVirtuesScreen()),
+      _QuickItem(Icons.wb_sunny_rounded, l10n.translate('morningRoutine'),
+          const MorningRoutineScreen()),
+      _QuickItem(Icons.bedtime_rounded, l10n.translate('nightRoutine'),
+          const NightRoutineScreen()),
+      _QuickItem(Icons.account_balance_outlined, l10n.translate('islamicFinance'),
+          const IslamicFinanceScreen()),
+      _QuickItem(Icons.health_and_safety, l10n.translate('healthSunnah'),
+          const HealthSunnahScreen()),
       _QuickItem(Icons.mosque, l10n.translate('fridayGuide'),
           const FridayGuideScreen()),
       _QuickItem(Icons.touch_app, l10n.translate('tasbihatCounter'),
