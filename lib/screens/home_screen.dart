@@ -118,6 +118,16 @@ import 'morning_routine_screen.dart';
 import 'night_routine_screen.dart';
 import 'islamic_finance_screen.dart';
 import 'health_sunnah_screen.dart';
+import 'umrah_checklist_screen.dart';
+import 'hajj_checklist_screen.dart';
+import 'islamic_dream_screen.dart';
+import 'charity_ideas_screen.dart';
+import 'convert_guide_screen.dart';
+import 'masjid_etiquette_screen.dart';
+import 'islamic_greetings_screen.dart';
+import 'forgiveness_duas_screen.dart';
+import 'exam_duas_screen.dart';
+import 'gratitude_journal_screen.dart';
 import 'settings_screen.dart';
 import 'friday_guide_screen.dart';
 import 'tasbihat_counter_screen.dart';
@@ -1338,6 +1348,26 @@ class _QuickActions extends StatelessWidget {
           const IslamicFinanceScreen()),
       _QuickItem(Icons.health_and_safety, l10n.translate('healthSunnah'),
           const HealthSunnahScreen()),
+      _QuickItem(Icons.checklist, l10n.translate('umrahChecklist'),
+          const UmrahChecklistScreen()),
+      _QuickItem(Icons.fact_check, l10n.translate('hajjChecklist'),
+          const HajjChecklistScreen()),
+      _QuickItem(Icons.cloud, l10n.translate('islamicDream'),
+          const IslamicDreamScreen()),
+      _QuickItem(Icons.card_giftcard, l10n.translate('charityIdeas'),
+          const CharityIdeasScreen()),
+      _QuickItem(Icons.door_front_door, l10n.translate('convertGuide'),
+          const ConvertGuideScreen()),
+      _QuickItem(Icons.mosque_outlined, l10n.translate('masjidEtiquette'),
+          const MasjidEtiquetteScreen()),
+      _QuickItem(Icons.waving_hand, l10n.translate('islamicGreetings'),
+          const IslamicGreetingsScreen()),
+      _QuickItem(Icons.spa_outlined, l10n.translate('forgivenessDuas'),
+          const ForgivenessDuasScreen()),
+      _QuickItem(Icons.school_rounded, l10n.translate('examDuas'),
+          const ExamDuasScreen()),
+      _QuickItem(Icons.favorite_outline, l10n.translate('gratitudeJournal'),
+          const GratitudeJournalScreen()),
       _QuickItem(Icons.mosque, l10n.translate('fridayGuide'),
           const FridayGuideScreen()),
       _QuickItem(Icons.touch_app, l10n.translate('tasbihatCounter'),
