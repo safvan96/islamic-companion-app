@@ -172,7 +172,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  static const _currentVersion = '3.3.0';
+  static const _currentVersion = '4.0.0';
 
   @override
   void initState() {
@@ -211,13 +211,13 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _whatsNewItem('90 screens, 80+ features!'),
-            _whatsNewItem('Holy Nights, Reading Log, Travel Guide'),
-            _whatsNewItem('Prayer Counter, Tafakkur, Weekly Report'),
-            _whatsNewItem('Quran Stories, Word Match, Arabic Alphabet'),
-            _whatsNewItem('Sadaqah Jariyah, Death Reminder'),
-            _whatsNewItem('Marriage Duas, Qunut, Surah Topics'),
-            _whatsNewItem('90 screens in 20 languages!'),
+            _whatsNewItem('110 screens, 100+ features!'),
+            _whatsNewItem('Morning/Night Routine, Islamic Finance'),
+            _whatsNewItem('Health Sunnah, Eid Guide, Friday Guide'),
+            _whatsNewItem('Hifz Test, Fact Cards, Tasbihat Counter'),
+            _whatsNewItem('Iftar/Suhoor, Khatm Dua, Ashura Guide'),
+            _whatsNewItem('Rabbana Duas, Daily Sadaqah, Countdown'),
+            _whatsNewItem('110 screens in 20 languages!'),
           ],
         ),
         actions: [

@@ -55,7 +55,7 @@ lib/
 ├── l10n/                  # Localization (11 languages)
 ├── models/                # Data models (hadith, surah, asma)
 ├── providers/             # State (app, prayer, dhikr, favorites, qaza, fasting)
-├── screens/               # Feature screens (90 screens)
+├── screens/               # Feature screens (110 screens)
 ├── services/              # Adhan, notifications, sharing, hijri
 ├── utils/                 # Constants, helpers, theme
 └── widgets/               # Reusable UI components
@@ -69,7 +69,7 @@ lib/
 - Keystore: android/app/upload-keystore.jks (password: IslamicApp2026!)
 
 ## Play Store
-- Version: 3.3.0+14
+- Version: 4.0.0+15
 - Target SDK: 35, Min SDK: 21
 - App Bundle: build/app/outputs/bundle/release/app-release.aab
 - Store listings: store_listing/play_store.md (EN) + play_store_tr.md (TR)
