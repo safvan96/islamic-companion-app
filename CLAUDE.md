@@ -55,7 +55,7 @@ lib/
 ├── l10n/                  # Localization (11 languages)
 ├── models/                # Data models (hadith, surah, asma)
 ├── providers/             # State (app, prayer, dhikr, favorites, qaza, fasting)
-├── screens/               # Feature screens (120 screens)
+├── screens/               # Feature screens (121 screens)
 ├── services/              # Adhan, notifications, sharing, hijri
 ├── utils/                 # Constants, helpers, theme
 └── widgets/               # Reusable UI components
