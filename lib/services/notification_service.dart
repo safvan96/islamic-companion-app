@@ -39,8 +39,8 @@ class NotificationService {
   Future<void> scheduleDailyHadith({int hour = 8, int minute = 0}) async {
     if (!_initialized) await initialize();
 
-    // Cancel existing daily hadith notification
-    await _plugin.cancel(100);
+    // Cancel existing daily hadith notification (ID 200)
+    await _plugin.cancel(200);
 
     final prefs = await SharedPreferences.getInstance();
     final langCode = prefs.getString('locale') ?? 'en';
@@ -60,7 +60,7 @@ class NotificationService {
 
     try {
       await _plugin.zonedSchedule(
-        100,
+        200, // Hadith ID=200, Adhan IDs=100-119
         '📖 ${hadith.source}',
         body,
         _nextInstanceOfTime(hour, minute),
@@ -85,7 +85,7 @@ class NotificationService {
   }
 
   Future<void> cancelDailyHadith() async {
-    await _plugin.cancel(100);
+    await _plugin.cancel(200);
   }
 
   Future<void> cancelAllNotifications() async {
@@ -104,15 +104,31 @@ class NotificationService {
 
   static String _guessTimeZone() {
     final offset = DateTime.now().timeZoneOffset;
-    if (offset.inHours == 3) return 'Europe/Istanbul';
-    if (offset.inHours == 2) return 'Europe/Berlin';
-    if (offset.inHours == 1) return 'Europe/London';
-    if (offset.inHours == 0) return 'UTC';
-    if (offset.inMinutes == 330) return 'Asia/Kolkata';
-    if (offset.inHours == 7) return 'Asia/Jakarta';
-    if (offset.inHours == 8) return 'Asia/Shanghai';
-    if (offset.inHours == 9) return 'Asia/Tokyo';
-    if (offset.inHours == 4) return 'Asia/Dubai';
-    return 'UTC';
+    final mins = offset.inMinutes;
+    const offsetMap = {
+      -300: 'America/New_York',
+      -360: 'America/Chicago',
+      -420: 'America/Denver',
+      -480: 'America/Los_Angeles',
+      -180: 'America/Sao_Paulo',
+      0: 'UTC',
+      60: 'Europe/London',
+      120: 'Europe/Berlin',
+      180: 'Europe/Istanbul',
+      210: 'Asia/Tehran',
+      240: 'Asia/Dubai',
+      270: 'Asia/Kabul',
+      300: 'Asia/Karachi',
+      330: 'Asia/Kolkata',
+      345: 'Asia/Kathmandu',
+      360: 'Asia/Dhaka',
+      420: 'Asia/Jakarta',
+      480: 'Asia/Shanghai',
+      540: 'Asia/Tokyo',
+      570: 'Australia/Adelaide',
+      600: 'Australia/Sydney',
+      720: 'Pacific/Auckland',
+    };
+    return offsetMap[mins] ?? 'UTC';
   }
 }

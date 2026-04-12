@@ -32,15 +32,20 @@ class AdhanService {
     _initialized = true;
   }
 
-  /// Schedule adhan notifications for today's prayer times.
+  // Adhan notification IDs: 100-199 (reserved range, avoids colliding with hadith IDs)
+  static const _adhanIdBase = 100;
+
+  /// Schedule adhan notifications for today's remaining prayer times.
   /// [prayerTimes] is a map like {'Fajr': '04:32', 'Dhuhr': '12:45', ...}
   static Future<void> scheduleAdhan(Map<String, String> prayerTimes) async {
     if (!_initialized) await init();
 
-    // Cancel all existing adhan notifications
-    await _notif.cancelAll();
+    // Cancel only adhan notifications (100-199), not hadith or other notifications
+    for (int i = _adhanIdBase; i < _adhanIdBase + 20; i++) {
+      await _notif.cancel(i);
+    }
 
-    int id = 0;
+    int id = _adhanIdBase;
     final now = tz.TZDateTime.now(tz.local);
 
     for (final entry in prayerTimes.entries) {
@@ -60,14 +65,16 @@ class AdhanService {
         minute,
       );
 
-      // If time already passed today, skip
-      if (scheduled.isBefore(now)) continue;
+      // If time already passed today, schedule for tomorrow
+      if (scheduled.isBefore(now)) {
+        scheduled = scheduled.add(const Duration(days: 1));
+      }
 
       try {
         await _notif.zonedSchedule(
           id++,
-          'Adhan — ${entry.key}',
-          'It is time for ${entry.key} prayer',
+          '${entry.key} \u2022 \u0627\u0644\u0644\u0647 \u0623\u0643\u0628\u0631',
+          '${entry.key} — ${entry.value}',
           scheduled,
           const NotificationDetails(
             android: AndroidNotificationDetails(
@@ -95,15 +102,32 @@ class AdhanService {
 
   static String _guessTimeZone() {
     final offset = DateTime.now().timeZoneOffset;
-    // Common mappings
-    if (offset.inHours == 3) return 'Europe/Istanbul';
-    if (offset.inHours == 2) return 'Europe/Berlin';
-    if (offset.inHours == 1) return 'Europe/London';
-    if (offset.inHours == 0) return 'UTC';
-    if (offset.inHours == 5 && offset.inMinutes == 330) return 'Asia/Kolkata';
-    if (offset.inHours == 7) return 'Asia/Jakarta';
-    if (offset.inHours == 8) return 'Asia/Shanghai';
-    if (offset.inHours == 9) return 'Asia/Tokyo';
-    return 'UTC';
+    final mins = offset.inMinutes;
+    // Map UTC offset (minutes) → representative IANA timezone
+    const offsetMap = {
+      -300: 'America/New_York',     // UTC-5
+      -360: 'America/Chicago',      // UTC-6
+      -420: 'America/Denver',       // UTC-7
+      -480: 'America/Los_Angeles',  // UTC-8
+      -180: 'America/Sao_Paulo',    // UTC-3
+      0: 'UTC',                     // UTC+0
+      60: 'Europe/London',          // UTC+1
+      120: 'Europe/Berlin',         // UTC+2
+      180: 'Europe/Istanbul',       // UTC+3
+      210: 'Asia/Tehran',           // UTC+3:30
+      240: 'Asia/Dubai',            // UTC+4
+      270: 'Asia/Kabul',            // UTC+4:30
+      300: 'Asia/Karachi',          // UTC+5
+      330: 'Asia/Kolkata',          // UTC+5:30
+      345: 'Asia/Kathmandu',        // UTC+5:45
+      360: 'Asia/Dhaka',            // UTC+6
+      420: 'Asia/Jakarta',          // UTC+7
+      480: 'Asia/Shanghai',         // UTC+8
+      540: 'Asia/Tokyo',            // UTC+9
+      570: 'Australia/Adelaide',    // UTC+9:30
+      600: 'Australia/Sydney',      // UTC+10
+      720: 'Pacific/Auckland',      // UTC+12
+    };
+    return offsetMap[mins] ?? 'UTC';
   }
 }
