@@ -216,12 +216,11 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _whatsNewItem('120 screens, 112+ features!'),
-            _whatsNewItem('Umrah/Hajj Checklists, New Muslim Guide'),
-            _whatsNewItem('Exam Duas, Gratitude Journal, Forgiveness'),
-            _whatsNewItem('Islamic Dreams, Charity Ideas, Greetings'),
-            _whatsNewItem('Morning/Night Routine, Islamic Finance'),
-            _whatsNewItem('Health Sunnah, Mosque Etiquette'),
-            _whatsNewItem('120 screens in 20 languages!'),
+            _whatsNewItem('71 cities worldwide for prayer times'),
+            _whatsNewItem('20 languages with expanded translations'),
+            _whatsNewItem('City search in prayer settings'),
+            _whatsNewItem('270+ bug fixes & crash prevention'),
+            _whatsNewItem('Faster, more stable experience'),
           ],
         ),
         actions: [

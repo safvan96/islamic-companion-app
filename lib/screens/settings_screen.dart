@@ -437,61 +437,82 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 }
 
-class _CityBottomSheet extends StatelessWidget {
+class _CityBottomSheet extends StatefulWidget {
   final String currentCity;
   const _CityBottomSheet({required this.currentCity});
 
   @override
+  State<_CityBottomSheet> createState() => _CityBottomSheetState();
+}
+
+class _CityBottomSheetState extends State<_CityBottomSheet> {
+  String _query = '';
+
+  @override
   Widget build(BuildContext context) {
-    final cities = PrayerProvider.cities.keys.toList();
+    final allCities = PrayerProvider.cities.keys.toList();
+    final filtered = _query.isEmpty
+        ? allCities
+        : allCities.where((c) => c.toLowerCase().contains(_query.toLowerCase())).toList();
+    final isDark = Provider.of<AppProvider>(context).isDarkMode;
+
     return Container(
+      height: MediaQuery.of(context).size.height * 0.7,
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 40,
-            height: 4,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(2),
-            ),
+            width: 40, height: 4,
+            decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2)),
           ),
           const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
               AppLocalizations.of(context)!.translate('selectCity'),
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
           const SizedBox(height: 12),
-          ...cities.map((city) {
-            final isSelected = city == currentCity;
-            return ListTile(
-              leading: Icon(
-                Icons.location_city,
-                color: isSelected ? const Color(0xFF1B5E20) : Colors.grey,
-              ),
-              title: Text(
-                city,
-                style: TextStyle(
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                  color: isSelected ? const Color(0xFF1B5E20) : null,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: TextField(
+              onChanged: (v) => setState(() => _query = v),
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.translate('search'),
+                prefixIcon: const Icon(Icons.search, size: 20),
+                isDense: true,
+                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.black12),
                 ),
               ),
-              trailing: isSelected
-                  ? const Icon(Icons.check_circle, color: Color(0xFF1B5E20))
-                  : null,
-              onTap: () {
-                Provider.of<PrayerProvider>(context, listen: false).setCity(city);
-                Navigator.pop(context);
+            ),
+          ),
+          const SizedBox(height: 8),
+          Expanded(
+            child: ListView.builder(
+              itemCount: filtered.length,
+              itemBuilder: (context, i) {
+                final city = filtered[i];
+                final isSelected = city == widget.currentCity;
+                return ListTile(
+                  leading: Icon(Icons.location_city, color: isSelected ? const Color(0xFF1B5E20) : Colors.grey),
+                  title: Text(city, style: TextStyle(
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    color: isSelected ? const Color(0xFF1B5E20) : null,
+                  )),
+                  trailing: isSelected ? const Icon(Icons.check_circle, color: Color(0xFF1B5E20)) : null,
+                  onTap: () {
+                    Provider.of<PrayerProvider>(context, listen: false).setCity(city);
+                    Navigator.pop(context);
+                  },
+                );
               },
-            );
-          }),
+            ),
+          ),
         ],
       ),
     );
