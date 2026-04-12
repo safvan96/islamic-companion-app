@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:share_plus/share_plus.dart';
 import '../l10n/app_localizations.dart';
 import '../models/quiz_model.dart';
@@ -28,11 +29,33 @@ class _QuizScreenState extends State<QuizScreen> {
   int? _selected;
   bool _answered = false;
   bool _finished = false;
+  int _bestScore = 0;
+  int _totalPlayed = 0;
 
   @override
   void initState() {
     super.initState();
+    _loadStats();
     _startQuiz();
+  }
+
+  Future<void> _loadStats() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
+    setState(() {
+      _bestScore = prefs.getInt('quizBestScore') ?? 0;
+      _totalPlayed = prefs.getInt('quizTotalPlayed') ?? 0;
+    });
+  }
+
+  Future<void> _saveScore() async {
+    final prefs = await SharedPreferences.getInstance();
+    _totalPlayed++;
+    await prefs.setInt('quizTotalPlayed', _totalPlayed);
+    if (_score > _bestScore) {
+      _bestScore = _score;
+      await prefs.setInt('quizBestScore', _bestScore);
+    }
   }
 
   void _startQuiz() {
@@ -67,6 +90,7 @@ class _QuizScreenState extends State<QuizScreen> {
           _answered = false;
         });
       } else {
+        _saveScore();
         setState(() => _finished = true);
       }
     });
@@ -264,6 +288,20 @@ class _QuizScreenState extends State<QuizScreen> {
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 16, color: p.muted, height: 1.4),
         ),
+        const SizedBox(height: 16),
+        // Personal best + total played
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          if (_score >= _bestScore && _totalPlayed > 1)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(color: p.gold.withOpacity(0.15), borderRadius: BorderRadius.circular(10)),
+              child: Text('🏆 ${l10n.translate('newBest')}!', style: TextStyle(fontSize: 12, color: p.gold, fontWeight: FontWeight.w600)),
+            ),
+          if (_score >= _bestScore && _totalPlayed > 1) const SizedBox(width: 12),
+          Text('${l10n.translate('best')}: $_bestScore/${_questions.length}', style: TextStyle(fontSize: 12, color: p.muted)),
+          const SizedBox(width: 12),
+          Text('${l10n.translate('played')}: $_totalPlayed', style: TextStyle(fontSize: 12, color: p.muted)),
+        ]),
         const Spacer(flex: 2),
         SizedBox(
           width: double.infinity,
