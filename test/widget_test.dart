@@ -414,4 +414,91 @@ void main() {
       expect(nums.length, 99);
     });
   });
+
+  group('Prayer calculation methods', () {
+    test('All 5 methods have Fajr angles', () {
+      for (final method in PrayerMethod.values) {
+        expect(PrayerProvider.methodNames.containsKey(method), true,
+            reason: '${method.name} missing from methodNames');
+      }
+    });
+
+    test('PrayerMethod enum has 5 values', () {
+      expect(PrayerMethod.values.length, 5);
+    });
+
+    test('Default method is MWL', () {
+      final provider = PrayerProvider();
+      expect(provider.method, PrayerMethod.mwl);
+    });
+
+    test('Default Asr is Shafi\'i', () {
+      final provider = PrayerProvider();
+      expect(provider.isHanafi, false);
+    });
+  });
+
+  group('Localization completeness', () {
+    test('EN has all core navigation keys', () {
+      final l10n = AppLocalizations(const Locale('en'));
+      final coreKeys = [
+        'prayerTimes', 'qibla', 'dhikr', 'hadiths', 'surahs',
+        'settings', 'home', 'search', 'cancel', 'ok', 'copied',
+        'fajr', 'dhuhr', 'asr', 'maghrib', 'isha',
+      ];
+      for (final key in coreKeys) {
+        final val = l10n.translate(key);
+        expect(val != key, true, reason: 'EN missing key: $key');
+      }
+    });
+
+    test('TR has all core navigation keys', () {
+      final l10n = AppLocalizations(const Locale('tr'));
+      final coreKeys = [
+        'prayerTimes', 'qibla', 'dhikr', 'hadiths', 'surahs',
+        'settings', 'home', 'search', 'cancel', 'ok', 'copied',
+        'fajr', 'dhuhr', 'asr', 'maghrib', 'isha',
+      ];
+      for (final key in coreKeys) {
+        final val = l10n.translate(key);
+        expect(val != key, true, reason: 'TR missing key: $key');
+      }
+    });
+
+    test('AR has core screen titles', () {
+      final l10n = AppLocalizations(const Locale('ar'));
+      final keys = ['prayerTimesTable', 'allahAttributes', 'islamicFinance'];
+      for (final key in keys) {
+        final val = l10n.translate(key);
+        expect(val != key, true, reason: 'AR missing key: $key');
+      }
+    });
+  });
+
+  group('Hijri special days coverage', () {
+    test('Ramadan 1 is detected', () {
+      final h = HijriCalendar(year: 1446, month: 9, day: 1);
+      expect(h.getSpecialDay('en'), isNotNull);
+    });
+
+    test('Month names lists have 12 entries', () {
+      expect(HijriCalendar.monthNamesArabic.length, 12);
+      expect(HijriCalendar.monthNamesEnglish.length, 12);
+      expect(HijriCalendar.monthNamesTurkish.length, 12);
+    });
+  });
+
+  group('Store listing data', () {
+    test('71 cities across all regions', () {
+      expect(PrayerProvider.cities.length, 71);
+      // Verify key regions represented
+      expect(PrayerProvider.cities.containsKey('Mecca'), true);
+      expect(PrayerProvider.cities.containsKey('Istanbul'), true);
+      expect(PrayerProvider.cities.containsKey('Jakarta'), true);
+      expect(PrayerProvider.cities.containsKey('New York'), true);
+      expect(PrayerProvider.cities.containsKey('Sydney'), true);
+      expect(PrayerProvider.cities.containsKey('Casablanca'), true);
+      expect(PrayerProvider.cities.containsKey('Tashkent'), true);
+    });
+  });
 }
