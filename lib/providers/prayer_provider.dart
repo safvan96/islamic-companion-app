@@ -155,7 +155,7 @@ class PrayerProvider extends ChangeNotifier {
   void calculatePrayerTimes() {
     final now = DateTime.now();
     final dayOfYear = _getDayOfYear(now);
-    final timeZoneOffset = now.timeZoneOffset.inHours.toDouble();
+    final timeZoneOffset = now.timeZoneOffset.inMinutes / 60.0;
 
     final declination = -23.45 * cos(2 * pi * (dayOfYear + 10) / 365);
     final declinationRad = declination * pi / 180;
@@ -240,8 +240,11 @@ class PrayerProvider extends ChangeNotifier {
   }
 
   String _formatTime(double time) {
-    final hours = time.floor();
-    final minutes = ((time - hours) * 60).round();
+    var hours = time.floor();
+    var minutes = ((time - hours) * 60).round();
+    if (minutes >= 60) { hours += 1; minutes -= 60; }
+    if (hours >= 24) hours -= 24;
+    if (hours < 0) hours += 24;
     return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}';
   }
 }
