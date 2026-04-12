@@ -489,6 +489,29 @@ class _HomeContentState extends State<_HomeContent>
                     ],
                   ),
                 ),
+              // ── Sunnah fasting banner ──
+              if (HijriCalendar.getSunnahFastingReason(langCode) != null)
+                Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: p.accent.withOpacity(0.08),
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: p.accent.withOpacity(0.2)),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.restaurant, color: p.accent, size: 18),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          HijriCalendar.getSunnahFastingReason(langCode)!,
+                          style: TextStyle(fontSize: 12, color: p.accent, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               // ── Next prayer card ──
               _NextPrayerCard(prayer: prayer, palette: p, l10n: l10n),
               const SizedBox(height: 24),

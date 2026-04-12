@@ -158,6 +158,54 @@ class HijriCalendar {
     return events;
   }
 
+  /// Check if today is a sunnah fasting day
+  static String? getSunnahFastingReason(String langCode) {
+    final now = DateTime.now();
+    final hijri = HijriCalendar.fromGregorian(now);
+
+    // Ayyamul Beed (White Days): 13, 14, 15 of each Hijri month
+    if (hijri.day >= 13 && hijri.day <= 15) {
+      return langCode == 'tr' ? 'Eyyamul Bid (Ayın 13-14-15. günleri)' :
+             langCode == 'ar' ? 'أيام البيض (١٣-١٤-١٥ من الشهر)' :
+             'Ayyamul Beed (13th-15th of Hijri month)';
+    }
+
+    // Monday and Thursday
+    if (now.weekday == DateTime.monday) {
+      return langCode == 'tr' ? 'Pazartesi orucu (Sünnet)' :
+             langCode == 'ar' ? 'صيام الاثنين (سنة)' :
+             'Monday fast (Sunnah)';
+    }
+    if (now.weekday == DateTime.thursday) {
+      return langCode == 'tr' ? 'Perşembe orucu (Sünnet)' :
+             langCode == 'ar' ? 'صيام الخميس (سنة)' :
+             'Thursday fast (Sunnah)';
+    }
+
+    // Day of Arafah (9 Dhul Hijjah) — not during Hajj
+    if (hijri.month == 12 && hijri.day == 9) {
+      return langCode == 'tr' ? 'Arefe günü orucu' :
+             langCode == 'ar' ? 'صيام يوم عرفة' :
+             'Day of Arafah fast';
+    }
+
+    // Ashura (10 Muharram) + day before
+    if (hijri.month == 1 && (hijri.day == 9 || hijri.day == 10)) {
+      return langCode == 'tr' ? 'Aşure günü orucu' :
+             langCode == 'ar' ? 'صيام عاشوراء' :
+             'Ashura fast';
+    }
+
+    // 6 days of Shawwal
+    if (hijri.month == 10 && hijri.day >= 2 && hijri.day <= 7) {
+      return langCode == 'tr' ? 'Şevval 6 gün orucu' :
+             langCode == 'ar' ? 'صيام ستة من شوال' :
+             'Six days of Shawwal fast';
+    }
+
+    return null;
+  }
+
   String getMonthName(String langCode) {
     switch (langCode) {
       case 'ar':
