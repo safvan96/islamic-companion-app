@@ -235,6 +235,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           const SizedBox(height: 12),
+          // Asr Method (Hanafi/Shafi'i)
+          Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            child: SwitchListTile(
+              secondary: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(color: Colors.orange.withOpacity(0.1), shape: BoxShape.circle),
+                child: const Icon(Icons.compare_arrows, color: Colors.orange),
+              ),
+              title: Text(l10n.translate('asrMethod'), style: const TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: Text(
+                prayerProvider.isHanafi ? 'Hanafi (${l10n.translate('laterAsr')})' : "Shafi'i / Hanbali / Maliki",
+                style: TextStyle(fontSize: 12, color: isDark ? Colors.white54 : Colors.black45),
+              ),
+              value: prayerProvider.isHanafi,
+              onChanged: (v) => prayerProvider.setHanafi(v),
+              activeColor: Colors.orange,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            ),
+          ),
+          const SizedBox(height: 12),
           // Adhan Notifications
           Card(
             shape: RoundedRectangleBorder(

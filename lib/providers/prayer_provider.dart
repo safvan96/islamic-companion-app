@@ -20,9 +20,11 @@ class PrayerProvider extends ChangeNotifier {
   double _longitude = 0;
   String _locationName = '';
   PrayerMethod _method = PrayerMethod.mwl;
+  bool _hanafi = false; // Asr: Hanafi (shadow=2x) vs Shafi'i (shadow=1x)
   Timer? _ticker;
 
   PrayerMethod get method => _method;
+  bool get isHanafi => _hanafi;
 
   static const methodNames = {
     PrayerMethod.mwl: 'Muslim World League',
@@ -167,6 +169,7 @@ class PrayerProvider extends ChangeNotifier {
       (m) => m.name == savedMethod,
       orElse: () => PrayerMethod.mwl,
     );
+    _hanafi = prefs.getBool('asrHanafi') ?? false;
     final coords = cities[savedCity];
     if (coords != null) {
       setLocation(coords[0], coords[1], savedCity);
@@ -180,6 +183,14 @@ class PrayerProvider extends ChangeNotifier {
     _method = m;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('prayerMethod', m.name);
+    calculatePrayerTimes();
+  }
+
+  /// Toggle Hanafi Asr (later Asr time)
+  Future<void> setHanafi(bool value) async {
+    _hanafi = value;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('asrHanafi', value);
     calculatePrayerTimes();
   }
 
@@ -234,7 +245,8 @@ class PrayerProvider extends ChangeNotifier {
       ishaHA = acos(cosIsha.clamp(-1.0, 1.0)) * 180 / pi / 15;
     }
 
-    final asrAngle = atan(1 / (1 + tan((latRad - declinationRad).abs())));
+    final asrShadowFactor = _hanafi ? 2 : 1; // Hanafi: shadow=2x, Shafi'i: shadow=1x
+    final asrAngle = atan(1 / (asrShadowFactor + tan((latRad - declinationRad).abs())));
     final cosAsr = (sin(asrAngle) - sin(latRad) * sin(declinationRad)) /
         (cos(latRad) * cos(declinationRad));
     final asrHA = acos(cosAsr.clamp(-1.0, 1.0)) * 180 / pi / 15;
