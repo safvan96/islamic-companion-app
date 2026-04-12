@@ -1,7 +1,7 @@
 name: islamic_companion
 description: A comprehensive Islamic companion app with prayer times, Qibla compass, dhikr counter, hadiths, and short surahs.
 publish_to: 'none'
-version: 4.8.0+34
+version: 4.8.1+35
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
