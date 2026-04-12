@@ -185,6 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<PrayerProvider>(context, listen: false).initLocation();
       _checkWhatsNew();
+      _checkRatingPrompt();
     });
   }
 
@@ -197,6 +198,44 @@ class _HomeScreenState extends State<HomeScreen> {
         _showWhatsNew();
       }
     }
+  }
+
+  Future<void> _checkRatingPrompt() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getBool('ratingDismissed') == true) return;
+    final firstOpen = prefs.getString('firstOpenDate');
+    if (firstOpen == null) {
+      await prefs.setString('firstOpenDate', DateTime.now().toIso8601String());
+      return;
+    }
+    final first = DateTime.tryParse(firstOpen);
+    if (first == null) return;
+    final daysSinceFirst = DateTime.now().difference(first).inDays;
+    if (daysSinceFirst < 7) return;
+    if (!mounted) return;
+    final l10n = AppLocalizations.of(context)!;
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Row(children: [
+          const Icon(Icons.star, color: Color(0xFFD4AF37)),
+          const SizedBox(width: 10),
+          Expanded(child: Text(l10n.translate('enjoyingApp'), style: const TextStyle(fontSize: 16))),
+        ]),
+        content: Text(l10n.translate('rateUsMessage'), style: const TextStyle(fontSize: 14, height: 1.5)),
+        actions: [
+          TextButton(
+            onPressed: () { prefs.setBool('ratingDismissed', true); Navigator.pop(ctx); },
+            child: Text(l10n.translate('later'), style: TextStyle(color: Colors.grey.shade600)),
+          ),
+          TextButton(
+            onPressed: () { prefs.setBool('ratingDismissed', true); Navigator.pop(ctx); },
+            child: Text(l10n.translate('rateNow'), style: const TextStyle(color: Color(0xFF1B5E20), fontWeight: FontWeight.w600)),
+          ),
+        ],
+      ),
+    );
   }
 
   void _showWhatsNew() {

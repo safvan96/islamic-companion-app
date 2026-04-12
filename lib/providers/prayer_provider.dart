@@ -55,6 +55,8 @@ class PrayerProvider extends ChangeNotifier {
   Duration get timeUntilNext => _timeUntilNext;
   String get locationName => _locationName;
 
+  int _lastCalcDay = 0;
+
   PrayerProvider() {
     _startTicker();
   }
@@ -62,8 +64,14 @@ class PrayerProvider extends ChangeNotifier {
   void _startTicker() {
     _ticker = Timer.periodic(const Duration(seconds: 60), (_) {
       if (_prayerTimes.isNotEmpty) {
-        _calculateNextPrayer(DateTime.now());
-        notifyListeners();
+        final now = DateTime.now();
+        // Recalculate prayer times once per day (midnight rollover)
+        if (now.day != _lastCalcDay) {
+          calculatePrayerTimes();
+        } else {
+          _calculateNextPrayer(now);
+          notifyListeners();
+        }
       }
     });
   }
@@ -213,6 +221,7 @@ class PrayerProvider extends ChangeNotifier {
 
   void calculatePrayerTimes() {
     final now = DateTime.now();
+    _lastCalcDay = now.day;
     final dayOfYear = _getDayOfYear(now);
     final timeZoneOffset = now.timeZoneOffset.inMinutes / 60.0;
 
