@@ -51,7 +51,7 @@ class AppTheme {
         colorScheme: ColorScheme.fromSeed(
           seedColor: primaryGreen,
           brightness: Brightness.dark,
-          primary: Color(0xFF4CAF50),
+          primary: const Color(0xFF4CAF50),
           secondary: accentGold,
           surface: darkBg,
         ),
@@ -73,7 +73,7 @@ class AppTheme {
           backgroundColor: accentGold,
           foregroundColor: Colors.white,
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           selectedItemColor: Color(0xFF4CAF50),
           unselectedItemColor: Colors.grey,
           type: BottomNavigationBarType.fixed,

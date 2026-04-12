@@ -148,13 +148,15 @@ class _JuzDetailScreenState extends State<_JuzDetailScreen> {
         }
         if (mounted) setState(() { _ayahs = ayahs; _loading = false; });
       } else {
-        if (mounted)
+        if (mounted) {
           setState(() { _error = 'Failed to load'; _loading = false; });
+        }
       }
     } catch (e) {
-      if (mounted)
+      if (mounted) {
         setState(
             () { _error = 'No internet connection'; _loading = false; });
+      }
     }
   }
 

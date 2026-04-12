@@ -22,8 +22,8 @@ Lightweight, modern, and innovative design targeting Muslim users worldwide.
 - **Daily Hadith Notification**: Scheduled with time picker
 - **Hijri Calendar**: With Ramadan suhoor/iftar banner
 
-## Supported Languages (11)
-English, Türkçe, العربية, Русский, हिन्दी, Bahasa Indonesia, 中文, Deutsch, Nederlands, Français, Español
+## Supported Languages (20)
+English, Türkçe, العربية, Русский, हिन्दी, Bahasa Indonesia, 中文, Deutsch, Nederlands, Français, Español, اردو, বাংলা, Bahasa Melayu, Português, فارسی, Kiswahili, 日本語, 한국어, Soomaali
 
 ## Tech Stack
 - **Framework**: Flutter 3.x / Dart
@@ -69,7 +69,7 @@ lib/
 - Keystore: android/app/upload-keystore.jks (password: IslamicApp2026!)
 
 ## Play Store
-- Version: 4.1.0+16
+- Version: 4.1.1+17
 - Target SDK: 35, Min SDK: 21
 - App Bundle: build/app/outputs/bundle/release/app-release.aab
 - Store listings: store_listing/play_store.md (EN) + play_store_tr.md (TR)

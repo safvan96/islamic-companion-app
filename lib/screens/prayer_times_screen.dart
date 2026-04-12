@@ -12,7 +12,7 @@ class PrayerTimesScreen extends StatelessWidget {
     final h = d.inHours;
     final m = d.inMinutes % 60;
     if (h > 0) return '${h}h ${m}m';
-    return '${m} min';
+    return '$m min';
   }
 
   void _showCityPicker(BuildContext context) {
@@ -110,7 +110,7 @@ class PrayerTimesScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const SizedBox(height: 30),
-                        Icon(Icons.location_on,
+                        const Icon(Icons.location_on,
                             color: Colors.white70, size: 20),
                         const SizedBox(height: 4),
                         GestureDetector(

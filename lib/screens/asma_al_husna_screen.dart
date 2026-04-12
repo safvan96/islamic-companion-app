@@ -97,11 +97,11 @@ class _AsmaAlHusnaScreenState extends State<AsmaAlHusnaScreen> {
                 leading: Container(
                   width: 48,
                   height: 48,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        const Color(0xFF4A148C),
-                        const Color(0xFF7B1FA2),
+                        Color(0xFF4A148C),
+                        Color(0xFF7B1FA2),
                       ],
                     ),
                     shape: BoxShape.circle,

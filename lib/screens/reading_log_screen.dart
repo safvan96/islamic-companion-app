@@ -32,7 +32,12 @@ class _ReadingLogScreenState extends State<ReadingLogScreen> {
   Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString('readingLog');
-    if (raw != null) _entries = (jsonDecode(raw) as List).map((e) => _Entry.fromJson(e)).toList();
+    if (raw != null) {
+      try {
+        _entries = (jsonDecode(raw) as List).map((e) => _Entry.fromJson(e)).toList();
+      } catch (_) {}
+    }
+    if (!mounted) return;
     setState(() {});
   }
 
@@ -69,7 +74,7 @@ class _ReadingLogScreenState extends State<ReadingLogScreen> {
           _save(); setState(() {}); Navigator.pop(ctx);
         }, child: Text(l10n.translate('add'), style: TextStyle(color: p.accent))),
       ],
-    ));
+    )).then((_) { pagesCtrl.dispose(); noteCtrl.dispose(); });
   }
 
   @override

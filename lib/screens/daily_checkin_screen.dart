@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +33,7 @@ class _DailyCheckinScreenState extends State<DailyCheckinScreen> {
     final raw = prefs.getStringList('dailyCheckin');
     if (raw != null) _checkedDays = raw.toSet();
     _calcStreak();
+    if (!mounted) return;
     setState(() {});
   }
 
@@ -68,7 +68,6 @@ class _DailyCheckinScreenState extends State<DailyCheckinScreen> {
     final p = _P.of(isDark);
     final l10n = AppLocalizations.of(context)!;
     final now = DateTime.now();
-    final monthStart = DateTime(now.year, now.month, 1);
     final daysInMonth = DateTime(now.year, now.month + 1, 0).day;
 
     return Scaffold(

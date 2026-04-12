@@ -60,13 +60,18 @@ class _GoodDeedsScreenState extends State<GoodDeedsScreen> {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString('goodDeeds_$_todayKey');
     if (raw != null) {
-      _checked = Set<int>.from(jsonDecode(raw));
+      try {
+        _checked = Set<int>.from(jsonDecode(raw));
+      } catch (_) {}
     }
     final histRaw = prefs.getString('goodDeedsHistory');
     if (histRaw != null) {
-      _history = Map<String, int>.from(jsonDecode(histRaw));
+      try {
+        _history = Map<String, int>.from(jsonDecode(histRaw));
+      } catch (_) {}
     }
     _calcStreak();
+    if (!mounted) return;
     setState(() {});
   }
 

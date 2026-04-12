@@ -53,11 +53,11 @@ class LanguageSelectionScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
                 style: TextStyle(
                   fontSize: 20,
-                  color: const Color(0xFFD4AF37),
+                  color: Color(0xFFD4AF37),
                   fontWeight: FontWeight.w500,
                 ),
               ),

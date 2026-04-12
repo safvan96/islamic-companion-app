@@ -34,8 +34,11 @@ class _PrayerCounterScreenState extends State<PrayerCounterScreen> {
   Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString('prayerCounter_$_todayKey');
-    if (raw != null) _prayed = Map<String, bool>.from(jsonDecode(raw));
+    if (raw != null) {
+      try { _prayed = Map<String, bool>.from(jsonDecode(raw)); } catch (_) {}
+    }
     _totalPrayed = prefs.getInt('prayerCounterTotal') ?? 0;
+    if (!mounted) return;
     setState(() {});
   }
 

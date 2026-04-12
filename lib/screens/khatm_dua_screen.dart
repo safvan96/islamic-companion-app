@@ -9,7 +9,7 @@ class _P{final Color bg,surface,accent,gold,fg,muted,divider;const _P({required 
 
 const _dua='\u0627\u0644\u0644\u0647\u0645 \u0627\u0631\u062d\u0645\u0646\u064a \u0628\u0627\u0644\u0642\u0631\u0622\u0646 \u0648\u0627\u062c\u0639\u0644\u0647 \u0644\u064a \u0625\u0645\u0627\u0645\u0627 \u0648\u0646\u0648\u0631\u0627 \u0648\u0647\u062f\u0649 \u0648\u0631\u062d\u0645\u0629 \u0627\u0644\u0644\u0647\u0645 \u0630\u0643\u0631\u0646\u064a \u0645\u0646\u0647 \u0645\u0627 \u0646\u0633\u064a\u062a \u0648\u0639\u0644\u0645\u0646\u064a \u0645\u0646\u0647 \u0645\u0627 \u062c\u0647\u0644\u062a \u0648\u0627\u0631\u0632\u0642\u0646\u064a \u062a\u0644\u0627\u0648\u062a\u0647 \u0622\u0646\u0627\u0621 \u0627\u0644\u0644\u064a\u0644 \u0648\u0623\u0637\u0631\u0627\u0641 \u0627\u0644\u0646\u0647\u0627\u0631';
 class KhatmDuaScreen extends StatelessWidget{const KhatmDuaScreen({super.key});
-  @override Widget build(BuildContext c){final p=_P.of(Provider.of<AppProvider>(c).isDarkMode);final l=AppLocalizations.of(c)!;
+  @override Widget build(BuildContext context){final p=_P.of(Provider.of<AppProvider>(context).isDarkMode);final l=AppLocalizations.of(context)!;
     return Scaffold(backgroundColor:p.bg,appBar:AppBar(backgroundColor:Colors.transparent,elevation:0,scrolledUnderElevation:0,foregroundColor:p.fg,title:Text(l.translate('khatmDua'),style:TextStyle(fontSize:15,fontWeight:FontWeight.w500,color:p.muted)),centerTitle:true),
       body:ListView(padding:const EdgeInsets.fromLTRB(20,0,20,32),children:[
         Container(padding:const EdgeInsets.all(14),decoration:BoxDecoration(color:p.gold.withOpacity(0.08),borderRadius:BorderRadius.circular(14)),
@@ -20,6 +20,6 @@ class KhatmDuaScreen extends StatelessWidget{const KhatmDuaScreen({super.key});
             const SizedBox(height:16),Container(width:40,height:2,color:p.gold),const SizedBox(height:16),
             Text(l.translate('khatmDuaTrans'),textAlign:TextAlign.center,style:TextStyle(fontSize:13,color:p.muted,fontStyle:FontStyle.italic,height:1.5)),
             const SizedBox(height:12),Row(mainAxisAlignment:MainAxisAlignment.center,children:[
-              IconButton(onPressed:(){Clipboard.setData(ClipboardData(text:_dua));ScaffoldMessenger.of(c).showSnackBar(const SnackBar(content:Text('Copied'),duration:Duration(seconds:1)));},icon:Icon(Icons.copy,size:18,color:p.muted)),
+              IconButton(onPressed:(){Clipboard.setData(const ClipboardData(text:_dua));ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.translate('copied')),duration:const Duration(seconds:1)));},icon:Icon(Icons.copy,size:18,color:p.muted)),
               IconButton(onPressed:()=>Share.share('\n\nIslamic Companion App'),icon:Icon(Icons.share_outlined,size:18,color:p.muted))])])),
       ]));}}

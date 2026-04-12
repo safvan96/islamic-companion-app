@@ -56,7 +56,7 @@ class RabbanaScreen extends StatelessWidget {
               Text(l10n.translate(transKey), textAlign: TextAlign.center, style: TextStyle(fontSize: 12, color: p.muted, fontStyle: FontStyle.italic, height: 1.4)),
               const SizedBox(height: 8),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                GestureDetector(onTap: () { Clipboard.setData(ClipboardData(text: '$arabic\n\n${l10n.translate(transKey)}\n— $ref')); ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Copied'), duration: Duration(seconds: 1))); },
+                GestureDetector(onTap: () { Clipboard.setData(ClipboardData(text: '$arabic\n\n${l10n.translate(transKey)}\n— $ref')); ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.translate('copied')), duration: const Duration(seconds: 1))); },
                   child: Icon(Icons.copy, size: 16, color: p.muted)),
                 const SizedBox(width: 16),
                 GestureDetector(onTap: () => Share.share('$arabic\n\n${l10n.translate(transKey)}\n— Quran $ref\n\nIslamic Companion App'),

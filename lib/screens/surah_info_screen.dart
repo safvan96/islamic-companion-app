@@ -20,14 +20,6 @@ class _SurahMeta {
   const _SurahMeta(this.num, this.name, this.arabic, this.ayahs, this.meccan, this.themeKey);
 }
 
-// Just 20 most important surahs with themes (the rest show basic info)
-const _surahsWithThemes = {
-  1: 'si_1', 2: 'si_2', 3: 'si_3', 4: 'si_4', 5: 'si_5',
-  12: 'si_12', 18: 'si_18', 19: 'si_19', 36: 'si_36', 55: 'si_55',
-  56: 'si_56', 67: 'si_67', 78: 'si_78', 93: 'si_93', 94: 'si_94',
-  112: 'si_112', 113: 'si_113', 114: 'si_114',
-};
-
 const _allSurahs = [
   _SurahMeta(1,'Al-Fatiha','\u0627\u0644\u0641\u0627\u062a\u062d\u0629',7,true,'si_1'),
   _SurahMeta(2,'Al-Baqarah','\u0627\u0644\u0628\u0642\u0631\u0629',286,false,'si_2'),

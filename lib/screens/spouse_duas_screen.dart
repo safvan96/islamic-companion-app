@@ -51,7 +51,7 @@ class SpouseDuasScreen extends StatelessWidget {
               Text('— $ref', style: TextStyle(fontSize: 11, color: p.gold, fontWeight: FontWeight.w600)),
               const SizedBox(height: 8),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                GestureDetector(onTap: () { Clipboard.setData(ClipboardData(text: '$arabic\n\n${l10n.translate(transKey)}')); ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Copied'), duration: Duration(seconds: 1))); },
+                GestureDetector(onTap: () { Clipboard.setData(ClipboardData(text: '$arabic\n\n${l10n.translate(transKey)}')); ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.translate('copied')), duration: const Duration(seconds: 1))); },
                   child: Icon(Icons.copy, size: 16, color: p.muted)),
                 const SizedBox(width: 16),
                 GestureDetector(onTap: () => Share.share('$arabic\n\n${l10n.translate(transKey)}\n— $ref\n\nIslamic Companion App'),

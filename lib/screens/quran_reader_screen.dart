@@ -6,7 +6,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:share_plus/share_plus.dart';
 import '../providers/app_provider.dart';
-import '../l10n/app_localizations.dart';
 import '../services/quran_stats_service.dart';
 import 'quran_search_screen.dart';
 import 'juz_screen.dart';
@@ -47,6 +46,7 @@ class _QuranReaderScreenState extends State<QuranReaderScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('lastReadSurah', number);
     await prefs.setString('lastReadSurahName', name);
+    if (!mounted) return;
     setState(() {
       _lastReadSurah = number;
       _lastReadName = name;
@@ -80,7 +80,6 @@ class _QuranReaderScreenState extends State<QuranReaderScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Provider.of<AppProvider>(context).isDarkMode;
-    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -317,6 +316,7 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
 
   Future<void> _toggleBookmark(String ayahKey) async {
     final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
     setState(() {
       if (_bookmarkedAyahs.contains(ayahKey)) {
         _bookmarkedAyahs.remove(ayahKey);

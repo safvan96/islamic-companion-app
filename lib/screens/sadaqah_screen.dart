@@ -39,11 +39,13 @@ class _SadaqahScreenState extends State<SadaqahScreen>
 
   Future<void> _loadSadaqahCount() async {
     final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
     setState(() => _sadaqahCount = prefs.getInt('sadaqahCount') ?? 0);
   }
 
   Future<void> _incrementSadaqah() async {
     final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
     setState(() => _sadaqahCount++);
     await prefs.setInt('sadaqahCount', _sadaqahCount);
   }
@@ -196,11 +198,11 @@ class _SadaqahScreenState extends State<SadaqahScreen>
                     ),
                     child: Column(
                       children: [
-                        Text(
+                        const Text(
                           'تَبَسُّمُكَ فِي وَجْهِ أَخِيكَ لَكَ صَدَقَةٌ',
                           style: TextStyle(
                             fontSize: 22,
-                            color: const Color(0xFFD4AF37),
+                            color: Color(0xFFD4AF37),
                             height: 1.8,
                           ),
                           textAlign: TextAlign.center,

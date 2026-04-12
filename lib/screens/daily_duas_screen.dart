@@ -161,7 +161,7 @@ class _CategoryCardState extends State<_CategoryCard> {
                       InkWell(
                         onTap: () {
                           Clipboard.setData(ClipboardData(text: '${dua.arabic}\n\n${dua.transliteration}\n\n${l10n.translate(dua.translationKey)}'));
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Copied'), duration: Duration(seconds: 1)));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.translate('copied')), duration: const Duration(seconds: 1)));
                         },
                         child: Icon(Icons.copy, size: 16, color: p.muted),
                       ),

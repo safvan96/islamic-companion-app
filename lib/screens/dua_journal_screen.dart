@@ -45,8 +45,11 @@ class _DuaJournalScreenState extends State<DuaJournalScreen> {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString('duaJournal');
     if (raw != null) {
-      _entries = (jsonDecode(raw) as List).map((e) => _DuaEntry.fromJson(e)).toList();
+      try {
+        _entries = (jsonDecode(raw) as List).map((e) => _DuaEntry.fromJson(e)).toList();
+      } catch (_) {}
     }
+    if (!mounted) return;
     setState(() {});
   }
 
@@ -93,7 +96,7 @@ class _DuaJournalScreenState extends State<DuaJournalScreen> {
           }, child: Text(l10n.translate('add'), style: TextStyle(color: p.accent))),
         ],
       ),
-    );
+    ).then((_) => ctrl.dispose());
   }
 
   void _markAnswered(int index) {

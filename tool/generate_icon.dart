@@ -1,5 +1,6 @@
 // Run: dart pub add image --dev
 // Then: dart run tool/generate_icon.dart
+// ignore_for_file: avoid_print
 import 'dart:io';
 import 'dart:math';
 import 'package:image/image.dart' as img;
@@ -11,8 +12,8 @@ void main() {
   const bgR = 0x1B, bgG = 0x5E, bgB = 0x20;
   const fgR = 0xD4, fgG = 0xAF, fgB = 0x37;
 
-  final cx = size / 2;
-  final cy = size / 2;
+  const cx = size / 2;
+  const cy = size / 2;
 
   for (var y = 0; y < size; y++) {
     for (var x = 0; x < size; x++) {
@@ -32,25 +33,25 @@ void main() {
       final b = (bgB + (20 * (1 - t))).clamp(0, 255).toInt();
 
       // Crescent
-      final moonCx = cx - size * 0.05;
-      final moonCy = cy - size * 0.08;
-      final moonR = size * 0.25;
+      const moonCx = cx - size * 0.05;
+      const moonCy = cy - size * 0.08;
+      const moonR = size * 0.25;
       final moonDist = sqrt(pow(x - moonCx, 2) + pow(y - moonCy, 2));
-      final innerCx = cx + size * 0.05;
-      final innerCy = cy - size * 0.1;
-      final innerR = size * 0.2;
+      const innerCx = cx + size * 0.05;
+      const innerCy = cy - size * 0.1;
+      const innerR = size * 0.2;
       final innerDist = sqrt(pow(x - innerCx, 2) + pow(y - innerCy, 2));
 
       // Star (5-pointed check simplified as circle)
-      final starCx = cx + size * 0.15;
-      final starCy = cy - size * 0.05;
-      final starR = size * 0.045;
+      const starCx = cx + size * 0.15;
+      const starCy = cy - size * 0.05;
+      const starR = size * 0.045;
       final starDist = sqrt(pow(x - starCx, 2) + pow(y - starCy, 2));
 
       // Mosque dome
-      final domeCy = cy + size * 0.15;
-      final domeRx = size * 0.2;
-      final domeRy = size * 0.12;
+      const domeCy = cy + size * 0.15;
+      const domeRx = size * 0.2;
+      const domeRy = size * 0.12;
       final domeNorm = pow((x - cx) / domeRx, 2) + pow((y - domeCy) / domeRy, 2);
       final isInDome = domeNorm <= 1.0 && y <= domeCy;
 
@@ -73,7 +74,7 @@ void main() {
       // Minaret tops (small domes)
       final lmTopDist = sqrt(pow(x - lmX, 2) + pow(y - mTop, 2));
       final rmTopDist = sqrt(pow(x - rmX, 2) + pow(y - mTop, 2));
-      final mTopR = size * 0.035;
+      const mTopR = size * 0.035;
 
       bool isFg = false;
       if (moonDist <= moonR && innerDist > innerR) isFg = true;

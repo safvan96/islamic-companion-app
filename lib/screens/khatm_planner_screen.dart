@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,7 +38,8 @@ class _KhatmPlannerScreenState extends State<KhatmPlannerScreen> {
 
   Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
-    _targetDays = prefs.getInt('khatm_target') ?? 30;
+    final loadedTarget = prefs.getInt('khatm_target') ?? 30;
+    _targetDays = loadedTarget > 0 ? loadedTarget : 30;
     _currentPage = prefs.getInt('khatm_page') ?? 0;
     _completedKhatms = prefs.getInt('khatm_completed') ?? 0;
     _startDate = prefs.getString('khatm_start') ?? '';
@@ -48,6 +48,7 @@ class _KhatmPlannerScreenState extends State<KhatmPlannerScreen> {
       _startDate = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
       await prefs.setString('khatm_start', _startDate);
     }
+    if (!mounted) return;
     setState(() {});
   }
 

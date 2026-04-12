@@ -70,7 +70,7 @@ class AdhanService {
           'It is time for ${entry.key} prayer',
           scheduled,
           const NotificationDetails(
-            android: const AndroidNotificationDetails(
+            android: AndroidNotificationDetails(
               'adhan_channel',
               'Adhan Notifications',
               channelDescription: 'Prayer time adhan alerts',

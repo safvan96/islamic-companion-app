@@ -10,7 +10,7 @@ class _P{final Color bg,surface,accent,gold,fg,muted,divider;const _P({required 
 const _iftarDua='\u0630\u0647\u0628 \u0627\u0644\u0638\u0645\u0623 \u0648\u0627\u0628\u062a\u0644\u062a \u0627\u0644\u0639\u0631\u0648\u0642 \u0648\u062b\u0628\u062a \u0627\u0644\u0623\u062c\u0631 \u0625\u0646 \u0634\u0627\u0621 \u0627\u0644\u0644\u0647';
 const _suhoorDua='\u0648\u0628\u0635\u0648\u0645 \u063a\u062f \u0646\u0648\u064a\u062a \u0645\u0646 \u0634\u0647\u0631 \u0631\u0645\u0636\u0627\u0646';
 class IftarDuaScreen extends StatelessWidget{const IftarDuaScreen({super.key});
-  @override Widget build(BuildContext c){final p=_P.of(Provider.of<AppProvider>(c).isDarkMode);final l=AppLocalizations.of(c)!;
+  @override Widget build(BuildContext context){final p=_P.of(Provider.of<AppProvider>(context).isDarkMode);final l=AppLocalizations.of(context)!;
     return Scaffold(backgroundColor:p.bg,appBar:AppBar(backgroundColor:Colors.transparent,elevation:0,scrolledUnderElevation:0,foregroundColor:p.fg,title:Text(l.translate('iftarSuhoor'),style:TextStyle(fontSize:15,fontWeight:FontWeight.w500,color:p.muted)),centerTitle:true),
       body:ListView(padding:const EdgeInsets.fromLTRB(20,0,20,32),children:[
         _duaCard(p,l,'IFTAR DUA',_iftarDua,'iftarDuaTrans',p.gold),

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -93,6 +92,7 @@ class _PinnedFeaturesScreenState extends State<PinnedFeaturesScreen> {
 
   Future<void> _load() async {
     _pinned = await PinnedFeaturesManager.getPinned();
+    if (!mounted) return;
     setState(() {});
   }
 

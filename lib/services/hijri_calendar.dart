@@ -159,5 +159,5 @@ class HijriCalendar {
   }
 
   @override
-  String toString() => '$day ${monthNameEnglish} $year AH';
+  String toString() => '$day $monthNameEnglish $year AH';
 }

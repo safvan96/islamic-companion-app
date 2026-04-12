@@ -14,8 +14,7 @@ class _P {
 class _Sajdah {
   final int surah, ayah, juz;
   final String surahName;
-  final bool wajib; // Hanafi: all are wajib; Shafii: some are recommended
-  const _Sajdah(this.surah, this.ayah, this.surahName, this.juz, {this.wajib = true});
+  const _Sajdah(this.surah, this.ayah, this.surahName, this.juz);
 }
 
 const _sajdahs = [

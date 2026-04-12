@@ -10,12 +10,12 @@ class _P{final Color bg,surface,accent,gold,fg,muted,divider;const _P({required 
 class MorningRoutineScreen extends StatefulWidget{const MorningRoutineScreen({super.key});@override State<MorningRoutineScreen>createState()=>_MorningRoutineScreenS();}
 class _MorningRoutineScreenS extends State<MorningRoutineScreen>{Set<int>_checked={};
   @override void initState(){super.initState();_load();}
-  Future<void>_load()async{final p=await SharedPreferences.getInstance();final r=p.getStringList('morningRoutine_checked');if(r!=null)_checked=r.map(int.parse).toSet();setState((){});}
+  Future<void>_load()async{final p=await SharedPreferences.getInstance();final r=p.getStringList('morningRoutine_checked');if(r!=null)_checked=r.map((s)=>int.tryParse(s)??-1).where((i)=>i>=0).toSet();if(!mounted)return;setState((){});}
   Future<void>_save()async{final p=await SharedPreferences.getInstance();await p.setStringList('morningRoutine_checked',_checked.map((e)=>e.toString()).toList());}
   void _toggle(int i){HapticFeedback.lightImpact();setState((){_checked.contains(i)?_checked.remove(i):_checked.add(i);});_save();}
   @override Widget build(BuildContext c){final p=_P.of(Provider.of<AppProvider>(c).isDarkMode);final l=AppLocalizations.of(c)!;
     final items=["mr_1","mr_2","mr_3","mr_4","mr_5","mr_6","mr_7"];
-    final progress=items.length==0?0.0:_checked.length/items.length;
+    final progress=items.isEmpty?0.0:_checked.length/items.length;
     return Scaffold(backgroundColor:p.bg,appBar:AppBar(backgroundColor:Colors.transparent,elevation:0,scrolledUnderElevation:0,foregroundColor:p.fg,title:Text(l.translate('morningRoutine'),style:TextStyle(fontSize:15,fontWeight:FontWeight.w500,color:p.muted)),centerTitle:true),
       body:ListView(padding:const EdgeInsets.fromLTRB(20,0,20,32),children:[
         Container(padding:const EdgeInsets.all(12),decoration:BoxDecoration(color:p.gold.withOpacity(0.08),borderRadius:BorderRadius.circular(12)),

@@ -49,12 +49,6 @@ class _DuaTimerScreenState extends State<DuaTimerScreen> {
     setState(() {});
   }
 
-  void _reset() {
-    _stop();
-    _secondsLeft = 0;
-    setState(() {});
-  }
-
   @override
   void dispose() { _timer?.cancel(); super.dispose(); }
 
@@ -84,7 +78,7 @@ class _DuaTimerScreenState extends State<DuaTimerScreen> {
             value: _running || done ? progress : 0, strokeWidth: 6, strokeCap: StrokeCap.round,
             backgroundColor: p.divider, valueColor: AlwaysStoppedAnimation(done ? p.gold : p.accent))),
           Column(mainAxisSize: MainAxisSize.min, children: [
-            Text(_running || done ? _timeDisplay : '${_minutes}:00', style: TextStyle(fontSize: 56, fontWeight: FontWeight.w200, color: p.fg, letterSpacing: -2)),
+            Text(_running || done ? _timeDisplay : '$_minutes:00', style: TextStyle(fontSize: 56, fontWeight: FontWeight.w200, color: p.fg, letterSpacing: -2)),
             if (done) Text(l10n.translate('duaTimeUp'), style: TextStyle(fontSize: 14, color: p.gold, fontWeight: FontWeight.w600)),
             if (!_running && !done) Text(l10n.translate('minutes'), style: TextStyle(fontSize: 13, color: p.muted)),
           ]),

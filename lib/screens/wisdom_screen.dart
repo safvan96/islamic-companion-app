@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -127,7 +126,7 @@ class _WisdomScreenState extends State<WisdomScreen> {
                     IconButton(
                       onPressed: () {
                         Clipboard.setData(ClipboardData(text: '${q.arabic}\n\n${l10n.translate(q.translationKey)}\n\n— ${l10n.translate(q.sourceKey)}'));
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Copied'), duration: Duration(seconds: 1)));
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.translate('copied')), duration: const Duration(seconds: 1)));
                       },
                       icon: Icon(Icons.copy, color: p.muted, size: 20),
                     ),

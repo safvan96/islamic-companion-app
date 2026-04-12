@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/app_provider.dart';
@@ -12,7 +10,8 @@ class _P{final Color bg,surface,accent,gold,fg,muted,divider;const _P({required 
 class GratitudeJournalScreen extends StatefulWidget{const GratitudeJournalScreen({super.key});@override State<GratitudeJournalScreen>createState()=>_GJS();}
 class _GJS extends State<GratitudeJournalScreen>{List<String>_items=[];final _ctrl=TextEditingController();
   @override void initState(){super.initState();_load();}
-  Future<void>_load()async{final p=await SharedPreferences.getInstance();final r=p.getStringList('gratitude');if(r!=null)_items=r;setState((){});}
+  @override void dispose(){_ctrl.dispose();super.dispose();}
+  Future<void>_load()async{final p=await SharedPreferences.getInstance();final r=p.getStringList('gratitude');if(r!=null)_items=r;if(!mounted)return;setState((){});}
   Future<void>_save()async{final p=await SharedPreferences.getInstance();await p.setStringList('gratitude',_items);}
   void _add(){if(_ctrl.text.trim().isEmpty)return;HapticFeedback.lightImpact();setState((){_items.insert(0,_ctrl.text.trim());_ctrl.clear();});_save();}
   @override Widget build(BuildContext c){final p=_P.of(Provider.of<AppProvider>(c).isDarkMode);final l=AppLocalizations.of(c)!;

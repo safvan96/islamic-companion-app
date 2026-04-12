@@ -16,7 +16,6 @@ class QiblaScreen extends StatefulWidget {
 }
 
 class _QiblaScreenState extends State<QiblaScreen> {
-  double _qiblaDirection = 0;
   double _currentHeading = 0;
   bool _hasCompass = false;
   StreamSubscription<CompassEvent>? _compassSub;
@@ -25,30 +24,8 @@ class _QiblaScreenState extends State<QiblaScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _calculateQibla();
       _startCompass();
     });
-  }
-
-  void _calculateQibla() {
-    final prayer = Provider.of<PrayerProvider>(context, listen: false);
-    final lat = prayer.latitude;
-    final lng = prayer.longitude;
-
-    final latRad = lat * pi / 180;
-    final lngRad = lng * pi / 180;
-    final kaabaLatRad = AppConstants.kaabaLatitude * pi / 180;
-    final kaabaLngRad = AppConstants.kaabaLongitude * pi / 180;
-
-    final dLng = kaabaLngRad - lngRad;
-    final y = sin(dLng) * cos(kaabaLatRad);
-    final x = cos(latRad) * sin(kaabaLatRad) -
-        sin(latRad) * cos(kaabaLatRad) * cos(dLng);
-
-    var bearing = atan2(y, x) * 180 / pi;
-    bearing = (bearing + 360) % 360;
-
-    setState(() => _qiblaDirection = bearing);
   }
 
   Future<void> _startCompass() async {
@@ -167,15 +144,15 @@ class _QiblaScreenState extends State<QiblaScreen> {
                     // Qibla needle
                     Transform.rotate(
                       angle: needleAngle,
-                      child: Column(
+                      child: const Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
                             Icons.navigation,
                             size: 60,
-                            color: const Color(0xFF1B5E20),
+                            color: Color(0xFF1B5E20),
                           ),
-                          const SizedBox(height: 40),
+                          SizedBox(height: 40),
                         ],
                       ),
                     ),
@@ -231,10 +208,10 @@ class _QiblaScreenState extends State<QiblaScreen> {
                     const SizedBox(height: 4),
                     Text(
                       '${qiblaDir.toStringAsFixed(1)}° ${l10n.translate('degrees')}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: const Color(0xFF1B5E20),
+                        color: Color(0xFF1B5E20),
                       ),
                     ),
                   ],

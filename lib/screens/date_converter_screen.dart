@@ -39,7 +39,7 @@ class _DateConverterScreenState extends State<DateConverterScreen> {
         GestureDetector(
           onTap: () async {
             final picked = await showDatePicker(context: context, initialDate: _selectedDate, firstDate: DateTime(1900), lastDate: DateTime(2100));
-            if (picked != null) setState(() => _selectedDate = picked);
+            if (picked != null && mounted) setState(() => _selectedDate = picked);
           },
           child: Container(
             width: double.infinity, padding: const EdgeInsets.all(24),

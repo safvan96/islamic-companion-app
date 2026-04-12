@@ -713,7 +713,11 @@ class _DhikrSheet extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ).then((_) {
+      arabicCtrl.dispose();
+      translitCtrl.dispose();
+      meaningCtrl.dispose();
+    });
   }
 
   Future<void> _confirmReset(BuildContext context, int index, String name) async {

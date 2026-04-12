@@ -111,7 +111,7 @@ class _AyahOfDayScreenState extends State<AyahOfDayScreen> {
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 IconButton(onPressed: () {
                   Clipboard.setData(ClipboardData(text: '${a['arabic']}\n\n${l10n.translate(a['key']!)}\n\n— Quran ${a['ref']}'));
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Copied'), duration: Duration(seconds: 1)));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.translate('copied')), duration: const Duration(seconds: 1)));
                 }, icon: Icon(Icons.copy, color: p.muted, size: 20)),
                 const SizedBox(width: 16),
                 IconButton(onPressed: () => Share.share('${a['arabic']}\n\n${l10n.translate(a['key']!)}\n\n— Quran ${a['ref']}\n\nIslamic Companion App'),

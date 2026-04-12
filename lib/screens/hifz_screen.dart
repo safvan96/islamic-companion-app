@@ -74,6 +74,7 @@ class _HifzScreenState extends State<HifzScreen> {
         if (list.length == 114) _status = list;
       } catch (_) {}
     }
+    if (!mounted) return;
     setState(() {});
   }
 
@@ -151,7 +152,7 @@ class _HifzScreenState extends State<HifzScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '$_memorizedAyahs / $totalAyahs ${l10n.translate('ayahs')} (${(_memorizedAyahs / totalAyahs * 100).toStringAsFixed(1)}%)',
+                  '$_memorizedAyahs / $totalAyahs ${l10n.translate('ayahs')} (${totalAyahs == 0 ? '0.0' : (_memorizedAyahs / totalAyahs * 100).toStringAsFixed(1)}%)',
                   style: TextStyle(fontSize: 10, color: p.muted),
                 ),
                 const SizedBox(height: 12),

@@ -49,9 +49,14 @@ class _MuhasabaScreenState extends State<MuhasabaScreen> {
   Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString('muhasaba_$_todayKey');
-    if (raw != null) _checked = Set<int>.from(jsonDecode(raw));
+    if (raw != null) {
+      try { _checked = Set<int>.from(jsonDecode(raw)); } catch (_) {}
+    }
     final histRaw = prefs.getString('muhasabaHistory');
-    if (histRaw != null) _history = Map<String, int>.from(jsonDecode(histRaw));
+    if (histRaw != null) {
+      try { _history = Map<String, int>.from(jsonDecode(histRaw)); } catch (_) {}
+    }
+    if (!mounted) return;
     setState(() {});
   }
 

@@ -8,7 +8,7 @@ class QazaProvider extends ChangeNotifier {
   // Prayer types: Fajr, Dhuhr, Asr, Maghrib, Isha, Witr
   static const prayerKeys = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha', 'witr'];
 
-  Map<String, int> _counts = {};
+  final Map<String, int> _counts = {};
   Map<String, int> get counts => Map.unmodifiable(_counts);
 
   int get totalRemaining => _counts.values.fold(0, (a, b) => a + b);

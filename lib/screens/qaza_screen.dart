@@ -477,9 +477,9 @@ class _PrayerCard extends StatelessWidget {
                     color: p.accent,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Text(
+                  child: const Text(
                     '-1',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
                       fontSize: 14,

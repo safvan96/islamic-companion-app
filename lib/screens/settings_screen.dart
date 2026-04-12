@@ -30,6 +30,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _loadPrefs() async {
     final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
     setState(() {
       _adhanEnabled = prefs.getBool('adhanEnabled') ?? true;
       _dailyHadithEnabled = prefs.getBool('dailyHadithEnabled') ?? false;
@@ -41,12 +42,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> _toggleAdhan(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('adhanEnabled', value);
+    if (!mounted) return;
     setState(() => _adhanEnabled = value);
   }
 
   Future<void> _toggleDailyHadith(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('dailyHadithEnabled', value);
+    if (!mounted) return;
     setState(() => _dailyHadithEnabled = value);
     if (value) {
       await NotificationService.instance
@@ -60,12 +63,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     showAboutDialog(
       context: context,
       applicationName: 'Islamic Companion',
-      applicationVersion: 'v4.1.0',
+      applicationVersion: 'v4.1.1',
       applicationIcon: Container(
         width: 48,
         height: 48,
-        decoration: BoxDecoration(
-          color: const Color(0xFF1B5E20),
+        decoration: const BoxDecoration(
+          color: Color(0xFF1B5E20),
           shape: BoxShape.circle,
         ),
         child: const Icon(Icons.mosque, color: Color(0xFFD4AF37), size: 24),
@@ -77,11 +80,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
           style: TextStyle(fontSize: 13),
         ),
         const SizedBox(height: 12),
-        const Text('12 Languages | 38 Cities | 20 Hadiths | 12 Surahs',
+        const Text('20 Languages | 42+ Cities | 120 Screens | 112+ Features',
             style: TextStyle(fontSize: 11, fontStyle: FontStyle.italic)),
         const SizedBox(height: 12),
-        const Text('Features: Prayer Times, Qibla, Dhikr, Quran Recitation, '
-            'Hadiths, Duas, 99 Names, Favorites, Notifications, Sadaqah.',
+        const Text('Features: Prayer Times, Qibla, Dhikr, Quran, Hadiths, '
+            'Duas, Zakat, Hajj, Fasting, Quiz, Adhkar and much more.',
             style: TextStyle(fontSize: 11)),
         const SizedBox(height: 16),
         const Text(
@@ -102,6 +105,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('dailyHadithHour', picked.hour);
     await prefs.setInt('dailyHadithMinute', picked.minute);
+    if (!mounted) return;
     setState(() {
       _dailyHadithHour = picked.hour;
       _dailyHadithMinute = picked.minute;
@@ -408,7 +412,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'v4.1.0',
+                    'v4.1.1',
                     style: TextStyle(
                       color: isDark ? Colors.white38 : Colors.black38,
                       fontSize: 13,

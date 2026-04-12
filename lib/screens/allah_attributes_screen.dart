@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/app_provider.dart';
 class _P{final Color bg,surface,accent,gold,fg,muted,divider;const _P({required this.bg,required this.surface,required this.accent,required this.gold,required this.fg,required this.muted,required this.divider});
@@ -17,7 +15,7 @@ const _attrs=[
   ('\u0645\u062e\u0627\u0644\u0641\u0629 \u0644\u0644\u062d\u0648\u0627\u062f\u062b','Unlike creation','aa_13_d'),
 ];
 class AllahAttributesScreen extends StatelessWidget{const AllahAttributesScreen({super.key});
-  @override Widget build(BuildContext c){final p=_P.of(Provider.of<AppProvider>(c).isDarkMode);final l=AppLocalizations.of(c)!;
+  @override Widget build(BuildContext context){final p=_P.of(Provider.of<AppProvider>(context).isDarkMode);final l=AppLocalizations.of(context)!;
     return Scaffold(backgroundColor:p.bg,appBar:AppBar(backgroundColor:Colors.transparent,elevation:0,scrolledUnderElevation:0,foregroundColor:p.fg,title:Text(l.translate('allahAttributes'),style:TextStyle(fontSize:15,fontWeight:FontWeight.w500,color:p.muted)),centerTitle:true),
       body:ListView.builder(padding:const EdgeInsets.fromLTRB(20,0,20,32),itemCount:_attrs.length,itemBuilder:(_,i){final(arabic,name,descKey)=_attrs[i];
         return Container(margin:const EdgeInsets.only(bottom:8),padding:const EdgeInsets.all(16),decoration:BoxDecoration(color:p.surface,borderRadius:BorderRadius.circular(14),border:Border.all(color:p.divider)),

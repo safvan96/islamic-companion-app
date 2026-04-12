@@ -116,7 +116,7 @@ class IstikharaScreen extends StatelessWidget {
                 IconButton(
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: '$_istikharaDua\n\n${l10n.translate('istikharaDuaTranslation')}'));
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Copied'), duration: Duration(seconds: 1)));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.translate('copied')), duration: const Duration(seconds: 1)));
                   },
                   icon: Icon(Icons.copy, color: p.muted, size: 20)),
                 const SizedBox(width: 12),

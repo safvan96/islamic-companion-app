@@ -34,6 +34,7 @@ class _MukabeleScreenState extends State<MukabeleScreen> {
       try { _completed = List<bool>.from(jsonDecode(raw)); } catch (_) {}
       if (_completed.length != 30) _completed = List.filled(30, false);
     }
+    if (!mounted) return;
     setState(() {});
   }
 

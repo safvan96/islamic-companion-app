@@ -102,7 +102,7 @@ class _MotivationScreenState extends State<MotivationScreen> {
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 IconButton(onPressed: () {
                   Clipboard.setData(ClipboardData(text: '$arabic\n\n${l10n.translate(key)}'));
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Copied'), duration: Duration(seconds: 1)));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.translate('copied')), duration: const Duration(seconds: 1)));
                 }, icon: Icon(Icons.copy, color: p.muted)),
                 const SizedBox(width: 12),
                 IconButton(onPressed: () => Share.share('$arabic\n\n${l10n.translate(key)}\n\n— $source\n\nIslamic Companion App'),

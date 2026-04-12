@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,7 @@ class _S extends State<DailySadaqahScreen>{int _streak=0;bool _donatedToday=fals
   @override void initState(){super.initState();_load();}
   String _key(DateTime d)=>'${d.year}-${d.month.toString().padLeft(2,'0')}-${d.day.toString().padLeft(2,'0')}';
   Future<void> _load()async{final p=await SharedPreferences.getInstance();final today=_key(DateTime.now());_donatedToday=p.getBool('sadaqah_$today')??false;
-    _streak=0;for(int i=0;i<365;i++){final d=DateTime.now().subtract(Duration(days:i));if(i==0&&_donatedToday){_streak++;continue;}if(i==0)continue;if(p.getBool('sadaqah_${_key(d)}')??false){_streak++;}else{break;}}setState((){});}
+    _streak=0;for(int i=0;i<365;i++){final d=DateTime.now().subtract(Duration(days:i));if(i==0&&_donatedToday){_streak++;continue;}if(i==0)continue;if(p.getBool('sadaqah_${_key(d)}')??false){_streak++;}else{break;}}if(!mounted)return;setState((){});}
   Future<void> _donate()async{HapticFeedback.mediumImpact();final p=await SharedPreferences.getInstance();await p.setBool('sadaqah_${_key(DateTime.now())}',true);await _load();}
   @override Widget build(BuildContext c){final isDark=Provider.of<AppProvider>(c).isDarkMode;final p=_P.of(isDark);final l=AppLocalizations.of(c)!;
     return Scaffold(backgroundColor:p.bg,appBar:AppBar(backgroundColor:Colors.transparent,elevation:0,scrolledUnderElevation:0,foregroundColor:p.fg,title:Text(l.translate('dailySadaqah'),style:TextStyle(fontSize:15,fontWeight:FontWeight.w500,color:p.muted)),centerTitle:true),

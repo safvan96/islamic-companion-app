@@ -23,7 +23,6 @@ import 'asma_al_husna_screen.dart';
 import 'dua_screen.dart';
 import 'favorites_screen.dart';
 import 'quran_reader_screen.dart';
-import 'juz_screen.dart';
 import 'prayer_guide_screen.dart';
 import 'tasbih_set_screen.dart';
 import 'qaza_screen.dart';
@@ -45,7 +44,7 @@ import 'stats_dashboard_screen.dart';
 import 'istikhara_screen.dart';
 import 'tajweed_screen.dart';
 import 'janazah_screen.dart';
-import 'allah_names_detail_screen.dart';
+import 'ayah_of_day_screen.dart';
 import 'wudu_screen.dart';
 import 'prophets_screen.dart';
 import 'ruqyah_screen.dart';
@@ -129,10 +128,6 @@ import 'forgiveness_duas_screen.dart';
 import 'exam_duas_screen.dart';
 import 'gratitude_journal_screen.dart';
 import 'settings_screen.dart';
-import 'friday_guide_screen.dart';
-import 'tasbihat_counter_screen.dart';
-import 'hifz_test_screen.dart';
-import 'fact_cards_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
 class _Palette {
@@ -182,7 +177,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  static const _currentVersion = '4.1.0';
+  static const _currentVersion = '4.1.1';
 
   @override
   void initState() {
@@ -205,15 +200,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showWhatsNew() {
-    final isDark = Provider.of<AppProvider>(context, listen: false).isDarkMode;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Row(
+        title: const Row(
           children: [
-            const Icon(Icons.new_releases, color: Color(0xFFD4AF37)),
-            const SizedBox(width: 10),
+            Icon(Icons.new_releases, color: Color(0xFFD4AF37)),
+            SizedBox(width: 10),
             Text("What's New", style: TextStyle(fontSize: 18)),
           ],
         ),
@@ -233,7 +227,8 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('OK', style: TextStyle(color: Color(0xFF1B5E20))),
+            child: Text(AppLocalizations.of(context)!.translate('ok'),
+                style: const TextStyle(color: Color(0xFF1B5E20))),
           ),
         ],
       ),
@@ -1162,10 +1157,10 @@ class _QuickActions extends StatelessWidget {
           const SadaqahScreen()),
       _QuickItem(Icons.bookmark_outlined, l10n.translate('favorites'),
           const FavoritesScreen()),
-      _QuickItem(Icons.chrome_reader_mode, 'Quran',
-          const QuranReaderScreen()),
-      _QuickItem(Icons.school, 'Guide',
-          const PrayerGuideScreen()),
+      const _QuickItem(Icons.chrome_reader_mode, 'Quran',
+          QuranReaderScreen()),
+      const _QuickItem(Icons.school, 'Guide',
+          PrayerGuideScreen()),
       _QuickItem(Icons.repeat_rounded, l10n.translate('tasbihSet'),
           const TasbihSetScreen()),
       _QuickItem(Icons.history_rounded, l10n.translate('qazaTracker'),

@@ -20,10 +20,16 @@ class _S extends State<HifzTestScreen>{late List<int>_order;int _cur=0,_score=0;
   @override void initState(){super.initState();_start();}
   void _start(){final r=Random();_order=List.generate(_qs.length,(i)=>i)..shuffle(r);_order=_order.take(5).toList();_cur=0;_score=0;_sel=null;_answered=false;_done=false;setState((){});}
   void _pick(int i){if(_answered)return;HapticFeedback.lightImpact();setState((){_sel=i;_answered=true;if(i==_qs[_order[_cur]].$4)_score++;});
-    Future.delayed(const Duration(milliseconds:1000),(){if(!mounted)return;if(_cur<_order.length-1)setState((){_cur++;_sel=null;_answered=false;});else setState(()=>_done=true);});}
+    Future.delayed(const Duration(milliseconds:1000),(){if(!mounted)return;if(_cur<_order.length-1) {
+      setState((){_cur++;_sel=null;_answered=false;});
+    } else {
+      setState(()=>_done=true);
+    }});}
   @override Widget build(BuildContext c){final isDark=Provider.of<AppProvider>(c).isDarkMode;final p=_P.of(isDark);final l=AppLocalizations.of(c)!;
-    if(_done)return Scaffold(backgroundColor:p.bg,appBar:AppBar(backgroundColor:Colors.transparent,elevation:0,scrolledUnderElevation:0,foregroundColor:p.fg,title:Text(l.translate('hifzTest'),style:TextStyle(fontSize:15,fontWeight:FontWeight.w500,color:p.muted)),centerTitle:true),
+    if(_done) {
+      return Scaffold(backgroundColor:p.bg,appBar:AppBar(backgroundColor:Colors.transparent,elevation:0,scrolledUnderElevation:0,foregroundColor:p.fg,title:Text(l.translate('hifzTest'),style:TextStyle(fontSize:15,fontWeight:FontWeight.w500,color:p.muted)),centerTitle:true),
       body:Center(child:Column(mainAxisAlignment:MainAxisAlignment.center,children:[Icon(Icons.check_circle,size:64,color:p.gold),const SizedBox(height:16),Text('$_score/${_order.length}',style:TextStyle(fontSize:40,fontWeight:FontWeight.w700,color:p.fg)),const SizedBox(height:24),ElevatedButton(onPressed:_start,style:ElevatedButton.styleFrom(backgroundColor:p.accent,foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(horizontal:32,vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(14))),child:Text(l.translate('playAgain'),style:const TextStyle(fontSize:15,fontWeight:FontWeight.w600)))])));
+    }
     final q=_qs[_order[_cur]];
     return Scaffold(backgroundColor:p.bg,appBar:AppBar(backgroundColor:Colors.transparent,elevation:0,scrolledUnderElevation:0,foregroundColor:p.fg,title:Text(l.translate('hifzTest'),style:TextStyle(fontSize:15,fontWeight:FontWeight.w500,color:p.muted)),centerTitle:true),
       body:Padding(padding:const EdgeInsets.all(20),child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[

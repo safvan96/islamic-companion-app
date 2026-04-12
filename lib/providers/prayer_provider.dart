@@ -190,7 +190,11 @@ class PrayerProvider extends ChangeNotifier {
     for (final entry in _prayerTimes.entries) {
       if (entry.key == 'Sunrise') continue;
       final parts = entry.value.split(':');
-      final prayerMinutes = int.parse(parts[0]) * 60 + int.parse(parts[1]);
+      if (parts.length < 2) continue;
+      final h = int.tryParse(parts[0]);
+      final m = int.tryParse(parts[1]);
+      if (h == null || m == null) continue;
+      final prayerMinutes = h * 60 + m;
       if (prayerMinutes > currentMinutes) {
         _nextPrayer = entry.key;
         _timeUntilNext = Duration(minutes: prayerMinutes - currentMinutes);

@@ -24,6 +24,7 @@ class _SurahScreenState extends State<SurahScreen> {
   Future<void> _loadReadSurahs() async {
     final prefs = await SharedPreferences.getInstance();
     final list = prefs.getStringList('readSurahs') ?? [];
+    if (!mounted) return;
     setState(() {
       _readSurahs = list.map((s) => int.tryParse(s) ?? -1).where((i) => i >= 0).toSet();
     });
@@ -31,6 +32,7 @@ class _SurahScreenState extends State<SurahScreen> {
 
   Future<void> _toggleRead(int surahNumber) async {
     final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
     setState(() {
       if (_readSurahs.contains(surahNumber)) {
         _readSurahs.remove(surahNumber);

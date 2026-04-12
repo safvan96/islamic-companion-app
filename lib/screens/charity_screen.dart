@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/app_localizations.dart';
@@ -57,6 +56,7 @@ class _CharityScreenState extends State<CharityScreen> {
       } catch (_) {}
     }
     _goal = prefs.getDouble('charityGoal') ?? 0;
+    if (!mounted) return;
     setState(() {});
   }
 
@@ -127,7 +127,7 @@ class _CharityScreenState extends State<CharityScreen> {
           ],
         ),
       ),
-    );
+    ).then((_) { amountCtrl.dispose(); noteCtrl.dispose(); });
   }
 
   void _setGoal(_P p, AppLocalizations l10n) {
@@ -154,7 +154,7 @@ class _CharityScreenState extends State<CharityScreen> {
           }, child: Text(l10n.translate('save'), style: TextStyle(color: p.accent))),
         ],
       ),
-    );
+    ).then((_) => ctrl.dispose());
   }
 
   @override

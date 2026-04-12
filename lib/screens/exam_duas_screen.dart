@@ -1,9 +1,5 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/app_provider.dart';
 class _P{final Color bg,surface,accent,gold,fg,muted,divider;const _P({required this.bg,required this.surface,required this.accent,required this.gold,required this.fg,required this.muted,required this.divider});
@@ -16,7 +12,7 @@ const _examDuas=[
   ('\u0627\u0644\u0644\u0647\u0645 \u0627\u0646\u0641\u0639\u0646\u064a \u0628\u0645\u0627 \u0639\u0644\u0645\u062a\u0646\u064a','ed_4','Hadith'),
 ];
 class ExamDuasScreen extends StatelessWidget{const ExamDuasScreen({super.key});
-  @override Widget build(BuildContext c){final p=_P.of(Provider.of<AppProvider>(c).isDarkMode);final l=AppLocalizations.of(c)!;
+  @override Widget build(BuildContext context){final p=_P.of(Provider.of<AppProvider>(context).isDarkMode);final l=AppLocalizations.of(context)!;
     return Scaffold(backgroundColor:p.bg,appBar:AppBar(backgroundColor:Colors.transparent,elevation:0,scrolledUnderElevation:0,foregroundColor:p.fg,title:Text(l.translate('examDuas'),style:TextStyle(fontSize:15,fontWeight:FontWeight.w500,color:p.muted)),centerTitle:true),
       body:ListView(padding:const EdgeInsets.fromLTRB(20,0,20,32),children:[
         Container(padding:const EdgeInsets.all(14),decoration:BoxDecoration(color:p.accent.withOpacity(0.08),borderRadius:BorderRadius.circular(14)),

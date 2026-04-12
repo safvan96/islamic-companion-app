@@ -172,7 +172,7 @@ class _WordMatchScreenState extends State<WordMatchScreen> {
     return Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Icon(Icons.check_circle, size: 64, color: p.gold),
       const SizedBox(height: 16),
-      Text('${_score}/${_pairs.length}', style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700, color: p.fg)),
+      Text('$_score/${_pairs.length}', style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700, color: p.fg)),
       Text('$_attempts ${l10n.translate('attempts')}', style: TextStyle(fontSize: 16, color: p.muted)),
       const SizedBox(height: 24),
       ElevatedButton(onPressed: _startGame, style: ElevatedButton.styleFrom(backgroundColor: p.accent, foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14))),

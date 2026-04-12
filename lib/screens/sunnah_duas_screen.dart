@@ -62,7 +62,7 @@ class SunnahDuasScreen extends StatelessWidget {
               Text(l10n.translate(d.translationKey), style: TextStyle(fontSize: 12, color: p.muted, fontStyle: FontStyle.italic, height: 1.4)),
               const SizedBox(height: 8),
               Row(children: [
-                GestureDetector(onTap: () { Clipboard.setData(ClipboardData(text: '${d.arabic}\n\n${l10n.translate(d.translationKey)}')); ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Copied'), duration: Duration(seconds: 1))); },
+                GestureDetector(onTap: () { Clipboard.setData(ClipboardData(text: '${d.arabic}\n\n${l10n.translate(d.translationKey)}')); ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.translate('copied')), duration: const Duration(seconds: 1))); },
                   child: Icon(Icons.copy, size: 16, color: p.muted)),
                 const SizedBox(width: 16),
                 GestureDetector(onTap: () => Share.share('${d.arabic}\n\n${l10n.translate(d.translationKey)}\n\nIslamic Companion App'),

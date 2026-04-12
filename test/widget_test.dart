@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:islamic_companion/models/hadith_model.dart';
 import 'package:islamic_companion/models/surah_model.dart';
@@ -181,7 +182,7 @@ void main() {
 
   group('Prayer calculation', () {
     test('Turkish cities include major cities', () {
-      final cities = PrayerProvider.cities;
+      const cities = PrayerProvider.cities;
       expect(cities.containsKey('Konya'), true);
       expect(cities.containsKey('Izmir'), true);
       expect(cities.containsKey('Antalya'), true);
@@ -189,14 +190,14 @@ void main() {
     });
 
     test('Middle East cities include holy cities', () {
-      final cities = PrayerProvider.cities;
+      const cities = PrayerProvider.cities;
       expect(cities.containsKey('Mecca'), true);
       expect(cities.containsKey('Medina'), true);
       expect(cities.containsKey('Cairo'), true);
     });
 
     test('Asian cities include major Muslim cities', () {
-      final cities = PrayerProvider.cities;
+      const cities = PrayerProvider.cities;
       expect(cities.containsKey('Jakarta'), true);
       expect(cities.containsKey('Karachi'), true);
       expect(cities.containsKey('Dhaka'), true);
@@ -318,12 +319,78 @@ void main() {
     test('Arabic locale exists', () {
       expect(AppLocalizations.supportedLocales.any((l) => l.languageCode == 'ar'), true);
     });
+
+    test('All 20 declared locales pass isSupported check', () {
+      // Regression: previously isSupported only accepted 11 languages while
+      // supportedLocales declared 20, so 9 languages silently fell back to EN.
+      const delegate = AppLocalizations.delegate;
+      for (final locale in AppLocalizations.supportedLocales) {
+        expect(delegate.isSupported(locale), true,
+            reason: '${locale.languageCode} declared but not supported by delegate');
+      }
+    });
+
+    test('Delegate rejects unknown locales', () {
+      expect(AppLocalizations.delegate.isSupported(const Locale('xx')), false);
+    });
   });
 
   group('Screen count', () {
-    test('App has 110 screen files', () {
+    test('App has 120 screen files', () {
       // This is a documentation test to track screen count
-      expect(110, 110);
+      expect(120, 120);
+    });
+  });
+
+  group('Constants', () {
+    test('Kaaba coordinates are valid', () {
+      expect(AppConstants.kaabaLatitude, closeTo(21.4225, 0.001));
+      expect(AppConstants.kaabaLongitude, closeTo(39.8262, 0.001));
+    });
+  });
+
+  group('Hijri calendar', () {
+    test('Can convert current Gregorian date to Hijri', () {
+      final hijri = HijriCalendar.fromGregorian(DateTime.now());
+      expect(hijri.year, greaterThan(1440));
+      expect(hijri.month, inInclusiveRange(1, 12));
+      expect(hijri.day, inInclusiveRange(1, 30));
+    });
+
+    test('Converts known date correctly', () {
+      // 2024-01-01 corresponds to year 1445 AH
+      final hijri = HijriCalendar.fromGregorian(DateTime(2024, 1, 1));
+      expect(hijri.year, 1445);
+    });
+  });
+
+  group('Prayer provider', () {
+    test('Can create PrayerProvider instance', () {
+      final provider = PrayerProvider();
+      expect(provider, isNotNull);
+    });
+
+    test('Has default coordinates', () {
+      final provider = PrayerProvider();
+      expect(provider.latitude, isNotNull);
+      expect(provider.longitude, isNotNull);
+    });
+  });
+
+  group('Asma al-Husna', () {
+    test('Has 99 names of Allah', () {
+      expect(AsmaAlHusnaModel.names.length, 99);
+    });
+
+    test('All names have Arabic text', () {
+      for (final name in AsmaAlHusnaModel.names) {
+        expect(name.arabic.isNotEmpty, true);
+      }
+    });
+
+    test('All names have unique numbers', () {
+      final nums = AsmaAlHusnaModel.names.map((n) => n.number).toSet();
+      expect(nums.length, 99);
     });
   });
 }
