@@ -25,7 +25,7 @@ const RESOURCES = {"assets/AssetManifest.json": "f534791734053e8f0aa77523db0292d
 "canvaskit/canvaskit.js": "66177750aff65a66cb07bb44b8c6422b",
 "canvaskit/skwasm.js": "694fda5704053957c2594de355805228",
 "flutter.js": "f393d3c16b631f36852323de8e583132",
-"flutter_bootstrap.js": "11878bfc8a5217d890739e200bee1634",
+"flutter_bootstrap.js": "62f9313cd5f4dd458ac2350d49afb89b",
 "main.dart.js": "7f40f781048e90775c39c830a1e57aa5",
 "version.json": "4bdbf870a08eb72620a98326271c876e",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
