@@ -51,6 +51,44 @@ class AdhanService {
 
     final prefs = await SharedPreferences.getInstance();
 
+    // Schedule pre-Fajr wake-up alarm if enabled
+    final preFajrMins = prefs.getInt('preFajrMinutes') ?? 0;
+    if (preFajrMins > 0 && prayerTimes.containsKey('Fajr')) {
+      final fajrParts = prayerTimes['Fajr']!.split(':');
+      if (fajrParts.length == 2) {
+        final fH = int.tryParse(fajrParts[0]);
+        final fM = int.tryParse(fajrParts[1]);
+        if (fH != null && fM != null) {
+          var preFajr = tz.TZDateTime(tz.local, now.year, now.month, now.day, fH, fM)
+              .subtract(Duration(minutes: preFajrMins));
+          if (preFajr.isBefore(now)) preFajr = preFajr.add(const Duration(days: 1));
+          try {
+            await _notif.zonedSchedule(
+              _adhanIdBase + 18, // Pre-Fajr ID
+              'Tahajjud / Suhoor',
+              '$preFajrMins min before Fajr',
+              preFajr,
+              const NotificationDetails(
+                android: AndroidNotificationDetails(
+                  'pre_fajr_channel',
+                  'Pre-Fajr Wake Up',
+                  channelDescription: 'Wake up before Fajr for Tahajjud or Suhoor',
+                  importance: Importance.max,
+                  priority: Priority.high,
+                  enableVibration: true,
+                  fullScreenIntent: true,
+                ),
+              ),
+              uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+              androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+            );
+          } catch (e) {
+            debugPrint('Failed to schedule pre-Fajr: $e');
+          }
+        }
+      }
+    }
+
     for (final entry in prayerTimes.entries) {
       if (entry.key == 'Sunrise') continue; // No adhan for sunrise
 

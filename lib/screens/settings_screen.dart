@@ -24,6 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _dailyHadithEnabled = false;
   int _dailyHadithHour = 8;
   int _dailyHadithMinute = 0;
+  int _preFajrMinutes = 0;
 
   @override
   void initState() {
@@ -42,6 +43,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       _dailyHadithEnabled = prefs.getBool('dailyHadithEnabled') ?? false;
       _dailyHadithHour = prefs.getInt('dailyHadithHour') ?? 8;
       _dailyHadithMinute = prefs.getInt('dailyHadithMinute') ?? 0;
+      _preFajrMinutes = prefs.getInt('preFajrMinutes') ?? 0;
     });
   }
 
@@ -308,6 +310,57 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ],
               ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          // Pre-Fajr Wake Up
+          Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            child: ListTile(
+              leading: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(color: Colors.indigo.withOpacity(0.1), shape: BoxShape.circle),
+                child: const Icon(Icons.alarm, color: Colors.indigo),
+              ),
+              title: Text(l10n.translate('preFajrAlarm'), style: const TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: Text(
+                _preFajrMinutes > 0 ? '$_preFajrMinutes ${l10n.translate('minBeforeFajr')}' : l10n.translate('off'),
+                style: TextStyle(fontSize: 12, color: isDark ? Colors.white54 : Colors.black45),
+              ),
+              trailing: const Icon(Icons.chevron_right),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+                  builder: (_) => Container(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Column(mainAxisSize: MainAxisSize.min, children: [
+                      Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2))),
+                      const SizedBox(height: 16),
+                      Text(l10n.translate('preFajrAlarm'), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 12),
+                      ...[0, 15, 30, 45, 60].map((mins) {
+                        final selected = mins == _preFajrMinutes;
+                        final label = mins == 0 ? l10n.translate('off') : '$mins ${l10n.translate('minutes')}';
+                        return ListTile(
+                          leading: Icon(mins == 0 ? Icons.alarm_off : Icons.alarm, color: selected ? Colors.indigo : Colors.grey),
+                          title: Text(label, style: TextStyle(fontWeight: selected ? FontWeight.bold : FontWeight.normal, color: selected ? Colors.indigo : null)),
+                          trailing: selected ? const Icon(Icons.check_circle, color: Colors.indigo) : null,
+                          onTap: () async {
+                            final nav = Navigator.of(context);
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setInt('preFajrMinutes', mins);
+                            if (!mounted) return;
+                            setState(() => _preFajrMinutes = mins);
+                            nav.pop();
+                          },
+                        );
+                      }),
+                    ]),
+                  ),
+                );
+              },
             ),
           ),
           const SizedBox(height: 12),
