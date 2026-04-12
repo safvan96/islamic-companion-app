@@ -4,11 +4,11 @@
 İslami Rehber - Namaz, Kuran, Zikir ve Daha Fazlası
 
 ## Kısa Açıklama (80 karakter)
-120 ekran! Namaz, Kuran, Zikir, Oruç, Zekat, Quiz, Hac rehberi ve fazlası!
+122 ekran! Namaz, Kuran, Zikir, Oruç, Zekat, Quiz, Hac rehberi ve fazlası!
 
 ## Tam Açıklama
 
-İslami Rehber, 120 ekran ve 112+ özellik ile dünyanın en kapsamlı ÜCRETSİZ İslami uygulamasıdır. 20 dilde, 71 şehir destekli, çevrimdışı Kuran okuma.
+İslami Rehber, 122 ekran ve 112+ özellik ile dünyanın en kapsamlı ÜCRETSİZ İslami uygulamasıdır. 20 dilde, 71 şehir destekli, çevrimdışı Kuran okuma.
 
 🕌 İBADET
 • Namaz Vakitleri - 71 şehir, 5 hesaplama yöntemi, Hanefi/Şafii İkindi

@@ -95,7 +95,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           style: TextStyle(fontSize: 13),
         ),
         const SizedBox(height: 12),
-        const Text('20 Languages | 71 Cities | 120 Screens | 112+ Features',
+        const Text('20 Languages | 71 Cities | 122 Screens | 115+ Features',
             style: TextStyle(fontSize: 11, fontStyle: FontStyle.italic)),
         const SizedBox(height: 12),
         const Text('Features: Prayer Times, Qibla, Dhikr, Quran, Hadiths, '

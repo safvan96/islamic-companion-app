@@ -4,11 +4,11 @@
 Islamic Companion - Quran, Prayer Times, Dhikr & More
 
 ## Short Description (80 chars max)
-120 screens! Prayer, Quran, Dhikr, Fasting, Zakat, Quiz, Hajj & much more!
+122 screens! Prayer, Quran, Dhikr, Fasting, Zakat, Quiz, Hajj & much more!
 
 ## Full Description (4000 chars max)
 
-Islamic Companion is the most comprehensive FREE Islamic app with 120 screens and 112+ features - everything a Muslim needs in one beautiful app. Available in 20 languages with offline Quran support.
+Islamic Companion is the most comprehensive FREE Islamic app with 122 screens and 112+ features - everything a Muslim needs in one beautiful app. Available in 20 languages with offline Quran support.
 
 🕌 PRAYER & WORSHIP
 • Prayer Times - 71 cities, 5 calculation methods, per-prayer notifications, Hanafi/Shafi'i Asr
