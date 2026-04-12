@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/prayer_provider.dart';
 import '../providers/app_provider.dart';
@@ -95,6 +96,30 @@ class PrayerTimesScreen extends StatelessWidget {
           SliverAppBar(
             expandedHeight: 160,
             pinned: true,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.share, color: Colors.white70),
+                tooltip: 'Share prayer times',
+                onPressed: () {
+                  final times = prayerProvider.prayerTimes;
+                  final city = prayerProvider.locationName;
+                  final hijri = HijriCalendar.now();
+                  final now = DateTime.now();
+                  final date = '${now.day}/${now.month}/${now.year}';
+                  final buffer = StringBuffer();
+                  buffer.writeln('🕌 Prayer Times — $city');
+                  buffer.writeln('📅 $date | ${hijri.format('en')}');
+                  buffer.writeln('');
+                  for (final e in times.entries) {
+                    final icon = e.key == 'Fajr' ? '🌅' : e.key == 'Sunrise' ? '☀️' : e.key == 'Dhuhr' ? '🌤️' : e.key == 'Asr' ? '🌥️' : e.key == 'Maghrib' ? '🌇' : '🌙';
+                    buffer.writeln('$icon ${e.key}: ${e.value}');
+                  }
+                  buffer.writeln('');
+                  buffer.writeln('Islamic Companion App');
+                  Share.share(buffer.toString());
+                },
+              ),
+            ],
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 decoration: const BoxDecoration(
