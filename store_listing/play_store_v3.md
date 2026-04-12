@@ -88,6 +88,22 @@ LANGUAGES: English, Turkish, Arabic, Russian, Hindi, Indonesian, Chinese, German
 
 Free, no subscription, no hidden fees. Ad-supported with optional Sadaqah feature.
 
+NEW IN v4.4:
+• 5 prayer calculation methods (MWL, ISNA, Egyptian, Karachi, Umm al-Qura)
+• Hanafi/Shafi'i Asr calculation
+• Pre-Fajr alarm for Tahajjud & Suhoor
+• Offline Quran reading (cached after first load)
+• Per-prayer notification toggle
+• Light / Dark / Follow System theme
+• 71 cities worldwide with search
+• Quran reading streak tracking
+
+## Data Safety
+• No location data collected (city-based, no GPS)
+• All user data stored locally on device only
+• No account required
+• Ad data collected by Google AdMob (can opt out)
+
 ## Category
 Education
 
