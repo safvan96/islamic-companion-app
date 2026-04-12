@@ -1729,6 +1729,7 @@ class _QuranProgressBarState extends State<_QuranProgressBar>
     with WidgetsBindingObserver {
   int _readCount = 0;
   int _totalAyahs = 0;
+  int _streak = 0;
 
   @override
   void initState() {
@@ -1756,6 +1757,7 @@ class _QuranProgressBarState extends State<_QuranProgressBar>
       setState(() {
         _readCount = list.length;
         _totalAyahs = stats['totalAyahs'] ?? 0;
+        _streak = stats['streak'] ?? 0;
       });
     }
   }
@@ -1800,6 +1802,19 @@ class _QuranProgressBarState extends State<_QuranProgressBar>
                         ),
                       ),
                       const Spacer(),
+                      if (_streak > 0)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          margin: const EdgeInsets.only(right: 6),
+                          decoration: BoxDecoration(
+                            color: p.gold.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            '$_streak day streak',
+                            style: TextStyle(fontSize: 9, color: p.gold, fontWeight: FontWeight.w600),
+                          ),
+                        ),
                       if (_totalAyahs > 0)
                         Text(
                           '$_totalAyahs ayahs  ',
