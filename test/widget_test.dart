@@ -13,8 +13,8 @@ import 'package:islamic_companion/utils/constants.dart';
 
 void main() {
   group('Models', () {
-    test('Hadith model has 20 hadiths', () {
-      expect(HadithModel.hadiths.length, 20);
+    test('Hadith model has 25 hadiths', () {
+      expect(HadithModel.hadiths.length, 25);
     });
 
     test('All hadiths have 11 translations', () {
