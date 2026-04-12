@@ -1,4 +1,4 @@
-# Google Play Store Listing - v4.2.0
+# Google Play Store Listing - v4.3.0
 
 ## App Name
 Islamic Companion - Quran, Prayer Times, Dhikr & More
@@ -11,7 +11,7 @@ Islamic Companion - Quran, Prayer Times, Dhikr & More
 Islamic Companion is the most comprehensive FREE Islamic app with 66 screens and 50+ features - everything a Muslim needs in one beautiful app. Available in 20 languages.
 
 🕌 PRAYER & WORSHIP
-• Prayer Times - 71 cities worldwide with adhan notifications
+• Prayer Times - 71 cities, 5 calculation methods, per-prayer notifications, Hanafi/Shafi'i Asr
 • Qibla Compass - Find the direction of Kaaba
 • Dhikr Counter - Digital tasbih with loop mode, custom dhikr, streak
 • Tasbih Set - Guided 33+33+33 post-prayer counter
@@ -24,7 +24,7 @@ Islamic Companion is the most comprehensive FREE Islamic app with 66 screens and
 • Muhasaba - Nightly self-reflection with 10 questions
 
 📖 QURAN
-• Full Quran Reader - 114 surahs with audio recitation
+• Full Quran Reader - 114 surahs with audio recitation + offline caching
 • Hifz Tracker - Track memorization of all 114 surahs
 • Khatm Planner - Plan to finish Quran in 7 days to 1 year
 • Quran Words - 40 most frequent Arabic words with meaning
