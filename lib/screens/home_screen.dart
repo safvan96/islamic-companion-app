@@ -130,6 +130,7 @@ import 'exam_duas_screen.dart';
 import 'gratitude_journal_screen.dart';
 import 'taraweeh_tracker_screen.dart';
 import 'dua_by_mood_screen.dart';
+import 'quran_certificate_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1806,6 +1807,15 @@ class _QuranProgressBarState extends State<_QuranProgressBar>
           MaterialPageRoute(builder: (_) => const SurahScreen()),
         );
         _load();
+      },
+      onLongPress: () {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (_) => QuranCertificateScreen(
+            surahsRead: _readCount,
+            totalAyahs: _totalAyahs,
+            streak: _streak,
+          ),
+        ));
       },
       child: Container(
         padding: const EdgeInsets.all(14),
