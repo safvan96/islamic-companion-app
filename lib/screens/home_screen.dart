@@ -685,7 +685,7 @@ class _NextPrayerCardState extends State<_NextPrayerCard> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text('No internet connection'),
+              content: Text(AppLocalizations.of(context)!.translate('noInternet')),
               backgroundColor: Colors.red.shade700,
               behavior: SnackBarBehavior.floating,
               duration: const Duration(seconds: 2),

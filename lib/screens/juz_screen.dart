@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../l10n/app_localizations.dart';
 import '../providers/app_provider.dart';
 
 class JuzScreen extends StatelessWidget {
@@ -207,8 +208,8 @@ class _JuzDetailScreenState extends State<_JuzDetailScreen> {
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF1B5E20)),
-                      child: const Text('Retry',
-                          style: TextStyle(color: Colors.white)),
+                      child: Text(AppLocalizations.of(context)!.translate('retry'),
+                          style: const TextStyle(color: Colors.white)),
                     ),
                   ],
                 ))

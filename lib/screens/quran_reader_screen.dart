@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:share_plus/share_plus.dart';
+import '../l10n/app_localizations.dart';
 import '../providers/app_provider.dart';
 import '../services/quran_stats_service.dart';
 import 'quran_search_screen.dart';
@@ -130,7 +131,7 @@ class _QuranReaderScreenState extends State<QuranReaderScreen> {
               onChanged: (v) => setState(() => _searchQuery = v),
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                hintText: 'Search surah...',
+                hintText: AppLocalizations.of(context)!.translate('searchSurah'),
                 hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
                 prefixIcon: Icon(Icons.search, color: Colors.white.withOpacity(0.7)),
                 filled: true,
@@ -176,7 +177,7 @@ class _QuranReaderScreenState extends State<QuranReaderScreen> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF1B5E20),
                           ),
-                          child: const Text('Retry', style: TextStyle(color: Colors.white)),
+                          child: Text(AppLocalizations.of(context)!.translate('retry'), style: const TextStyle(color: Colors.white)),
                         ),
                       ],
                     ),
@@ -599,7 +600,7 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF1B5E20)),
-                          child: const Text('Retry', style: TextStyle(color: Colors.white)),
+                          child: Text(AppLocalizations.of(context)!.translate('retry'), style: const TextStyle(color: Colors.white)),
                         ),
                       ],
                     ),
