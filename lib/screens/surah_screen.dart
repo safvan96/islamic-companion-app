@@ -91,8 +91,8 @@ class _SurahScreenState extends State<SurahScreen> {
         setState(() => _playingIndex = null);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Unable to play audio. Check internet connection.',
-                style: TextStyle(color: Colors.white)),
+            content: Text(AppLocalizations.of(context)!.translate('noInternet'),
+                style: const TextStyle(color: Colors.white)),
             backgroundColor: Colors.red.shade700,
             behavior: SnackBarBehavior.floating,
             duration: const Duration(seconds: 3),
