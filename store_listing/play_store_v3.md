@@ -1,4 +1,4 @@
-# Google Play Store Listing - v4.1.0
+# Google Play Store Listing - v4.2.0
 
 ## App Name
 Islamic Companion - Quran, Prayer Times, Dhikr & More
