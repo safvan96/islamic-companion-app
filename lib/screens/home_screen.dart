@@ -128,6 +128,7 @@ import 'islamic_greetings_screen.dart';
 import 'forgiveness_duas_screen.dart';
 import 'exam_duas_screen.dart';
 import 'gratitude_journal_screen.dart';
+import 'taraweeh_tracker_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -1408,6 +1409,8 @@ class _QuickActions extends StatelessWidget {
           const ExamDuasScreen()),
       _QuickItem(Icons.favorite_outline, l10n.translate('gratitudeJournal'),
           const GratitudeJournalScreen()),
+      _QuickItem(Icons.nightlight_round, l10n.translate('taraweehTracker'),
+          const TaraweehTrackerScreen()),
       _QuickItem(Icons.mosque, l10n.translate('fridayGuide'),
           const FridayGuideScreen()),
       _QuickItem(Icons.touch_app, l10n.translate('tasbihatCounter'),

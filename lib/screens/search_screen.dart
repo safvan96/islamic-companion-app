@@ -111,6 +111,7 @@ import 'islamic_greetings_screen.dart';
 import 'forgiveness_duas_screen.dart';
 import 'exam_duas_screen.dart';
 import 'gratitude_journal_screen.dart';
+import 'taraweeh_tracker_screen.dart';
 import 'ayah_of_day_screen.dart';
 import 'surah_info_screen.dart';
 
@@ -248,6 +249,7 @@ final _features = [
   const _Feature('gratitudeJournal', 'searchGratitude', Icons.sentiment_satisfied, GratitudeJournalScreen(), ['sukur', 'gratitude', 'tesekkur']),
   const _Feature('ayahOfDay', 'searchAyah', Icons.format_quote, AyahOfDayScreen(), ['ayet', 'ayah', 'gunun', 'daily']),
   const _Feature('surahGuide', 'searchSurahInfo', Icons.info_outline, SurahInfoScreen(), ['sure', 'surah', 'bilgi', 'info']),
+  const _Feature('taraweehTracker', 'searchTaraweeh', Icons.nightlight_round, TaraweehTrackerScreen(), ['teravih', 'taraweeh', 'ramazan', 'ramadan', 'gece']),
 ];
 
 class SearchScreen extends StatefulWidget {
