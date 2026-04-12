@@ -259,12 +259,12 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _whatsNewItem('120 screens, 112+ features!'),
-            _whatsNewItem('71 cities worldwide for prayer times'),
-            _whatsNewItem('20 languages with expanded translations'),
-            _whatsNewItem('City search in prayer settings'),
-            _whatsNewItem('270+ bug fixes & crash prevention'),
-            _whatsNewItem('Faster, more stable experience'),
+            _whatsNewItem('5 prayer calculation methods + Hanafi Asr'),
+            _whatsNewItem('Pre-Fajr alarm for Tahajjud & Suhoor'),
+            _whatsNewItem('Offline Quran — read without internet'),
+            _whatsNewItem('71 cities with search + per-prayer notifications'),
+            _whatsNewItem('Light / Dark / System theme'),
+            _whatsNewItem('280+ bug fixes & performance improvements'),
           ],
         ),
         actions: [
