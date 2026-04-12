@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../providers/app_provider.dart';
 
 class JuzScreen extends StatelessWidget {
@@ -119,11 +120,24 @@ class _JuzDetailScreenState extends State<_JuzDetailScreen> {
   }
 
   Future<void> _load() async {
-    try {
-      final langCode =
-          Provider.of<AppProvider>(context, listen: false).locale.languageCode;
-      final edition = _editionMap[langCode] ?? 'en.asad';
+    final langCode =
+        Provider.of<AppProvider>(context, listen: false).locale.languageCode;
+    final edition = _editionMap[langCode] ?? 'en.asad';
+    final cacheKey = 'quran_juz_${widget.juzNumber}_$edition';
 
+    // Try cache first
+    final prefs = await SharedPreferences.getInstance();
+    final cached = prefs.getString(cacheKey);
+    if (cached != null) {
+      try {
+        final ayahs = (json.decode(cached) as List).cast<Map<String, dynamic>>();
+        if (mounted) setState(() { _ayahs = ayahs; _loading = false; });
+        return;
+      } catch (_) {}
+    }
+
+    // Fetch from API
+    try {
       final responses = await Future.wait([
         http.get(Uri.parse(
             'https://api.alquran.cloud/v1/juz/${widget.juzNumber}/quran-uthmani')),
@@ -146,6 +160,8 @@ class _JuzDetailScreenState extends State<_JuzDetailScreen> {
             'ayahNumber': arData[i]['numberInSurah'],
           });
         }
+        // Cache for offline
+        await prefs.setString(cacheKey, json.encode(ayahs));
         if (mounted) setState(() { _ayahs = ayahs; _loading = false; });
       } else {
         if (mounted) {

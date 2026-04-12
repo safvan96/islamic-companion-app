@@ -54,6 +54,23 @@ class _QuranReaderScreenState extends State<QuranReaderScreen> {
   }
 
   Future<void> _loadSurahList() async {
+    final prefs = await SharedPreferences.getInstance();
+    // Try cache first
+    final cached = prefs.getString('quran_surah_list');
+    if (cached != null) {
+      try {
+        final list = (json.decode(cached) as List).cast<Map<String, dynamic>>();
+        if (mounted) setState(() { _surahs = list; _loading = false; });
+        // Refresh in background
+        _fetchSurahListFromApi(prefs);
+        return;
+      } catch (_) {}
+    }
+    // No cache — fetch from API
+    await _fetchSurahListFromApi(prefs);
+  }
+
+  Future<void> _fetchSurahListFromApi(SharedPreferences prefs) async {
     try {
       final response = await http.get(
         Uri.parse('https://api.alquran.cloud/v1/surah'),
@@ -68,12 +85,14 @@ class _QuranReaderScreenState extends State<QuranReaderScreen> {
           'numberOfAyahs': s['numberOfAyahs'] as int,
           'revelationType': s['revelationType'] as String,
         }).toList();
+        // Cache the list
+        await prefs.setString('quran_surah_list', json.encode(list));
         if (mounted) setState(() { _surahs = list; _loading = false; });
       } else {
-        if (mounted) setState(() { _error = 'Failed to load'; _loading = false; });
+        if (mounted && _surahs.isEmpty) setState(() { _error = 'Failed to load'; _loading = false; });
       }
     } catch (e) {
-      if (mounted) setState(() { _error = 'No internet connection'; _loading = false; });
+      if (mounted && _surahs.isEmpty) setState(() { _error = 'No internet connection'; _loading = false; });
     }
   }
 
@@ -376,11 +395,27 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
   }
 
   Future<void> _loadAyahs() async {
-    try {
-      final langCode =
-          Provider.of<AppProvider>(context, listen: false).locale.languageCode;
-      final edition = _langMap[langCode] ?? 'en.asad';
+    final langCode =
+        Provider.of<AppProvider>(context, listen: false).locale.languageCode;
+    final edition = _langMap[langCode] ?? 'en.asad';
+    final cacheKey = 'quran_surah_${widget.surahNumber}_$edition';
 
+    // Try cache first
+    final prefs = await SharedPreferences.getInstance();
+    final cached = prefs.getString(cacheKey);
+    if (cached != null) {
+      try {
+        final ayahs = (json.decode(cached) as List)
+            .map((e) => Map<String, String>.from(e))
+            .toList();
+        if (mounted) setState(() { _ayahs = ayahs; _loading = false; });
+        QuranStatsService.markSurahRead(widget.surahNumber, ayahs.length);
+        return;
+      } catch (_) {}
+    }
+
+    // Fetch from API
+    try {
       final responses = await Future.wait([
         http.get(Uri.parse(
             'https://api.alquran.cloud/v1/surah/${widget.surahNumber}/ar.alafasy')),
@@ -403,8 +438,9 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
             'audio': arabicData[i]['audio'] as String? ?? '',
           });
         }
+        // Cache for offline
+        await prefs.setString(cacheKey, json.encode(ayahs));
         if (mounted) setState(() { _ayahs = ayahs; _loading = false; });
-        // Track reading stats
         QuranStatsService.markSurahRead(widget.surahNumber, ayahs.length);
       } else {
         if (mounted) setState(() { _error = 'Failed to load'; _loading = false; });
