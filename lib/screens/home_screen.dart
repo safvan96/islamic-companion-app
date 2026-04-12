@@ -181,7 +181,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late int _currentIndex;
-  static const _currentVersion = '4.6.2';
+  static const _currentVersion = '4.7.0';
 
   @override
   void initState() {
