@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="prayer_times"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/shortcut_prayer_short"
+        android:shortcutLongLabel="@string/shortcut_prayer_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.islamiccompanion.app"
+            android:targetClass="com.islamiccompanion.app.MainActivity"
+            android:data="app://prayer_times" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="quran"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/shortcut_quran_short"
+        android:shortcutLongLabel="@string/shortcut_quran_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.islamiccompanion.app"
+            android:targetClass="com.islamiccompanion.app.MainActivity"
+            android:data="app://quran" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="dhikr"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/shortcut_dhikr_short"
+        android:shortcutLongLabel="@string/shortcut_dhikr_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.islamiccompanion.app"
+            android:targetClass="com.islamiccompanion.app.MainActivity"
+            android:data="app://dhikr" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="qibla"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/shortcut_qibla_short"
+        android:shortcutLongLabel="@string/shortcut_qibla_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.islamiccompanion.app"
+            android:targetClass="com.islamiccompanion.app.MainActivity"
+            android:data="app://qibla" />
+    </shortcut>
+</shortcuts>

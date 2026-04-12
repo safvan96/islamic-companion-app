@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_prayer_short">Prayer Times</string>
+    <string name="shortcut_prayer_long">View Prayer Times</string>
+    <string name="shortcut_quran_short">Quran</string>
+    <string name="shortcut_quran_long">Read Quran</string>
+    <string name="shortcut_dhikr_short">Dhikr</string>
+    <string name="shortcut_dhikr_long">Dhikr Counter</string>
+    <string name="shortcut_qibla_short">Qibla</string>
+    <string name="shortcut_qibla_long">Qibla Compass</string>
+</resources>
