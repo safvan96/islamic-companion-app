@@ -131,6 +131,7 @@ import 'gratitude_journal_screen.dart';
 import 'taraweeh_tracker_screen.dart';
 import 'dua_by_mood_screen.dart';
 import 'quran_certificate_screen.dart';
+import 'quran_stats_screen.dart';
 import 'settings_screen.dart';
 
 // ─── Palette ────────────────────────────────────────────────────────────────
@@ -182,7 +183,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late int _currentIndex;
-  static const _currentVersion = '4.9.0';
+  static const _currentVersion = '5.0.0';
 
   @override
   void initState() {
@@ -1438,6 +1439,8 @@ class _QuickActions extends StatelessWidget {
           const TaraweehTrackerScreen()),
       _QuickItem(Icons.mood, l10n.translate('duaByMood'),
           const DuaByMoodScreen()),
+      _QuickItem(Icons.bar_chart, l10n.translate('quranStats'),
+          const QuranStatsScreen()),
       _QuickItem(Icons.mosque, l10n.translate('fridayGuide'),
           const FridayGuideScreen()),
       _QuickItem(Icons.touch_app, l10n.translate('tasbihatCounter'),
