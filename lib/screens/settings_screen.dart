@@ -18,6 +18,9 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _adhanEnabled = true;
+  final Map<String, bool> _prayerNotifs = {
+    'Fajr': true, 'Dhuhr': true, 'Asr': true, 'Maghrib': true, 'Isha': true,
+  };
   bool _dailyHadithEnabled = false;
   int _dailyHadithHour = 8;
   int _dailyHadithMinute = 0;
@@ -33,6 +36,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (!mounted) return;
     setState(() {
       _adhanEnabled = prefs.getBool('adhanEnabled') ?? true;
+      for (final p in _prayerNotifs.keys) {
+        _prayerNotifs[p] = prefs.getBool('adhan_$p') ?? true;
+      }
       _dailyHadithEnabled = prefs.getBool('dailyHadithEnabled') ?? false;
       _dailyHadithHour = prefs.getInt('dailyHadithHour') ?? 8;
       _dailyHadithMinute = prefs.getInt('dailyHadithMinute') ?? 0;
@@ -44,6 +50,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     await prefs.setBool('adhanEnabled', value);
     if (!mounted) return;
     setState(() => _adhanEnabled = value);
+  }
+
+  Future<void> _togglePrayerNotif(String prayer, bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('adhan_$prayer', value);
+    if (!mounted) return;
+    setState(() => _prayerNotifs[prayer] = value);
   }
 
   Future<void> _toggleDailyHadith(bool value) async {
@@ -173,29 +186,53 @@ class _SettingsScreenState extends State<SettingsScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
-            child: SwitchListTile(
-              secondary: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.teal.withOpacity(0.1),
-                  shape: BoxShape.circle,
+            child: Column(
+              children: [
+                SwitchListTile(
+                  secondary: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.teal.withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.notifications_active, color: Colors.teal),
+                  ),
+                  title: Text(
+                    l10n.translate('adhanNotifications'),
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  subtitle: Text(
+                    l10n.translate('adhanNotificationsDesc'),
+                    style: TextStyle(fontSize: 12, color: isDark ? Colors.white54 : Colors.black45),
+                  ),
+                  value: _adhanEnabled,
+                  onChanged: _toggleAdhan,
+                  activeColor: Colors.teal,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                 ),
-                child: const Icon(Icons.notifications_active, color: Colors.teal),
-              ),
-              title: Text(
-                l10n.translate('adhanNotifications'),
-                style: const TextStyle(fontWeight: FontWeight.w600),
-              ),
-              subtitle: Text(
-                l10n.translate('adhanNotificationsDesc'),
-                style: TextStyle(fontSize: 12, color: isDark ? Colors.white54 : Colors.black45),
-              ),
-              value: _adhanEnabled,
-              onChanged: _toggleAdhan,
-              activeColor: Colors.teal,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
+                if (_adhanEnabled) ...[
+                  const Divider(height: 1),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Column(
+                      children: _prayerNotifs.entries.map((e) => Row(
+                        children: [
+                          const SizedBox(width: 48),
+                          Expanded(child: Text(l10n.translate(e.key.toLowerCase()),
+                            style: TextStyle(fontSize: 14, color: isDark ? Colors.white70 : Colors.black87))),
+                          Switch(
+                            value: e.value,
+                            onChanged: (v) => _togglePrayerNotif(e.key, v),
+                            activeColor: Colors.teal,
+                          ),
+                        ],
+                      )).toList(),
+                    ),
+                  ),
+                ],
+              ],
             ),
           ),
           const SizedBox(height: 12),

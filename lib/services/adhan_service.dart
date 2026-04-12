@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz_data;
 
@@ -48,8 +49,14 @@ class AdhanService {
     int id = _adhanIdBase;
     final now = tz.TZDateTime.now(tz.local);
 
+    final prefs = await SharedPreferences.getInstance();
+
     for (final entry in prayerTimes.entries) {
       if (entry.key == 'Sunrise') continue; // No adhan for sunrise
+
+      // Check per-prayer toggle (default: enabled)
+      final prayerEnabled = prefs.getBool('adhan_${entry.key}') ?? true;
+      if (!prayerEnabled) continue;
 
       final parts = entry.value.split(':');
       if (parts.length != 2) continue;
