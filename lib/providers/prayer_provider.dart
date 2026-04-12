@@ -57,12 +57,18 @@ class PrayerProvider extends ChangeNotifier {
     // Orta Doğu
     'Mecca': [21.4225, 39.8262],
     'Medina': [24.4672, 39.6112],
+    'Jeddah': [21.5433, 39.1728],
     'Cairo': [30.0444, 31.2357],
     'Dubai': [25.2048, 55.2708],
+    'Abu Dhabi': [24.4539, 54.3773],
     'Riyadh': [24.7136, 46.6753],
     'Baghdad': [33.3152, 44.3661],
     'Doha': [25.2854, 51.5310],
+    'Kuwait City': [29.3759, 47.9774],
+    'Amman': [31.9454, 35.9284],
+    'Beirut': [33.8938, 35.5018],
     'Tehran': [35.6892, 51.3890],
+    'Muscat': [23.5880, 58.3829],
     // Avrupa
     'London': [51.5074, -0.1278],
     'Berlin': [52.5200, 13.4050],
@@ -71,23 +77,47 @@ class PrayerProvider extends ChangeNotifier {
     'Moscow': [55.7558, 37.6173],
     'Vienna': [48.2082, 16.3738],
     'Stockholm': [59.3293, 18.0686],
-    // Asya
+    'Brussels': [50.8503, 4.3517],
+    'Sarajevo': [43.8563, 18.4131],
+    'Rome': [41.9028, 12.4964],
+    'Cologne': [50.9375, 6.9603],
+    // Güney & Güneydoğu Asya
     'Jakarta': [-6.2088, 106.8456],
     'New Delhi': [28.6139, 77.2090],
+    'Mumbai': [19.0760, 72.8777],
     'Beijing': [39.9042, 116.4074],
     'Kuala Lumpur': [3.1390, 101.6869],
     'Karachi': [24.8607, 67.0011],
+    'Lahore': [31.5204, 74.3587],
     'Dhaka': [23.8103, 90.4125],
     'Islamabad': [33.6844, 73.0479],
     'Tokyo': [35.6762, 139.6503],
     'Seoul': [37.5665, 126.9780],
-    'Mogadishu': [2.0469, 45.3182],
-    // Amerika & Afrika
+    'Singapore': [1.3521, 103.8198],
+    'Bangkok': [13.7563, 100.5018],
+    'Colombo': [6.9271, 79.8612],
+    // Orta Asya & Kafkasya
+    'Tashkent': [41.2995, 69.2401],
+    'Almaty': [43.2220, 76.8512],
+    'Baku': [40.4093, 49.8671],
+    // Amerika
     'New York': [40.7128, -74.0060],
+    'Los Angeles': [34.0522, -118.2437],
+    'Chicago': [41.8781, -87.6298],
+    'Houston': [29.7604, -95.3698],
     'Toronto': [43.6532, -79.3832],
-    'Madrid': [40.4168, -3.7038],
+    'Sao Paulo': [-23.5505, -46.6333],
+    // Afrika
+    'Mogadishu': [2.0469, 45.3182],
     'Lagos': [6.5244, 3.3792],
     'Dar es Salaam': [-6.7924, 39.2083],
+    'Casablanca': [33.5731, -7.5898],
+    'Nairobi': [-1.2921, 36.8219],
+    'Johannesburg': [-26.2041, 28.0473],
+    'Dakar': [14.7167, -17.4677],
+    // Avustralya
+    'Sydney': [-33.8688, 151.2093],
+    'Melbourne': [-37.8136, 144.9631],
   };
 
   double get latitude => _latitude;

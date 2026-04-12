@@ -5,7 +5,7 @@ A comprehensive Islamic companion app built with Flutter for Google Play Store.
 Lightweight, modern, and innovative design targeting Muslim users worldwide.
 
 ## Features
-- **Prayer Times**: City-based prayer time calculation (27+ cities), adhan notifications
+- **Prayer Times**: City-based prayer time calculation (71 cities worldwide), adhan notifications
 - **Qibla Compass**: City-based Qibla direction finder
 - **Dhikr Counter (Zikirmatik)**: Digital tasbih with haptic feedback, weekly chart, per-dhikr stats, loop mode, custom dhikr, streak display, sound toggle
 - **Tasbih Set**: Post-prayer guided 33+33+33 (SubhanAllah, Alhamdulillah, Allahu Akbar)

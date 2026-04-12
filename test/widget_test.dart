@@ -349,6 +349,27 @@ void main() {
     });
   });
 
+  group('Prayer cities', () {
+    test('Has 71 cities', () {
+      expect(PrayerProvider.cities.length, 71);
+    });
+
+    test('All cities have valid coordinates', () {
+      for (final entry in PrayerProvider.cities.entries) {
+        expect(entry.value.length, 2, reason: '${entry.key} should have [lat, lng]');
+        expect(entry.value[0], inInclusiveRange(-90.0, 90.0), reason: '${entry.key} latitude out of range');
+        expect(entry.value[1], inInclusiveRange(-180.0, 180.0), reason: '${entry.key} longitude out of range');
+      }
+    });
+
+    test('Key cities exist', () {
+      expect(PrayerProvider.cities.containsKey('Mecca'), true);
+      expect(PrayerProvider.cities.containsKey('Istanbul'), true);
+      expect(PrayerProvider.cities.containsKey('Jakarta'), true);
+      expect(PrayerProvider.cities.containsKey('Tokyo'), true);
+    });
+  });
+
   group('Hijri calendar', () {
     test('Can convert current Gregorian date to Hijri', () {
       final hijri = HijriCalendar.fromGregorian(DateTime.now());

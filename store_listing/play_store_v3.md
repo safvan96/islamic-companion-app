@@ -11,7 +11,7 @@ Islamic Companion - Quran, Prayer Times, Dhikr & More
 Islamic Companion is the most comprehensive FREE Islamic app with 66 screens and 50+ features - everything a Muslim needs in one beautiful app. Available in 20 languages.
 
 🕌 PRAYER & WORSHIP
-• Prayer Times - 42+ cities worldwide with adhan notifications
+• Prayer Times - 71 cities worldwide with adhan notifications
 • Qibla Compass - Find the direction of Kaaba
 • Dhikr Counter - Digital tasbih with loop mode, custom dhikr, streak
 • Tasbih Set - Guided 33+33+33 post-prayer counter
