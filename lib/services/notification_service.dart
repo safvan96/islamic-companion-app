@@ -34,12 +34,26 @@ class NotificationService {
     debugPrint('NotificationService initialized');
   }
 
-  /// Schedule daily hadith notification at given hour:minute.
-  /// Uses a deterministic hadith based on day of year.
+  // Daily wisdom quotes for variety (days without hadith)
+  static const _dailyWisdom = [
+    ('Patience (Sabr)', 'Indeed, Allah is with the patient. — Quran 2:153'),
+    ('Gratitude (Shukr)', 'If you are grateful, I will surely increase you. — Quran 14:7'),
+    ('Trust (Tawakkul)', 'Whoever relies upon Allah, He is sufficient. — Quran 65:3'),
+    ('Remembrance', 'In the remembrance of Allah do hearts find rest. — Quran 13:28'),
+    ('Mercy', 'My mercy encompasses all things. — Quran 7:156'),
+    ('Knowledge', 'Say: My Lord, increase me in knowledge. — Quran 20:114'),
+    ('Prayer', 'Seek help through patience and prayer. — Quran 2:45'),
+    ('Kindness', 'Speak to people good words. — Quran 2:83'),
+    ('Forgiveness', 'Let them pardon and overlook. — Quran 24:22'),
+    ('Hope', 'Do not despair of the mercy of Allah. — Quran 39:53'),
+  ];
+
+  /// Schedule daily wisdom notification at given hour:minute.
+  /// Rotates between hadith (even days) and Quran wisdom (odd days).
   Future<void> scheduleDailyHadith({int hour = 8, int minute = 0}) async {
     if (!_initialized) await initialize();
 
-    // Cancel existing daily hadith notification (ID 200)
+    // Cancel existing daily notification (ID 200)
     await _plugin.cancel(200);
 
     final prefs = await SharedPreferences.getInstance();
@@ -48,20 +62,30 @@ class NotificationService {
     final dayOfYear = DateTime.now()
         .difference(DateTime(DateTime.now().year, 1, 1))
         .inDays;
-    final hadithIndex = dayOfYear % HadithModel.hadiths.length;
-    final hadith = HadithModel.hadiths[hadithIndex];
-    final translation =
-        hadith.translations[langCode] ?? hadith.translations['en']!;
 
-    // Truncate for notification body
-    final body = translation.length > 100
-        ? '${translation.substring(0, 100)}...'
-        : translation;
+    String title;
+    String body;
+
+    if (dayOfYear % 3 != 0) {
+      // Hadith days (2 out of 3)
+      final hadithIndex = dayOfYear % HadithModel.hadiths.length;
+      final hadith = HadithModel.hadiths[hadithIndex];
+      final translation =
+          hadith.translations[langCode] ?? hadith.translations['en']!;
+      title = '\u{1F4D6} ${hadith.source}';
+      body = translation.length > 100 ? '${translation.substring(0, 100)}...' : translation;
+    } else {
+      // Quran wisdom day (1 out of 3)
+      final wisdomIndex = dayOfYear % _dailyWisdom.length;
+      final (wisdomTitle, wisdomBody) = _dailyWisdom[wisdomIndex];
+      title = '\u2728 $wisdomTitle';
+      body = wisdomBody;
+    }
 
     try {
       await _plugin.zonedSchedule(
         200, // Hadith ID=200, Adhan IDs=100-119
-        '📖 ${hadith.source}',
+        title,
         body,
         _nextInstanceOfTime(hour, minute),
         const NotificationDetails(
