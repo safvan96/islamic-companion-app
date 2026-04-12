@@ -64,13 +64,25 @@ class _SplashScreenState extends State<SplashScreen>
     final prefs = await SharedPreferences.getInstance();
     final hasSelectedLanguage = prefs.getBool('hasSelectedLanguage') ?? false;
 
+    // Check if launched from app shortcut
+    int initialTab = 0;
+    final window = WidgetsBinding.instance.platformDispatcher.views.first;
+    final uri = Uri.tryParse(window.platformDispatcher.defaultRouteName);
+    if (uri != null) {
+      switch (uri.host) {
+        case 'prayer_times': initialTab = 1; break;
+        case 'dhikr': initialTab = 2; break;
+        case 'quran': initialTab = 3; break;
+      }
+    }
+
     if (!mounted) return;
 
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
             hasSelectedLanguage
-                ? const HomeScreen()
+                ? HomeScreen(initialTab: initialTab)
                 : const LanguageSelectionScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(opacity: animation, child: child);

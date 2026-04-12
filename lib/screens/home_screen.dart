@@ -171,18 +171,20 @@ class _Palette {
 }
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int initialTab;
+  const HomeScreen({super.key, this.initialTab = 0});
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
+  late int _currentIndex;
   static const _currentVersion = '4.5.1';
 
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.initialTab;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<PrayerProvider>(context, listen: false).initLocation();
       _checkWhatsNew();
