@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../l10n/app_localizations.dart';
 import '../models/hadith_model.dart';
 import '../models/surah_model.dart';
@@ -230,7 +231,11 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text(l10n.translate('later'), style: TextStyle(color: Colors.grey.shade600)),
           ),
           TextButton(
-            onPressed: () { prefs.setBool('ratingDismissed', true); Navigator.pop(ctx); },
+            onPressed: () {
+              prefs.setBool('ratingDismissed', true);
+              Navigator.pop(ctx);
+              launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=com.islamiccompanion.app'), mode: LaunchMode.externalApplication);
+            },
             child: Text(l10n.translate('rateNow'), style: const TextStyle(color: Color(0xFF1B5E20), fontWeight: FontWeight.w600)),
           ),
         ],
