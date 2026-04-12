@@ -257,8 +257,8 @@ void main() {
   });
 
   group('Quiz model', () {
-    test('Quiz has 15 questions', () {
-      expect(quizQuestions.length, 15);
+    test('Quiz has 25 questions', () {
+      expect(quizQuestions.length, 25);
     });
 
     test('All questions have 4 options', () {

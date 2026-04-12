@@ -34,4 +34,15 @@ const quizQuestions = [
   QuizQuestion(questionKey: 'q13', optionKeys: ['q13a', 'q13b', 'q13c', 'q13d'], correctIndex: 2, category: 'history'),
   QuizQuestion(questionKey: 'q14', optionKeys: ['q14a', 'q14b', 'q14c', 'q14d'], correctIndex: 1, category: 'history'),
   QuizQuestion(questionKey: 'q15', optionKeys: ['q15a', 'q15b', 'q15c', 'q15d'], correctIndex: 3, category: 'history'),
+  // Additional questions
+  QuizQuestion(questionKey: 'q16', optionKeys: ['q16a', 'q16b', 'q16c', 'q16d'], correctIndex: 2, category: 'quran'),
+  QuizQuestion(questionKey: 'q17', optionKeys: ['q17a', 'q17b', 'q17c', 'q17d'], correctIndex: 1, category: 'pillars'),
+  QuizQuestion(questionKey: 'q18', optionKeys: ['q18a', 'q18b', 'q18c', 'q18d'], correctIndex: 0, category: 'prophets'),
+  QuizQuestion(questionKey: 'q19', optionKeys: ['q19a', 'q19b', 'q19c', 'q19d'], correctIndex: 3, category: 'prayer'),
+  QuizQuestion(questionKey: 'q20', optionKeys: ['q20a', 'q20b', 'q20c', 'q20d'], correctIndex: 1, category: 'history'),
+  QuizQuestion(questionKey: 'q21', optionKeys: ['q21a', 'q21b', 'q21c', 'q21d'], correctIndex: 0, category: 'quran'),
+  QuizQuestion(questionKey: 'q22', optionKeys: ['q22a', 'q22b', 'q22c', 'q22d'], correctIndex: 2, category: 'pillars'),
+  QuizQuestion(questionKey: 'q23', optionKeys: ['q23a', 'q23b', 'q23c', 'q23d'], correctIndex: 1, category: 'prophets'),
+  QuizQuestion(questionKey: 'q24', optionKeys: ['q24a', 'q24b', 'q24c', 'q24d'], correctIndex: 3, category: 'history'),
+  QuizQuestion(questionKey: 'q25', optionKeys: ['q25a', 'q25b', 'q25c', 'q25d'], correctIndex: 0, category: 'prayer'),
 ];
