@@ -181,6 +181,60 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           const SizedBox(height: 12),
+          // Calculation Method
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: ListTile(
+              leading: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.indigo.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.calculate, color: Colors.indigo),
+              ),
+              title: Text(
+                l10n.translate('calculationMethod'),
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+              subtitle: Text(PrayerProvider.methodNames[prayerProvider.method]!,
+                style: TextStyle(fontSize: 12, color: isDark ? Colors.white54 : Colors.black45)),
+              trailing: const Icon(Icons.chevron_right),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  ),
+                  builder: (_) => Container(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2))),
+                        const SizedBox(height: 16),
+                        Text(l10n.translate('calculationMethod'), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 12),
+                        ...PrayerMethod.values.map((m) {
+                          final isSelected = m == prayerProvider.method;
+                          return ListTile(
+                            leading: Icon(Icons.calculate, color: isSelected ? Colors.indigo : Colors.grey),
+                            title: Text(PrayerProvider.methodNames[m]!, style: TextStyle(fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: isSelected ? Colors.indigo : null)),
+                            trailing: isSelected ? const Icon(Icons.check_circle, color: Colors.indigo) : null,
+                            onTap: () { prayerProvider.setMethod(m); Navigator.pop(context); },
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 12),
           // Adhan Notifications
           Card(
             shape: RoundedRectangleBorder(

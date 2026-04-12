@@ -4,6 +4,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import '../services/adhan_service.dart';
 
+enum PrayerMethod {
+  mwl,    // Muslim World League: Fajr 18°, Isha 17°
+  isna,   // ISNA (North America): Fajr 15°, Isha 15°
+  egypt,  // Egyptian Authority: Fajr 19.5°, Isha 17.5°
+  karachi,// Karachi: Fajr 18°, Isha 18°
+  makkah, // Umm al-Qura: Fajr 18.5°, Isha 90min after Maghrib
+}
+
 class PrayerProvider extends ChangeNotifier {
   Map<String, String> _prayerTimes = {};
   String _nextPrayer = '';
@@ -11,7 +19,34 @@ class PrayerProvider extends ChangeNotifier {
   double _latitude = 0;
   double _longitude = 0;
   String _locationName = '';
+  PrayerMethod _method = PrayerMethod.mwl;
   Timer? _ticker;
+
+  PrayerMethod get method => _method;
+
+  static const methodNames = {
+    PrayerMethod.mwl: 'Muslim World League',
+    PrayerMethod.isna: 'ISNA (North America)',
+    PrayerMethod.egypt: 'Egyptian Authority',
+    PrayerMethod.karachi: 'Univ. of Karachi',
+    PrayerMethod.makkah: 'Umm al-Qura (Makkah)',
+  };
+
+  static const _fajrAngles = {
+    PrayerMethod.mwl: 18.0,
+    PrayerMethod.isna: 15.0,
+    PrayerMethod.egypt: 19.5,
+    PrayerMethod.karachi: 18.0,
+    PrayerMethod.makkah: 18.5,
+  };
+
+  static const _ishaAngles = {
+    PrayerMethod.mwl: 17.0,
+    PrayerMethod.isna: 15.0,
+    PrayerMethod.egypt: 17.5,
+    PrayerMethod.karachi: 18.0,
+    PrayerMethod.makkah: 0.0, // Uses 90min offset instead
+  };
 
   Map<String, String> get prayerTimes => _prayerTimes;
   String get nextPrayer => _nextPrayer;
@@ -123,16 +158,29 @@ class PrayerProvider extends ChangeNotifier {
   double get latitude => _latitude;
   double get longitude => _longitude;
 
-  /// Initialize with saved or default city
+  /// Initialize with saved city and calculation method
   Future<void> initLocation() async {
     final prefs = await SharedPreferences.getInstance();
     final savedCity = prefs.getString('selectedCity') ?? 'Istanbul';
+    final savedMethod = prefs.getString('prayerMethod') ?? 'mwl';
+    _method = PrayerMethod.values.firstWhere(
+      (m) => m.name == savedMethod,
+      orElse: () => PrayerMethod.mwl,
+    );
     final coords = cities[savedCity];
     if (coords != null) {
       setLocation(coords[0], coords[1], savedCity);
     } else {
       setLocation(41.0082, 28.9784, 'Istanbul');
     }
+  }
+
+  /// Change calculation method and recalculate
+  Future<void> setMethod(PrayerMethod m) async {
+    _method = m;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('prayerMethod', m.name);
+    calculatePrayerTimes();
   }
 
   /// Set city by name and persist
@@ -169,15 +217,22 @@ class PrayerProvider extends ChangeNotifier {
     final cosHA = -tan(latRad) * tan(declinationRad);
     final ha = acos(cosHA.clamp(-1.0, 1.0)) * 180 / pi / 15;
 
+    final fajrAngle = _fajrAngles[_method]!;
     final cosFajr =
-        (cos(108 * pi / 180) - sin(latRad) * sin(declinationRad)) /
+        (cos((90 + fajrAngle) * pi / 180) - sin(latRad) * sin(declinationRad)) /
             (cos(latRad) * cos(declinationRad));
     final fajrHA = acos(cosFajr.clamp(-1.0, 1.0)) * 180 / pi / 15;
 
-    final cosIsha =
-        (cos(107 * pi / 180) - sin(latRad) * sin(declinationRad)) /
-            (cos(latRad) * cos(declinationRad));
-    final ishaHA = acos(cosIsha.clamp(-1.0, 1.0)) * 180 / pi / 15;
+    final ishaAngle = _ishaAngles[_method]!;
+    final double ishaHA;
+    if (_method == PrayerMethod.makkah) {
+      ishaHA = 0; // Isha = Maghrib + 90min (handled below)
+    } else {
+      final cosIsha =
+          (cos((90 + ishaAngle) * pi / 180) - sin(latRad) * sin(declinationRad)) /
+              (cos(latRad) * cos(declinationRad));
+      ishaHA = acos(cosIsha.clamp(-1.0, 1.0)) * 180 / pi / 15;
+    }
 
     final asrAngle = atan(1 / (1 + tan((latRad - declinationRad).abs())));
     final cosAsr = (sin(asrAngle) - sin(latRad) * sin(declinationRad)) /
@@ -189,7 +244,9 @@ class PrayerProvider extends ChangeNotifier {
     final dhuhr = solarNoon + 0.0167;
     final asr = solarNoon + asrHA;
     final maghrib = solarNoon + ha;
-    final isha = solarNoon + ishaHA;
+    final isha = _method == PrayerMethod.makkah
+        ? maghrib + 1.5 // 90 minutes after Maghrib
+        : solarNoon + ishaHA;
 
     _prayerTimes = {
       'Fajr': _formatTime(fajr),
