@@ -1,18 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+enum ThemeSetting { light, dark, system }
 
 class AppProvider extends ChangeNotifier {
   Locale _locale;
-  bool _isDarkMode;
+  ThemeSetting _themeSetting;
 
   AppProvider({
     required Locale locale,
-    required bool isDarkMode,
+    required ThemeSetting themeSetting,
   })  : _locale = locale,
-        _isDarkMode = isDarkMode;
+        _themeSetting = themeSetting;
 
   Locale get locale => _locale;
-  bool get isDarkMode => _isDarkMode;
+  ThemeSetting get themeSetting => _themeSetting;
+
+  bool get isDarkMode {
+    if (_themeSetting == ThemeSetting.system) {
+      return SchedulerBinding.instance.platformDispatcher.platformBrightness == Brightness.dark;
+    }
+    return _themeSetting == ThemeSetting.dark;
+  }
+
+  ThemeMode get themeMode {
+    switch (_themeSetting) {
+      case ThemeSetting.light: return ThemeMode.light;
+      case ThemeSetting.dark: return ThemeMode.dark;
+      case ThemeSetting.system: return ThemeMode.system;
+    }
+  }
 
   Future<void> setLocale(Locale locale) async {
     _locale = locale;
@@ -22,10 +40,16 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleDarkMode() async {
-    _isDarkMode = !_isDarkMode;
+  Future<void> setTheme(ThemeSetting setting) async {
+    _themeSetting = setting;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isDarkMode', _isDarkMode);
+    await prefs.setString('themeSetting', setting.name);
     notifyListeners();
+  }
+
+  // Legacy toggle: cycles light → dark → system → light
+  Future<void> toggleDarkMode() async {
+    final next = ThemeSetting.values[(_themeSetting.index + 1) % ThemeSetting.values.length];
+    await setTheme(next);
   }
 }

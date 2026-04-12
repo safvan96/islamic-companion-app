@@ -37,7 +37,15 @@ void main() async {
     await NotificationService.instance.scheduleDailyHadith(hour: h, minute: m);
   }
   final savedLocale = prefs.getString('locale') ?? 'en';
-  final isDarkMode = prefs.getBool('isDarkMode') ?? false;
+  // Migrate from old isDarkMode bool to new themeSetting
+  final themeStr = prefs.getString('themeSetting');
+  ThemeSetting themeSetting;
+  if (themeStr != null) {
+    themeSetting = ThemeSetting.values.firstWhere((t) => t.name == themeStr, orElse: () => ThemeSetting.light);
+  } else {
+    final isDark = prefs.getBool('isDarkMode') ?? false;
+    themeSetting = isDark ? ThemeSetting.dark : ThemeSetting.light;
+  }
 
   runApp(
     MultiProvider(
@@ -45,7 +53,7 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => AppProvider(
             locale: Locale(savedLocale),
-            isDarkMode: isDarkMode,
+            themeSetting: themeSetting,
           ),
         ),
         ChangeNotifierProvider(create: (_) => PrayerProvider()),
@@ -71,7 +79,7 @@ class IslamicCompanionApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: appProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      themeMode: appProvider.themeMode,
       locale: appProvider.locale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: const [

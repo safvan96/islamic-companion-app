@@ -365,28 +365,56 @@ class _SettingsScreenState extends State<SettingsScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
-            child: SwitchListTile(
-              secondary: Container(
+            child: ListTile(
+              leading: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Colors.deepPurple.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
+                  appProvider.themeSetting == ThemeSetting.system ? Icons.brightness_auto :
                   isDark ? Icons.dark_mode : Icons.light_mode,
                   color: Colors.deepPurple,
                 ),
               ),
               title: Text(
-                l10n.translate('darkMode'),
+                l10n.translate('theme'),
                 style: const TextStyle(fontWeight: FontWeight.w600),
               ),
-              value: isDark,
-              onChanged: (_) => appProvider.toggleDarkMode(),
-              activeColor: Colors.deepPurple,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+              subtitle: Text(
+                appProvider.themeSetting == ThemeSetting.system ? l10n.translate('systemTheme') :
+                isDark ? l10n.translate('darkMode') : l10n.translate('lightMode'),
+                style: TextStyle(fontSize: 12, color: isDark ? Colors.white54 : Colors.black45),
               ),
+              trailing: const Icon(Icons.chevron_right),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+                  builder: (_) => Container(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Column(mainAxisSize: MainAxisSize.min, children: [
+                      Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2))),
+                      const SizedBox(height: 16),
+                      Text(l10n.translate('theme'), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 12),
+                      ...ThemeSetting.values.map((t) {
+                        final selected = t == appProvider.themeSetting;
+                        final icon = t == ThemeSetting.light ? Icons.light_mode : t == ThemeSetting.dark ? Icons.dark_mode : Icons.brightness_auto;
+                        final label = t == ThemeSetting.light ? l10n.translate('lightMode') : t == ThemeSetting.dark ? l10n.translate('darkMode') : l10n.translate('systemTheme');
+                        return ListTile(
+                          leading: Icon(icon, color: selected ? Colors.deepPurple : Colors.grey),
+                          title: Text(label, style: TextStyle(fontWeight: selected ? FontWeight.bold : FontWeight.normal, color: selected ? Colors.deepPurple : null)),
+                          trailing: selected ? const Icon(Icons.check_circle, color: Colors.deepPurple) : null,
+                          onTap: () { appProvider.setTheme(t); Navigator.pop(context); },
+                        );
+                      }),
+                    ]),
+                  ),
+                );
+              },
             ),
           ),
           const SizedBox(height: 12),
