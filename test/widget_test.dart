@@ -336,9 +336,9 @@ void main() {
   });
 
   group('Screen count', () {
-    test('App has 121 screen files', () {
+    test('App has 123 screen files', () {
       // This is a documentation test to track screen count
-      expect(121, 121);
+      expect(123, 123);
     });
   });
 
