@@ -317,6 +317,13 @@ class _SurahDetailScreen extends StatefulWidget {
 }
 
 class _SurahDetailScreenState extends State<_SurahDetailScreen> {
+  static const _reciters = {
+    'ar.alafasy': 'Mishary Alafasy',
+    'ar.abdulbasitmurattal': 'Abdul Basit (Murattal)',
+    'ar.abdurrahmaansudais': 'Abdurrahman As-Sudais',
+    'ar.hudhaify': 'Ali Al-Hudhaify',
+    'ar.minshawi': 'Mohamed Al-Minshawi',
+  };
   List<Map<String, String>> _ayahs = [];
   bool _loading = true;
   String? _error;
@@ -327,6 +334,7 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
   int _themeMode = 0; // 0=default, 1=sepia, 2=dark
   Set<String> _bookmarkedAyahs = {};
   final ScrollController _scrollController = ScrollController();
+  String _reciter = 'ar.alafasy';
 
   Future<void> _loadBookmarks() async {
     final prefs = await SharedPreferences.getInstance();
@@ -384,6 +392,12 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
         setState(() => _playingAyah = null);
       }
     });
+    _loadReciterAndContent();
+  }
+
+  Future<void> _loadReciterAndContent() async {
+    final prefs = await SharedPreferences.getInstance();
+    _reciter = prefs.getString('quranReciter') ?? 'ar.alafasy';
     _loadBookmarks();
     _loadAyahs();
   }
@@ -419,7 +433,7 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
     try {
       final responses = await Future.wait([
         http.get(Uri.parse(
-            'https://api.alquran.cloud/v1/surah/${widget.surahNumber}/ar.alafasy')),
+            'https://api.alquran.cloud/v1/surah/${widget.surahNumber}/$_reciter')),
         http.get(Uri.parse(
             'https://api.alquran.cloud/v1/surah/${widget.surahNumber}/$edition')),
       ]);
@@ -514,6 +528,43 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
         title: Text('${widget.surahName} ${widget.arabicName}'),
         backgroundColor: const Color(0xFF1B5E20),
         actions: [
+          // Reciter selector
+          IconButton(
+            icon: const Icon(Icons.record_voice_over, size: 20),
+            tooltip: 'Reciter',
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+                builder: (_) => Container(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2))),
+                    const SizedBox(height: 16),
+                    const Text('Reciter / القارئ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 12),
+                    ..._reciters.entries.map((e) {
+                      final selected = e.key == _reciter;
+                      return ListTile(
+                        leading: Icon(Icons.person, color: selected ? const Color(0xFF1B5E20) : Colors.grey),
+                        title: Text(e.value, style: TextStyle(fontWeight: selected ? FontWeight.bold : FontWeight.normal, color: selected ? const Color(0xFF1B5E20) : null)),
+                        trailing: selected ? const Icon(Icons.check_circle, color: Color(0xFF1B5E20)) : null,
+                        onTap: () async {
+                          final nav = Navigator.of(context);
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setString('quranReciter', e.key);
+                          if (!mounted) return;
+                          setState(() { _reciter = e.key; _loading = true; });
+                          nav.pop();
+                          _loadAyahs();
+                        },
+                      );
+                    }),
+                  ]),
+                ),
+              );
+            },
+          ),
           // Reading theme toggle
           IconButton(
             icon: Icon(
