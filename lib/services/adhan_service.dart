@@ -3,6 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz_data;
+import 'hijri_calendar.dart';
 
 class AdhanService {
   static final FlutterLocalNotificationsPlugin _notif =
@@ -141,6 +142,37 @@ class AdhanService {
         debugPrint('Scheduled adhan for ${entry.key} at ${entry.value}');
       } catch (e) {
         debugPrint('Failed to schedule ${entry.key}: $e');
+      }
+    }
+
+    // Schedule upcoming Islamic event notifications (ID 120-129)
+    final langCode = prefs.getString('locale') ?? 'en';
+    final events = HijriCalendar.getUpcomingEvents(langCode, withinDays: 3);
+    for (int i = 0; i < events.length && i < 10; i++) {
+      final (date, eventName) = events[i];
+      try {
+        final scheduled = tz.TZDateTime(tz.local, date.year, date.month, date.day, 8, 0);
+        if (scheduled.isAfter(now)) {
+          await _notif.zonedSchedule(
+            120 + i,
+            '\u{1F31F} $eventName',
+            eventName,
+            scheduled,
+            const NotificationDetails(
+              android: AndroidNotificationDetails(
+                'islamic_events',
+                'Islamic Events',
+                channelDescription: 'Upcoming Islamic calendar events',
+                importance: Importance.high,
+                priority: Priority.high,
+              ),
+            ),
+            uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+            androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+          );
+        }
+      } catch (e) {
+        debugPrint('Failed to schedule event: $e');
       }
     }
   }

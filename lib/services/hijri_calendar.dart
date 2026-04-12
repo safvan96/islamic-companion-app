@@ -143,6 +143,21 @@ class HijriCalendar {
     '12-13': {'en': 'Eid al-Adha (4th day)', 'tr': 'Kurban Bayramı 4. gün', 'ar': 'عيد الأضحى'},
   };
 
+  /// Get upcoming special days within the next N days
+  static List<(DateTime, String)> getUpcomingEvents(String langCode, {int withinDays = 7}) {
+    final events = <(DateTime, String)>[];
+    final now = DateTime.now();
+    for (int d = 1; d <= withinDays; d++) {
+      final date = now.add(Duration(days: d));
+      final hijri = HijriCalendar.fromGregorian(date);
+      final special = hijri.getSpecialDay(langCode);
+      if (special != null) {
+        events.add((date, special));
+      }
+    }
+    return events;
+  }
+
   String getMonthName(String langCode) {
     switch (langCode) {
       case 'ar':
