@@ -1,4 +1,4 @@
-# Google Play Store Listing - v4.3.0
+# Google Play Store Listing - v4.4.1
 
 ## App Name
 Islamic Companion - Quran, Prayer Times, Dhikr & More
@@ -8,7 +8,7 @@ Islamic Companion - Quran, Prayer Times, Dhikr & More
 
 ## Full Description (4000 chars max)
 
-Islamic Companion is the most comprehensive FREE Islamic app with 66 screens and 50+ features - everything a Muslim needs in one beautiful app. Available in 20 languages.
+Islamic Companion is the most comprehensive FREE Islamic app with 120 screens and 112+ features - everything a Muslim needs in one beautiful app. Available in 20 languages with offline Quran support.
 
 🕌 PRAYER & WORSHIP
 • Prayer Times - 71 cities, 5 calculation methods, per-prayer notifications, Hanafi/Shafi'i Asr
