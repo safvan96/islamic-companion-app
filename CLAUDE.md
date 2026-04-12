@@ -69,7 +69,7 @@ lib/
 - Keystore: android/app/upload-keystore.jks (password: IslamicApp2026!)
 
 ## Play Store
-- Version: 4.3.1+21
+- Version: 4.4.0+22
 - Target SDK: 35, Min SDK: 21
 - App Bundle: build/app/outputs/bundle/release/app-release.aab
 - Store listings: store_listing/play_store.md (EN) + play_store_tr.md (TR)
