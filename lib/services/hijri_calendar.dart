@@ -165,40 +165,40 @@ class HijriCalendar {
 
     // Ayyamul Beed (White Days): 13, 14, 15 of each Hijri month
     if (hijri.day >= 13 && hijri.day <= 15) {
-      return langCode == 'tr' ? 'Eyyamul Bid (Ayın 13-14-15. günleri)' :
+      return langCode == 'tr' ? 'Eyyâm-ı Bîd orucu (ayın 13-14-15\'i)' :
              langCode == 'ar' ? 'أيام البيض (١٣-١٤-١٥ من الشهر)' :
              'Ayyamul Beed (13th-15th of Hijri month)';
     }
 
     // Monday and Thursday
     if (now.weekday == DateTime.monday) {
-      return langCode == 'tr' ? 'Pazartesi orucu (Sünnet)' :
+      return langCode == 'tr' ? 'Pazartesi orucu (sünnet)' :
              langCode == 'ar' ? 'صيام الاثنين (سنة)' :
              'Monday fast (Sunnah)';
     }
     if (now.weekday == DateTime.thursday) {
-      return langCode == 'tr' ? 'Perşembe orucu (Sünnet)' :
+      return langCode == 'tr' ? 'Perşembe orucu (sünnet)' :
              langCode == 'ar' ? 'صيام الخميس (سنة)' :
              'Thursday fast (Sunnah)';
     }
 
     // Day of Arafah (9 Dhul Hijjah) — not during Hajj
     if (hijri.month == 12 && hijri.day == 9) {
-      return langCode == 'tr' ? 'Arefe günü orucu' :
+      return langCode == 'tr' ? 'Arefe günü orucu (geçmiş ve gelecek yılın günahlarına kefarettir)' :
              langCode == 'ar' ? 'صيام يوم عرفة' :
              'Day of Arafah fast';
     }
 
     // Ashura (10 Muharram) + day before
     if (hijri.month == 1 && (hijri.day == 9 || hijri.day == 10)) {
-      return langCode == 'tr' ? 'Aşure günü orucu' :
+      return langCode == 'tr' ? 'Aşûre günü orucu (geçmiş yılın günahlarına kefarettir)' :
              langCode == 'ar' ? 'صيام عاشوراء' :
              'Ashura fast';
     }
 
     // 6 days of Shawwal
     if (hijri.month == 10 && hijri.day >= 2 && hijri.day <= 7) {
-      return langCode == 'tr' ? 'Şevval 6 gün orucu' :
+      return langCode == 'tr' ? 'Şevval\'in 6 günü orucu (bir yıl oruç tutmuş gibi sevaptır)' :
              langCode == 'ar' ? 'صيام ستة من شوال' :
              'Six days of Shawwal fast';
     }
