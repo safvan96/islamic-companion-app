@@ -659,10 +659,43 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
                 : ListView.builder(
                     controller: _scrollController,
                     padding: const EdgeInsets.all(16),
-                    itemCount: _ayahs.length,
+                    // +1 for the Bismillah header (shown except for At-Tawbah surah 9)
+                    itemCount: _ayahs.length + (widget.surahNumber != 9 && widget.surahNumber != 1 ? 1 : 0),
                     itemBuilder: (context, index) {
-                      final ayah = _ayahs[index];
-                      final isPlaying = _playingAyah == index;
+                      // Bismillah header for all surahs except At-Tawbah (9) and Al-Fatiha (already contains it)
+                      if (widget.surahNumber != 9 && widget.surahNumber != 1 && index == 0) {
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 20, top: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: isDark
+                                  ? [const Color(0xFF1A2A20), const Color(0xFF182624)]
+                                  : [const Color(0xFFFFF8E1), const Color(0xFFFFFDE7)],
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.5), width: 1.5),
+                          ),
+                          child: Column(children: [
+                            Text(
+                              'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+                              textDirection: TextDirection.rtl,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.w500,
+                                color: isDark ? const Color(0xFFE3C77B) : const Color(0xFF1B5E20),
+                                height: 1.8,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Container(width: 40, height: 1, color: const Color(0xFFD4AF37).withOpacity(0.5)),
+                          ]),
+                        );
+                      }
+                      final ayahIndex = widget.surahNumber != 9 && widget.surahNumber != 1 ? index - 1 : index;
+                      final ayah = _ayahs[ayahIndex];
+                      final isPlaying = _playingAyah == ayahIndex;
 
                       return Container(
                         margin: const EdgeInsets.only(bottom: 16),
@@ -733,7 +766,7 @@ class _SurahDetailScreenState extends State<_SurahDetailScreen> {
                                 // Play
                                 if (ayah['audio']!.isNotEmpty)
                                   InkWell(
-                                    onTap: () => _playAyah(index),
+                                    onTap: () => _playAyah(ayahIndex),
                                     child: Icon(
                                       isPlaying
                                           ? Icons.stop_circle

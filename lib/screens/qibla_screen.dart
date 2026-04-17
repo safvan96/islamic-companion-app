@@ -237,7 +237,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      _hasCompass ? 'Compass active' : 'No compass sensor',
+                      _hasCompass ? l10n.translate('compassActive') : l10n.translate('noCompass'),
                       style: TextStyle(
                         fontSize: 11,
                         color: _hasCompass ? const Color(0xFF1B5E20) : Colors.orange,
@@ -250,10 +250,13 @@ class _QiblaScreenState extends State<QiblaScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: Text(
-                  l10n.translate('pointTowards'),
+                  _hasCompass
+                      ? l10n.translate('pointTowards')
+                      : l10n.translate('qiblaManualInstruction'),
                   style: TextStyle(
-                    fontSize: 14,
-                    color: isDark ? Colors.white54 : Colors.black45,
+                    fontSize: 13,
+                    color: isDark ? Colors.white60 : Colors.black54,
+                    height: 1.4,
                   ),
                   textAlign: TextAlign.center,
                 ),
